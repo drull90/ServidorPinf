@@ -64,3 +64,12 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# Packages lock
+package-lock.json
+
+# Pruebas de datos
+src/routes/datos
+
+# Data base de prueba
+DataBase/

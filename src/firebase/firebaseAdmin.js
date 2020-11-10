@@ -5,13 +5,15 @@ const firebaseAdmin = require('firebase-admin');
 firebaseAdmin.initializeApp();
 const firebaseAdminAuth = firebaseAdmin.auth();
 
+let dataBase = firebaseAdmin.firestore();
+
 async function isAuth(req, res, next) {
     if(!req.headers.authorization) {
         return res.status(401).send();
     }    
     try {
         let token = req.headers.authorization.split(" ")[1];
-        let response = await firebaseAdminAuth.verifyIdToken(token);
+        await firebaseAdminAuth.verifyIdToken(token);
     }
     catch(error) {
         return res.status(401).send(error);
@@ -22,5 +24,7 @@ async function isAuth(req, res, next) {
 
 module.exports = {
     isAuth,
-    firebaseAdmin
+    firebaseAdmin,
+    firebaseAdminAuth,
+    dataBase
 }
