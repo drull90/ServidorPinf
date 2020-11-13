@@ -55,6 +55,6 @@ async function entrarConEmail(req, res) {
 module.exports = {
     crearUsuarioConEmail,
     entrarConEmail,
-    logout,
-    entrarConGoogle
+//    logout,
+//    entrarConGoogle
 };
