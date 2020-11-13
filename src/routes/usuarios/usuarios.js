@@ -18,15 +18,27 @@ async function crearUsuarioConEmail(req, res) {
         dataBase.collection("usuarios").doc(nick).set({
             uid: nick,
             email: email,
-            estado: "Apostando a tope"
+            estado: "Apostando a tope",
+            emailVerified: false,
         });
-        res.status(201).send(response);
+        res.status(200).send(response);
     }
     catch(error) {
         console.log("Error al crear usuario");
         res.status(409).send(error.message);
     }
 }
+
+// async function logout(req, res) {
+//     try {
+//         await fbApp.firebaseAppAuth.signOut();
+//         res.status(200).send();
+//     }
+//     catch(error) {
+//         console.log(error)
+//         res.status(500).send();
+//     }
+// }
 
 async function entrarConEmail(req, res) {
     try {
@@ -42,5 +54,7 @@ async function entrarConEmail(req, res) {
 
 module.exports = {
     crearUsuarioConEmail,
-    entrarConEmail
+    entrarConEmail,
+    logout,
+    entrarConGoogle
 };
