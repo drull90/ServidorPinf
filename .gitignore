@@ -68,8 +68,6 @@ node_modules/
 # Packages lock
 package-lock.json
 
-# Pruebas de datos
-src/routes/datos
 
 # Data base de prueba
 DataBase/
