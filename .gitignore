@@ -71,3 +71,7 @@ package-lock.json
 
 # Data base de prueba
 DataBase/
+
+./dist
+
+public/
