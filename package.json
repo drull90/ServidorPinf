@@ -6,12 +6,12 @@
     "serve": "npm run ng-build && firebase emulators:start --import=./DataBase --export-on-exit --only firestore,functions,auth,hosting",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
+    "deploy": "firebase deploy --only functions,firestore,auth,hosting",
     "logs": "firebase functions:log",
     "ng-build": "cd src/cliente && ng build && cd ../.."
   },
   "engines": {
-    "node": "12"
+    "node": "14"
   },
   "main": "src/servidor/index.js",
   "dependencies": {
