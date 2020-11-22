@@ -29,17 +29,6 @@ async function crearUsuarioConEmail(req, res) {
     }
 }
 
-// async function logout(req, res) {
-//     try {
-//         await fbApp.firebaseAppAuth.signOut();
-//         res.status(200).send();
-//     }
-//     catch(error) {
-//         console.log(error)
-//         res.status(500).send();
-//     }
-// }
-
 async function entrarConEmail(req, res) {
     try {
         let email = req.body.email;
@@ -54,7 +43,5 @@ async function entrarConEmail(req, res) {
 
 module.exports = {
     crearUsuarioConEmail,
-    entrarConEmail,
-//    logout,
-//    entrarConGoogle
+    entrarConEmail
 };
