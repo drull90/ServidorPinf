@@ -19,11 +19,12 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,    
   }
 }

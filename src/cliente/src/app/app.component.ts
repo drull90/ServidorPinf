@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'PinfBet';
+  public language = 'es';
+
+  constructor(private router: Router) {
+    this.router.navigate(['home']);
+  }
+
+  getLanguage() {
+    return this.language;
+  }
+
 }
