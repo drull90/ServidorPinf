@@ -30,6 +30,7 @@
     "firebase": "^7.24.0",
     "firebase-admin": "^9.2.0",
     "firebase-functions": "^3.6.1",
+    "pdf-to-excel": "^0.3.0",
     "rxjs": "~6.6.0",
     "zone.js": "~0.10.2"
   },
