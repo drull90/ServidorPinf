@@ -5,12 +5,21 @@ import { AuthenticationService } from '../service/authentication.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  providers: [AuthenticationService]
 })
-export class HomeComponent {
-  constructor(public auth: AuthenticationService, private router: Router) {
-    if(!auth.isLoggedIn()) {
-      this.router.navigate(['login']);
+export class HomeComponent implements OnInit{
+
+  constructor(public auth: AuthenticationService, private router: Router) {}
+
+  async ngOnInit() {
+    const user = await this.auth.getCurrentUser();
+    if(user) {
+      console.log("Usuario logeado" + user);
+    }
+    else {
+      console.log("usuario sin logear");
     }
   }
+
 }

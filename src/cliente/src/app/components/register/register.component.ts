@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../service/authentication.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  providers: [AuthenticationService]
 })
 export class RegisterComponent {
 
   private privacyAccepted: boolean = false;
   private responsibilityAccepted: boolean = false;
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
   checkedResponsibility(event: any) {
     if(event.target.checked) {
@@ -31,27 +33,31 @@ export class RegisterComponent {
     }
   }
 
-  createAccountWithEmail(username: string, password: string) {
+  async createAccountWithEmail(username: string, password: string) {
     if(this.checkPolicyAndResponsibilityAccepted()) {
-      this.authService.createAccountWithEmail(username, password);
+      await this.authService.createAccountWithEmail(username, password);
+      this.redirectToHome();
     }
   }
 
-  createAccountWithGoogle() {
+  async createAccountWithGoogle() {
     if(this.checkPolicyAndResponsibilityAccepted()) {
-      this.authService.loginWithGoogle();
+      await this.authService.loginWithGoogle();
+      this.redirectToHome();     
     }
   }
 
-  createAccountWithFacebook() {
+  async createAccountWithFacebook() {
     if(this.checkPolicyAndResponsibilityAccepted()) {
-      this.authService.loginWithFacebook();
+      await this.authService.loginWithFacebook();
+      this.redirectToHome();
     }
   }
 
-  createAccountWithTwitter() {
+  async createAccountWithTwitter() {
     if(this.checkPolicyAndResponsibilityAccepted()) {
-      this.authService.loginWithTwitter();
+      await this.authService.loginWithTwitter();
+      this.redirectToHome();
     }
   }
 
@@ -81,6 +87,10 @@ export class RegisterComponent {
       }
       return false;
     }
+  }
+
+  private redirectToHome() {
+    this.router.navigate(['home']);
   }
 
 }

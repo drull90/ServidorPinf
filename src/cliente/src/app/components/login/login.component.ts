@@ -4,16 +4,15 @@ import { AuthenticationService } from '../service/authentication.service';
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [AuthenticationService]
 })
 
 export class LoginComponent {
 
-  constructor(private authService: AuthenticationService) {
-  }
+  constructor(private authService: AuthenticationService) {}
 
   loginWithPassword(username: string, password: string) {
-    console.log("Logeando Usuario");
     this.authService.login(username, password);
   }
 
