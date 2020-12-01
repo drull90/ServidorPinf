@@ -69,15 +69,25 @@ export class AuthenticationService {
   async loginWithFacebook() {
     let provider = new auth.FacebookAuthProvider();
     auth().languageCode = 'es';
-    let result = await this.fireAuth.signInWithPopup(provider);
-    this.sendEmailVerification();
+    try {
+      let result = await this.fireAuth.signInWithPopup(provider);
+      this.sendEmailVerification();
+    }
+    catch(error) {
+      console.log(error);
+    }
   }
 
   async loginWithTwitter() {
     let provider = new auth.TwitterAuthProvider();
     auth().languageCode = 'es';
-    let result = await this.fireAuth.signInWithPopup(provider);
-    this.sendEmailVerification();
+    try {
+      let result = await this.fireAuth.signInWithPopup(provider);
+      this.sendEmailVerification();
+    }
+    catch(error) {
+      console.log(error);
+    }
   }
 
 }

@@ -14,11 +14,8 @@ export class HomeComponent implements OnInit{
 
   async ngOnInit() {
     const user = await this.auth.getCurrentUser();
-    if(user) {
-      console.log("Usuario logeado" + user);
-    }
-    else {
-      console.log("usuario sin logear");
+    if(!user) {
+      this.router.navigate(['login']);
     }
   }
 
