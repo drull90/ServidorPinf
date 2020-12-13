@@ -26,6 +26,31 @@ function analizarExpediente() {
   }
 }
 
+function ObtenerPinfCoins(){
+
+  for(let i = 0; i<= rows.length ; i++){ //Bucle para obtener la nota media del alumno
+    if(rows[i] != null){
+      if(rows[i].match("NOTA MEDIA PONDERADA")){
+        if(rows[i+1].match("Art. 5.3 del R.D. 1125/2003")){
+          let linea = rows[i].split(" ");
+          var NotaMedia = parseFloat(linea[4].substr(0,4));
+        }
+      }
+    }
+  }
+
+  for(let i = 0; i <= asignaturas.length ; i++){ //Bucle para obtener el total de créditos superados por el alumno
+    if(asignaturas[i] != null){
+      let linea = asignaturas[i];
+      var creditosSuperados =+ parseInt((linea[67]));
+    }
+  }
+
+  console.log("PinfCoins: " + creditosSuperados * NotaMedia); //PinfCoins = creditosSuperados * NotaMedia en base 10
+  //return (creditosSuperados * NotaMedia);
+
+}
+
 function getNombre(string){
   let str = string.split(" ");
   let nombre = "";
