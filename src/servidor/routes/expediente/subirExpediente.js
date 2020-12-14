@@ -3,7 +3,7 @@ var pdfReader = require("pdfreader");
 var rows = [];
 var asignaturas = [];
 
-let usuario = "Usuario01";
+let usuario = "HPLZSWQI";  //Duda obtener el usuario uuid que verdaderamente ha iniciado sesión
 
 function analizarExpediente() {
 
@@ -46,8 +46,8 @@ function ObtenerPinfCoins(){
     }
   }
 
-  console.log("PinfCoins: " + creditosSuperados * NotaMedia); //PinfCoins = creditosSuperados * NotaMedia en base 10
-  //return (creditosSuperados * NotaMedia);
+  //console.log("PinfCoins: " + creditosSuperados * NotaMedia); //PinfCoins = creditosSuperados * NotaMedia en base 10
+  return (creditosSuperados * NotaMedia); 
 
 }
 
@@ -70,7 +70,7 @@ function getNombre(string){
 
 async function subirExpedienteConPDF(){
   
-  new pdfReader.PdfReader().parseFileItems("datos.pdf", function(err, item) {
+  new pdfReader.PdfReader().parseFileItems("/ruta_al_pdfExpediente", function(err, item) {  //Duda incluir path al pdf que sube el usuario
     if (!item ){
       analizarExpediente();
     }
@@ -81,26 +81,34 @@ async function subirExpedienteConPDF(){
    });
 
    for(let i = 0; i <= asignaturas.length ; i++){
+    if(asignaturas[i] != null){
+      var l = asignaturas[i].split(" ");
+      var calificacion = l[l.length - 2];
+      var nombre = getNombre(asignaturas[i]);
+      var cod = l[1];
+      var coins = ObtenerPinfCoins();
+      console.log("PinfCoins")
+    }
+  
     
-    let l = asignaturas[i].split(" ");
-    let calificacion = l[l.length - 2];
-    let nombre = getNombre(asignaturas[i]);
-    let codigo = l[1];
- 
-    let asignatura = {
-     "nombre": nombre,
-     "estado":{
-       "terminado": true,
-       "calificacion": calificacion
-     },
-     "apostado":{
- 
-     }
-     }
-     
-     const a = await db.collection('expediente').doc(usuario).set(asignatura);
+     const userExRef = db.collection('expedientes').doc(usuario); 
+     const asigRef = db.collection('asignaturas');
+     const userRef = db.collection('usuarios').doc(usuario);
 
-   }
+     const a = await userExRef.set({
+       "codigo": cod,
+       "calificacion": calificacion
+     },{ merge: true });
+
+
+     const b = await asigRef.set({
+       "codigo": cod,
+       "nombre": nombre
+     },{ merge: true });
+
+     const c = await userRef.update({"pinfcoins": coins});
+
+    }   
 }
 
 subirExpedienteConPDF();
