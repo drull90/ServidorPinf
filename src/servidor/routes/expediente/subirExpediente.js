@@ -88,7 +88,7 @@ async function subirExpedienteConPDF(){
       var cod = l[1];
       var coins = ObtenerPinfCoins();
       console.log("PinfCoins")
-    }
+    
   
     
      const userExRef = db.collection('expedientes').doc(usuario); 
@@ -107,7 +107,7 @@ async function subirExpedienteConPDF(){
      },{ merge: true });
 
      const c = await userRef.update({"pinfcoins": coins});
-
+    }
     }   
 }
 
