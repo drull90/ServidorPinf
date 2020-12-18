@@ -9,6 +9,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from './components/service/authentication.service';
 import { LoginComponent } from './components/login/login.component';
+import { AngularFileUploaderModule } from "angular-file-uploader";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LoginComponent } from './components/login/login.component';
     AngularFireModule.initializeApp(environment.firebase),
     BrowserModule,
     AppRoutingModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFileUploaderModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]

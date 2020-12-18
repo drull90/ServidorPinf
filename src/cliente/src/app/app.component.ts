@@ -18,14 +18,14 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    const user = await this.auth.getCurrentUser();
-    if(user) {
-      this.router.navigate(['home']);
-    }
-    else {
-      console.log("usuario sin logear");
-      this.router.navigate(['login']);
-    }
+    // const user = await this.auth.getCurrentUser();
+    // if(user) {
+    //   this.router.navigate(['home']);
+    // }
+    // else {
+    //   console.log("usuario sin logear");
+    //   this.router.navigate(['login']);
+    // }
   }
 
 }
