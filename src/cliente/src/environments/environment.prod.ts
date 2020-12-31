@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  url: "https://us-central1-pinfbet-10a92.cloudfunctions.net/api/"
 };

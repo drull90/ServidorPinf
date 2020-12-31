@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   public language = 'es';
 
   constructor(private router: Router, private auth: AuthenticationService, public fireAuth: AngularFireAuth) {
-    fireAuth.useEmulator("http://192.168.0.2:9099/");
+    //fireAuth.useEmulator("http://192.168.0.2:9099/");
   }
 
   async ngOnInit() {

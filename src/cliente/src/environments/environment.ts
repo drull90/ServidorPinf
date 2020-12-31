@@ -12,7 +12,8 @@ export const environment = {
     storageBucket: "pinfbet-10a92.appspot.com",
     messagingSenderId: "801673803434",
     appId: "1:801673803434:web:6d60da417fbbc03229c2d3"
-  }
+  },
+  url: "http://localhost:5001/pinfbet-10a92/us-central1/api/"
 };
 
 /*

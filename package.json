@@ -11,7 +11,7 @@
     "ng-build": "cd src/cliente && ng build && cd ../.."
   },
   "engines": {
-    "node": "8"
+    "node": "12"
   },
   "main": "src/servidor/index.js",
   "dependencies": {
