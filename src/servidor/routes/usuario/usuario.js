@@ -13,7 +13,7 @@ function listarAsignaturas(req, res) {
             res.send('{ "message": "ok" }');
         }
         catch(error) {
-            res.send('{ "message": error }');
+            res.send('{ "message": "error" }');
         }
     //})
 }

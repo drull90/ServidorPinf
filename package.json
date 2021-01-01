@@ -6,9 +6,10 @@
     "serve": "npm run ng-build && firebase emulators:start --import=./DataBase --export-on-exit --only firestore,functions,auth,hosting",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
-    "deploy": "npm run ng-build && firebase deploy --only functions,firestore,auth,hosting",
+    "deploy": "npm run ng-build-prod && firebase deploy --only functions,firestore,auth,hosting",
     "logs": "firebase functions:log",
-    "ng-build": "cd src/cliente && ng build && cd ../.."
+    "ng-build": "cd src/cliente && ng build && cd ../..",
+    "ng-build-prod": "cd src/cliente && ng build --prod && cd ../.."
   },
   "engines": {
     "node": "12"

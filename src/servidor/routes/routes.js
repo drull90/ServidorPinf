@@ -1,7 +1,10 @@
 'use strict'
 
+const cors = require('cors');
 const express = require('express');
 const app = express();
+
+app.use(cors({ origin: true }));
 
 const firebaseAdmin = require('../firebase/firebaseAdmin');
 

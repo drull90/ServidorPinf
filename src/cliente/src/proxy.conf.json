@@ -1,7 +1,0 @@
-{
-    "/pinfbet-10a92/us-central1/api/*": {
-        "target": "http://localhost:5001",
-        "secure": false,
-        "changeOrigin": true
-    }
-}

@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     // if(!user) {
     //   this.router.navigate(['login']);
     // }
-    this.httpClient.get("http://localhost:5001/pinfbet-10a92/us-central1/api/prueba")
+    this.httpClient.get(environment.url + "/prueba ")
     .subscribe(
       (response) => {   // data is already a JSON object
          console.log(response);
