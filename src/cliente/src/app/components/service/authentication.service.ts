@@ -54,6 +54,11 @@ export class AuthenticationService {
     return this.fireAuth.authState.pipe(first()).toPromise();
   }
 
+  async getUserToken() {
+    let user = await this.fireAuth.currentUser;
+    return await user?.getIdToken();
+  }
+
   async loginWithGoogle() {
     let provider = new auth.GoogleAuthProvider();
     auth().languageCode = 'es';

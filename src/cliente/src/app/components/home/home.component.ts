@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient) {}
 
   async ngOnInit() {
-    // const user = await this.auth.getCurrentUser();
+    const user = await this.auth.getCurrentUser();
     // if(!user) {
     //   this.router.navigate(['login']);
     // }

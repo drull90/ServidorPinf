@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './components/service/authentication.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit {
   public language = 'es';
 
   constructor(private router: Router, private auth: AuthenticationService, public fireAuth: AngularFireAuth) {
-    //fireAuth.useEmulator("http://192.168.0.2:9099/");
+    if(environment.production == false)
+      fireAuth.useEmulator("http://localhost:9099/");
   }
 
   async ngOnInit() {
