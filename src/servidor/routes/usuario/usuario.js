@@ -14,14 +14,22 @@ async function listarAsignaturas(req, res) {
 
         let uuid = "HPLZSWQI";
 
-        const matricula = database.collection('matricula').doc('HPLZSWQI');
-        let data = await matricula.get();
+        const datosMatricula = await database.collection('matricula').doc('HPLZSWQI').get();
 
-        console.log(data.data());
+        // Enviar codigo y nombre
+        let asignaturas = {};
 
-        res.send('{ "message": "ok" }');
+        let arr = Object.keys(datosMatricula.data());
+
+        await Promise.all(arr.map(async (asignatura) => {
+            let nombre = await database.collection('asignaturas').doc(asignatura).get();
+            asignaturas[asignatura] = nombre.data().nombre;
+        }));
+
+        res.send(asignaturas);
     }
     catch(error) {
+        console.log(error);
         res.send('{ "message": "' + error + '" }');
     }
 }

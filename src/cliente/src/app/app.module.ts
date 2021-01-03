@@ -11,6 +11,7 @@ import { AuthenticationService } from './components/service/authentication.servi
 import { LoginComponent } from './components/login/login.component';
 import { AngularFileUploaderModule } from "angular-file-uploader";
 import { HttpClientModule } from '@angular/common/http';
+import { FriendsComponent } from './components/friends/friends.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    FriendsComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
