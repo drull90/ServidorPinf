@@ -13,6 +13,8 @@ const expediente = require("./expediente/subirExpediente");
 const usuario = require("./usuario/usuario");
 
 app.get('/datos', firebaseAdmin.isAuth, datos.getDatos);
-app.get('/prueba', usuario.listarAsignaturas);
+app.get('/prueba', firebaseAdmin.isAuth, usuario.listarAsignaturas);
+app.post('/userstatus', firebaseAdmin.isAuth, usuario.changeUserStatus);
+
 
 module.exports = app;

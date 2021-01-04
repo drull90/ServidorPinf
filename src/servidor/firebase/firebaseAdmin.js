@@ -12,10 +12,11 @@ async function isAuth(req, res, next) {
         return res.status(401).send();
     }    
     try {
-        await firebaseAdminAuth.verifyIdToken(getUserToken(req));
+        let user = await firebaseAdminAuth.verifyIdToken(getUserToken(req));
+        req.user = user;
     }
     catch(error) {
-        return res.status(401).send(error);
+        return res.status(401).send('{ "message": "User not logged" }');
     }
 
     next();    

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../service/authentication.service';
@@ -23,11 +23,21 @@ export class HomeComponent implements OnInit {
   constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient) {}
 
   async ngOnInit() {
-    const user = await this.auth.getCurrentUser();
+    let user = await this.auth.getCurrentUser();
     // if(!user) {
     //   this.router.navigate(['login']);
     // }
-    this.httpClient.get(environment.url + "/prueba ")
+    let token = await user?.getIdToken();
+    let tokenString = "Bearer " + token;
+    
+    // this.httpClient.get(environment.url + "/prueba ", {headers: {'Authorization': tokenString}})
+    // .subscribe(
+    //   (response) => {   // data is already a JSON object
+    //      console.log(response);
+    //   }
+    // );
+
+    this.httpClient.post(environment.url + "/userstatus ", "hola", {headers: {'Authorization': tokenString}})
     .subscribe(
       (response) => {   // data is already a JSON object
          console.log(response);

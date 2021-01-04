@@ -6,25 +6,20 @@ let fireAuth = admin.firebaseAdminAuth;
 
 async function listarAsignaturas(req, res) {
     try {
+        let uid = req.user.uid;
 
-        // let token = admin.getUserToken(req);
-        // let user = await firebaseAdminAuth.verifyIdToken(token);
-        
-        // let uuid = user.uuid;
-
-        let uuid = "HPLZSWQI";
-
-        const datosMatricula = await database.collection('matricula').doc('HPLZSWQI').get();
+        const datosMatricula = await database.collection('matricula').doc(uid).get();
 
         // Enviar codigo y nombre
         let asignaturas = {};
 
-        let arr = Object.keys(datosMatricula.data());
-
-        await Promise.all(arr.map(async (asignatura) => {
-            let nombre = await database.collection('asignaturas').doc(asignatura).get();
-            asignaturas[asignatura] = nombre.data().nombre;
-        }));
+        if(datosMatricula.data() !== undefined) {
+            let arr = Object.keys(datosMatricula.data());
+            await Promise.all(arr.map(async (asignatura) => {
+                let nombre = await database.collection('asignaturas').doc(asignatura).get();
+                asignaturas[asignatura] = nombre.data().nombre;
+            }));
+        }
 
         res.send(asignaturas);
     }
@@ -34,6 +29,23 @@ async function listarAsignaturas(req, res) {
     }
 }
 
+async function changeUserStatus(req, res) {
+    try {
+        let uid = req.user.uid;
+
+        const status = await database.collection('usuarios').doc(uid).update({
+            "estado": req.body
+        })
+
+        res.status(200).send('{ "message": "User status changed" }');
+    }
+    catch(error) {
+        console.log(error);
+        res.status(500).send('{ "message": "' + error + '" }');
+    }
+}
+
 module.exports = {
-    listarAsignaturas
+    listarAsignaturas,
+    changeUserStatus
 }

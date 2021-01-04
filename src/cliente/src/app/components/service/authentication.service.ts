@@ -15,7 +15,9 @@ export class AuthenticationService {
   async login(email: string, password: string) {
     try {
       let result = await this.fireAuth.signInWithEmailAndPassword(email, password);
-      console.log("Logged");
+      if(!result.user?.emailVerified) {
+        this.sendEmailVerification();
+      }
     }
     catch(error) {
       console.log(error);
@@ -54,17 +56,14 @@ export class AuthenticationService {
     return this.fireAuth.authState.pipe(first()).toPromise();
   }
 
-  async getUserToken() {
-    let user = await this.fireAuth.currentUser;
-    return await user?.getIdToken();
-  }
-
   async loginWithGoogle() {
     let provider = new auth.GoogleAuthProvider();
     auth().languageCode = 'es';
     try {
       let result = await this.fireAuth.signInWithPopup(provider);
-      this.sendEmailVerification();
+      if(!result.user?.emailVerified) {
+        this.sendEmailVerification();
+      }
     }
     catch(error) {
       console.log(error);
@@ -76,7 +75,9 @@ export class AuthenticationService {
     auth().languageCode = 'es';
     try {
       let result = await this.fireAuth.signInWithPopup(provider);
-      this.sendEmailVerification();
+      if(!result.user?.emailVerified) {
+        this.sendEmailVerification();
+      }
     }
     catch(error) {
       console.log(error);
@@ -88,7 +89,9 @@ export class AuthenticationService {
     auth().languageCode = 'es';
     try {
       let result = await this.fireAuth.signInWithPopup(provider);
-      this.sendEmailVerification();
+      if(!result.user?.emailVerified) {
+        this.sendEmailVerification();
+      }
     }
     catch(error) {
       console.log(error);

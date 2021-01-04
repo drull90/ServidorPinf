@@ -8,6 +8,12 @@ const app = require('./routes/routes');
 
 exports.api = functions.https.onRequest(app);
 
+exports.userCreated = functions.auth.user().onCreate( async (user) => {
+
+    console.log("Usuario creado =======>" + user);
+
+});
+
 // BORRAR
 
 const admin = require("./firebase/firebaseAdmin");
@@ -19,17 +25,17 @@ async function crearDatosDePrueba() {
     let data = {
         "nick": "drull90",
         "estado": "Apostando a tope",
-        "fotoUrl": "HPLZSWQI-FOTO",
+        "fotoUrl": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-FOTO",
         "pinfcoins": 200,
         "verificado": true,
         "idioma": "es",
         "apuestasActivas": {
-            "HPLZSWQI-HGFOTOEW-2007001": true,
-            "HPLZSWQI-HGFOTOEW-2007002": true
+            "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007001": true,
+            "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007002": true
         }
     };
 
-    await db.collection('usuarios').doc('HPLZSWQI').set(data);
+    await db.collection('usuarios').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
 
     data = {
         "nick": "rgued98",
@@ -45,7 +51,7 @@ async function crearDatosDePrueba() {
     // Crear uuids
 
     data = {
-        "uuid": "HPLZSWQI"
+        "uuid": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1"
     };
 
     await db.collection('uuids').doc('@drull90').set(data);
@@ -107,7 +113,7 @@ async function crearDatosDePrueba() {
         }
     };
 
-    await db.collection('expedientes').doc('HPLZSWQI').set(data);
+    await db.collection('expedientes').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
 
     data = {
         "2007001": {
@@ -125,16 +131,16 @@ async function crearDatosDePrueba() {
     data = {
         "2007003": {
             "HGFOTOEW": true,
-            "HPLZSWQI": true
+            "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": true
         }
     };
 
-    await db.collection('matricula').doc('HPLZSWQI').set(data);
+    await db.collection('matricula').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
 
     data = {
         "2007003": {
             "HGFOTOEW": true,
-            "HPLZSWQI": true
+            "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": true
         }
     };
 
@@ -146,10 +152,10 @@ async function crearDatosDePrueba() {
         "HGFOTOEW": true
     };
 
-    await db.collection('amistades').doc('HPLZSWQI').set(data);
+    await db.collection('amistades').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
 
     data = {
-        "HPLZSWQI": true
+        "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": true
     };
 
     await db.collection('amistades').doc('HGFOTOEW').set(data);
@@ -160,7 +166,7 @@ async function crearDatosDePrueba() {
         "QWERTY": true
     };
 
-    await db.collection('peticionesEnviadas').doc('HPLZSWQI').set(data);
+    await db.collection('peticionesEnviadas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
 
     // crear peticiones recibidas
 
@@ -168,36 +174,36 @@ async function crearDatosDePrueba() {
         "BIDEN": true
     };
 
-    await db.collection('peticionesRecibidas').doc('HPLZSWQI').set(data);
+    await db.collection('peticionesRecibidas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
 
     // crear apuestas
 
     data = {
-        "usuario": "HPLZSWQI",
+        "usuario": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
         "destinatario": "HQARWSE",
         "estado": "aprueba",
         "calificacion": 8
     };
 
-    await db.collection('apuestas').doc('HPLZSWQI-HGFOTOEW-2007001').set(data);
+    await db.collection('apuestas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007001').set(data);
 
     data = {
-        "usuario": "HPLZSWQI",
+        "usuario": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
         "destinatario": "HQARWSE",
         "estado": "aprueba",
         "calificacion": 8
     };
 
-    await db.collection('apuestas').doc('HPLZSWQI-HGFOTOEW-2007002').set(data);
+    await db.collection('apuestas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007002').set(data);
 
     data = {
-        "usuario": "HPLZSWQI",
+        "usuario": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
         "destinatario": "HQARWSE",
         "estado": "aprueba",
         "calificacion": 8
     };
 
-    await db.collection('apuestas').doc('HPLZSWQI-HPLZSWQI-2007001').set(data);
+    await db.collection('apuestas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1-z8JUgK1gH6fH4AXOH1hpuXNLDJx1-2007001').set(data);
 
     // crear estadisiticas
 
@@ -210,12 +216,12 @@ async function crearDatosDePrueba() {
         }
     };
 
-    await db.collection('estadisticas').doc('HPLZSWQI').set(data);
+    await db.collection('estadisticas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
 
     // crear historial apuestas
 
     data = {
-        "HPLZSWQI-HGFOTOEW-2007005": {
+        "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007005": {
             "destinatario": "HQWSSAZC",
             "estado": "aprueba",
             "calificacion": 8,
@@ -223,7 +229,7 @@ async function crearDatosDePrueba() {
             "calificacionFin": 5,
             "pinfcoinsGanados": 20
         },
-        "HPLZSWQI-HGFOTOEW-2007006": {
+        "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007006": {
             "destinatario": "HQWSSAZC",
             "estado": "aprueba",
             "calificacion": 8,
@@ -233,10 +239,10 @@ async function crearDatosDePrueba() {
         }
     };
 
-    await db.collection('historialApuestas').doc('HPLZSWQI').set(data);
+    await db.collection('historialApuestas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
 
     data = {
-        "HPLZSWQI-HGFOTOEW-2007005": {
+        "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007005": {
             "destinatario": "HQWSSAZC",
             "estado": "aprueba",
             "calificacion": 8,
@@ -244,7 +250,7 @@ async function crearDatosDePrueba() {
             "calificacionFin": 5,
             "pinfcoinsGanados": 20
         },
-        "HPLZSWQI-HGFOTOEW-2007006": {
+        "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007006": {
             "destinatario": "HQWSSAZC",
             "estado": "aprueba",
             "calificacion": 8,
@@ -268,7 +274,7 @@ async function crearDatosDePrueba() {
 
     data = {
         "m1": {
-            "author": "HPLZSWQI",
+            "author": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
             "texto": "Pues eso, que esto no funciona, alguien me explica"
         },
         "m2": {
