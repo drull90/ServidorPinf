@@ -46,7 +46,7 @@ async function crearDatosDePrueba() {
         "idioma": "en"
     };
 
-    await db.collection('usuarios').doc('HGFOTOEWs').set(data);
+    await db.collection('usuarios').doc('HGFOTOEW').set(data);
 
     // Crear uuids
 
@@ -148,33 +148,45 @@ async function crearDatosDePrueba() {
 
     // crear amistades
 
+    // data = {
+    //     "HGFOTOEW": true
+    // };
+
+    // await db.collection('amistades').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
+
+    // data = {
+    //     "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": true
+    // };
+
+    // await db.collection('amistades').doc('HGFOTOEW').set(data);
+
+    // crear peticiones enviadas
+
     data = {
         "HGFOTOEW": true
     };
 
-    await db.collection('amistades').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
+    await db.collection('peticionesEnviadas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
 
     data = {
         "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": true
     };
 
-    await db.collection('amistades').doc('HGFOTOEW').set(data);
-
-    // crear peticiones enviadas
-
-    data = {
-        "QWERTY": true
-    };
-
-    await db.collection('peticionesEnviadas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
+    await db.collection('peticionesEnviadas').doc('HGFOTOEW').set(data);
 
     // crear peticiones recibidas
 
     data = {
-        "BIDEN": true
+        "HGFOTOEW": true
     };
 
     await db.collection('peticionesRecibidas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
+
+    data = {
+        "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": true
+    };
+
+    await db.collection('peticionesRecibidas').doc('HGFOTOEW').set(data);
 
     // crear apuestas
 
@@ -286,3 +298,6 @@ async function crearDatosDePrueba() {
     await db.collection('foroMensajes').doc('0').set(data);
 
 }
+
+
+crearDatosDePrueba();

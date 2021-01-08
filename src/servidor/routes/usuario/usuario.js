@@ -2,11 +2,10 @@
 let admin = require("../../firebase/firebaseAdmin");
 
 let database = admin.dataBase;
-let fireAuth = admin.firebaseAdminAuth;
 
 async function listarAsignaturas(req, res) {
     try {
-        let uid = req.user.uid;
+        let uid = req.body;
 
         const datosMatricula = await database.collection('matricula').doc(uid).get();
 

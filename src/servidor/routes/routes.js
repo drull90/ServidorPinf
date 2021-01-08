@@ -8,13 +8,14 @@ app.use(cors({ origin: true }));
 
 const firebaseAdmin = require('../firebase/firebaseAdmin');
 
-const datos = require('./datos/datos');
 const expediente = require("./expediente/subirExpediente");
 const usuario = require("./usuario/usuario");
+const amistad = require("./amistad/amistad");
 
-app.get('/datos', firebaseAdmin.isAuth, datos.getDatos);
-app.get('/prueba', firebaseAdmin.isAuth, usuario.listarAsignaturas);
+app.get('/asignaturas', firebaseAdmin.isAuth, usuario.listarAsignaturas);
 app.post('/userstatus', firebaseAdmin.isAuth, usuario.changeUserStatus);
+app.post('/aceptarpeticion', firebaseAdmin.isAuth, amistad.aceptarPeticion);
+app.post('/rechazarpeticion', firebaseAdmin.isAuth, amistad.rechazarPeticion);
 
 
 module.exports = app;
