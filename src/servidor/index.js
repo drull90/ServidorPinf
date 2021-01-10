@@ -282,6 +282,12 @@ async function crearDatosDePrueba() {
 
     await db.collection('foro').doc('0').set(data);
 
+    data = {
+        "titulo": "Como se hacen las apuestas"
+    };
+
+    await db.collection('foro').doc('1').set(data);
+
     // crear foro mensajes
 
     data = {

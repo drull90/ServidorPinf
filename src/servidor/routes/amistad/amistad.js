@@ -11,14 +11,15 @@ async function aceptarPeticion(req, res) {
 
         let uidPeticion = req.body.uidPeticion;
 
-        // Eliminar peticion enviada, peticion  recibida si existen
-
+        // Eliminar peticion enviada
         await database.collection('peticionesRecibidas').doc(uid).update({[uidPeticion]: firebase.FieldValue.delete()});
 
+        // Eliminar peticion recibida
         await database.collection('peticionesRecibidas').doc(uidPeticion).update({ [uid]: firebase.FieldValue.delete()});
 
         let data = {[uidPeticion]: true}
 
+        // Guardar en amigos ambos usuarios
         await database.collection('amistades').doc(uid).set(data, { merge: true });
 
         data = {[uid]: true}
@@ -40,9 +41,9 @@ async function rechazarPeticion(req, res) {
 
         let uidPeticion = req.body.uidPeticion;
 
-        // Eliminar peticion enviadam peticion recibida si existen
+        // Eliminar peticion enviada
         await database.collection('peticionesRecibidas').doc(uid).update({[uidPeticion]: firebase.FieldValue.delete()});
-
+        // Eliminar peticion recibida
         await database.collection('peticionesEnviadas').doc(uidPeticion).update({[uid]: firebase.FieldValue.delete()});
 
         res.status(200).send('{ "message": "Peticion rechazada" }');
