@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ForoComponent } from './components/foro/foro.component';
 import { FriendsComponent } from './components/friends/friends.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'profile/:userid',
     component: ProfileComponent
+  },
+  {
+    path: 'foro',
+    component: ForoComponent
   }
 ];
 

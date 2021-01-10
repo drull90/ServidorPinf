@@ -13,6 +13,7 @@ import { AngularFileUploaderModule } from "angular-file-uploader";
 import { HttpClientModule } from '@angular/common/http';
 import { FriendsComponent } from './components/friends/friends.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ForoComponent } from './components/foro/foro.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     LoginComponent,
     RegisterComponent,
     FriendsComponent,
-    ProfileComponent
+    ProfileComponent,
+    ForoComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
