@@ -1,39 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Page Title</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-</style>
-</head>
-<body>
-  <div class="header">
-    <h1>PINFBET</h1>
-    <p>Una aplicación de apuestas de académicas.</p>
-  </div>
-
-  <div class="navbar">
-    <a href="#">Amigos</a>
-    <a href="#">Mensajes</a>
-    <a href="#">Apuestas</a>
-    <input type="text" placeholder="Buscar usuarios...">
-    <a href="#" class="right">Mi Perfil</a>
-
-
-  </div>
-
+<div class="container-fluid">
   <div class="row">
-    <div class="side">PRIMER COMMIT DE FRONT-END DE ÁNGEL PARA PROBAR</div>
-    <div class="main">En breves HomePage Completa :D</div>
+    <div class="col-sm-4 well">
+      <h3>Has iniciado sesión como:</h3>
+      <div class="card" style="width: 400px">
+        <span class="logo glyphicon glyphicon-user"></span>
+        <div class="card-body">
+          <h4 class="card-title">@Usuario</h4>
+          <p><strong>Cantidad de PinfCoins:</strong> 66</p>
+          <p><strong>Estado: </strong>Apostando a tope</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8 well">
+      <div class="container-fluid text-center">
+        <h2>PANEL DE CONTROL</h2>
+        <br>
+        <div class="row">
+          <div class="col-sm-4">
+            <span class="glyphicon glyphicon-off"></span>
+            <h4>Cerrar Sesión</h4>
+            <p>Cierra la sesión</p>
+          </div>
+          <div class="col-sm-4">
+            <span class="glyphicon glyphicon-user"></span>
+            <h4>Mi perfil</h4>
+            <p>Gestiona los datos de tu perfil.</p>
+          </div>
+          <div class="col-sm-4">
+            <span class="glyphicon glyphicon-heart"></span>
+            <h4>Amistades</h4>
+            <p>Consulta tu lista de amigos y gestiona tus solicitudes de amistad.</p>
+          </div>
+          </div>
+          <br><br>
+        <div class="row">
+          <div class="col-sm-4">
+            <span class="glyphicon glyphicon-tower"></span>
+            <h4>Apuestas</h4>
+            <p>Haz nuevas apuestas o consulta las que ya has realizado.</p>
+          </div>
+          <div class="col-sm-4">
+            <span class="glyphicon glyphicon-list-alt"></span>
+            <h4>Expediente</h4>
+            <p>Consulta, sube o actualiza tu expediente.</p>
+          </div>
+          <div class="col-sm-4">
+            <span class="glyphicon glyphicon-signal"></span>
+            <h4>Estadísticas</h4>
+            <p>Consulta las estadísticas de las asignaturas para trazar tu plan de apuestas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid bg-grey">
+  <h2 class="text-center">La opinión de los usuarios</h2>
+  <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+  
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <h4>"Espero aprobar todo para seguir apostando a tope!"<br><span style="font-style:normal;">Florinda García</span></h4>
+    </div>
+    <div class="item">
+      <h4>"La app es genial, pero mal curso..."<br><span style="font-style:normal;">Anónimo</span></h4>
+    </div>
+    <div class="item">
+      <h4>"Nunca pensé que me engancharía tanto a Pinfbet"<br><span style="font-style:normal;">Joe John</span></h4>
+    </div>
   </div>
 
-  <div class="footer">
-    <h2>Barra inferior</h2>
-  </div>
-</body>
-</html> 
-
+    <a class="left carousel-control" href="#OpinionCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Anterior</span>
+    </a>
+    <a class="right carousel-control" href="#OpinionCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Siguiente</span>
+    </a>
+</div>
+</div>

@@ -1,0 +1,92 @@
+<body>
+    <div class="container-fluid text-center">
+        <div class="row">
+            <div class="col-sm-8 well">
+                <h1>Mis apuestas</h1>
+                <p>Consulta tus apuestas realizadas.</p>
+                <div clas="row">
+                    <div class="col-sm-8">
+                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Busca por nombre...">
+                        <table id="myTable">
+                            <tr class="header">
+                                <th style="width: 25%;">#</th>
+                                <th style="width: 25%">Destinatario</th>
+                                <th style="width: 25%;">Calificación</th>
+                                <th style="width: 25%;">Estado</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>@Usuario2</td>
+                                <td>6</td>
+                                <td>Acierto</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>@Usuario3</td>
+                                <td>8</td>
+                                <td>Pendiente</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>@Usuario3</td>
+                                <td>3</td>
+                                <td>Pendiente</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-4">
+                        <span class="logo glyphicon glyphicon-signal"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 well">
+                <h1>Nueva apuesta</h1>
+                <p>Realiza una nueva apuesta.</p>
+                <form>
+                    <p>Usuario: </p>
+                    <select name="Usuario" class="select">
+                        <option selected>-Selecciona un usuario-</option>
+                        <option value="@Usuario1">@Usuario1</option>
+                        <option value="@Usuario2">@Usuario2</option>
+                        <option value="@Usuario3">@Usuario3</option>
+                    </select>
+                    <p>Asignatura: </p>
+                    <select name="Asignatura" class="select">
+                        <option selected>-Selecciona una asignatuta-</option>
+                        <option value="Proyectos Informáticos">Proyectos Informáticos</option>
+                        <option value="Matemática Discreta">Matemática Discreta</option>
+                    </select>
+                    <p>Calificación: </p>
+                    <input type="text" placeholder="Calificación...">
+                    <p>PinfCoins: </p>
+                    <input type="text" placeholder="PinfCoins...">
+                    <button type="button" class="btn btn-info">Confirmar</button>
+                </form>
+            </div>
+        </div>
+    </div> 
+</body>
+
+<script>
+    function myFunction() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+    
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    </script>
