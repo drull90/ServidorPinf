@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from './components/service/authentication.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -20,14 +19,16 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // const user = await this.auth.getCurrentUser();
-    // if(user) {
-    //   this.router.navigate(['home']);
-    // }
-    // else {
-    //   console.log("usuario sin logear");
-    //   this.router.navigate(['login']);
-    // }
+    const user = await this.auth.getCurrentUser();
+    if(!user) {
+      this.router.navigate(['login']);
+    }
+    else {
+      if(this.router.url === "/") {
+        this.router.navigate(['home']);
+      }
+    }
+
   }
 
 }
