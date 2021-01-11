@@ -19,16 +19,31 @@ export class FriendsComponent implements OnInit {
     let token = await user?.getIdToken();
     let tokenString = "Bearer " + token;
 
-    let data = {
-      uidPeticion: "HGFOTOEW"
-    }
+    // let data = {
+    //   uidPeticion: "HGFOTOEW"
+    // }
 
-    this.httpClient.post(environment.url + "/rechazarpeticion ", data, {headers: {'Authorization': tokenString}})
-    .subscribe(
-      (response) => {   // data is already a JSON object
-         console.log(response);
-      }
-    );
+    // this.httpClient.post(environment.url + "/rechazarpeticion ", data, {headers: {'Authorization': tokenString}})
+    // .subscribe(
+    //   (response) => {   // data is already a JSON object
+    //      console.log(response);
+    //   }
+    // );
+
+    // let data = {
+    //   msg: "Gracias por la bienvenida",
+    //   id: "m7ffsd7CN6RPCJCOUOPE"
+    // };
+
+    // this.httpClient.post(environment.url + "/msgforo ", data, {headers: {'Authorization': tokenString}})
+    // .subscribe(
+    //   (response) => {   // data is already a JSON object
+    //      console.log(response);
+    //   }
+    // );
+
+
+
   }
 
 }

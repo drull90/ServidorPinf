@@ -1,3 +1,4 @@
+'use stric'
 
 let admin = require("../../firebase/firebaseAdmin");
 
