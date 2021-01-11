@@ -1,11 +1,11 @@
 .header
 {
-  background-image: url("../../../assets/esi.png");
+  background-image: url(../../../assets/esi.png);
 }
 .jumbotron
 {
   background-color: aquamarine;
-  background-image: url("../../../assets/esi.png");
+  background-image: url(../../../assets/esi.png);
   color: #000000;
   margin-top: 5%;
   padding: 30px 25px;
