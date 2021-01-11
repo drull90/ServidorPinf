@@ -1,22 +1,5 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <title>PinfBet</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
 
-<body>
-  <div class="jumbotron text-center">
-    <h1>PinfBet</h1>
-    <p>Una app de apuestas académicas.</p> 
-  </div>
-  
-  <nav class="navbar navbar-default navbar-fixed-top">
+  <!-- <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toogle="collapse" data-target="#myNavbar">
@@ -39,7 +22,39 @@
         </ul>
       </div>
     </div>
+  </nav> -->
+
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark navbar-fixed-top">
+    <a class="navbar-brand" routerLink="/">Pinfbet</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="expediente">EXPEDIENTE</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="matricula">MATRÍCULA</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="bet">APUESTAS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="friends">AMIGOS</a>
+        </li> 
+        <li class="nav-item">
+          <a class="nav-link" routerLink="miperfil">MI PERFIL</a>
+        </li>  
+      </ul>
+      <button type="button" class="btn btn-danger">Cerrar Sesión</button>
+    </div>  
   </nav>
+
+  <div class="jumbotron text-center mgt-0">
+    <h1>PinfBet</h1>
+    <p>Una app de apuestas académicas.</p> 
+  </div>
   
   <router-outlet></router-outlet>
 
@@ -56,7 +71,4 @@
     <p class="text-center">Grupo 11 - Proyectos Informáticos - Curso 2020/2021<p>
 
   </footer>
-
-</body>
-</html>
 

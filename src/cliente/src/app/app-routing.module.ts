@@ -3,10 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { BetComponent } from './components/bet/bet.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { ExpedienteComponent } from './components/expediente/expediente.component';
 import { ForoComponent } from './components/foro/foro.component';
 import { FriendsComponent } from './components/friends/friends.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { MatriculaComponent } from './components/matricula/matricula.component';
+import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 
@@ -46,6 +49,18 @@ const routes: Routes = [
   {
     path: 'profile/:userid',
     component: ProfileComponent
+  },
+  {
+    path: 'expediente',
+    component: ExpedienteComponent
+  },
+  {
+    path: 'matricula',
+    component: MatriculaComponent
+  },
+  {
+    path: 'miperfil',
+    component: MiPerfilComponent
   }
 ];
 

@@ -20,5 +20,6 @@ app.post('/rechazarpeticion', firebaseAdmin.isAuth, amistad.rechazarPeticion);
 app.get('/foros', firebaseAdmin.isAuth, foro.getForos);
 app.post('/foro', firebaseAdmin.isAuth, foro.crearForo);
 app.post('/msgforo', firebaseAdmin.isAuth, foro.addMessageForo);
+app.get('/userdata', firebaseAdmin.isAuth, usuario.getUserProfile)
 
 module.exports = app;

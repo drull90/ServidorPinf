@@ -3,6 +3,7 @@
 let admin = require("../../firebase/firebaseAdmin");
 
 let database = admin.dataBase;
+let fbauth = admin.firebaseAdminAuth;
 
 async function listarAsignaturas(req, res) {
     try {
@@ -45,7 +46,38 @@ async function changeUserStatus(req, res) {
     }
 }
 
+async function getUserProfile(req, res) {
+    try {
+        let uid = req.user.uid;
+
+        let data = {
+            nick: null,
+            pinfcoins: null,
+            estado: null,
+            email: null
+        }
+
+        let userData = await database.collection('usuarios').doc(uid).get();
+
+        userData = userData.data();
+
+        let user = await fbauth.getUser(uid);
+
+        data.nick = userData.nick;
+        data.pinfcoins = userData.pinfcoins;
+        data.estado = userData.estado;
+        data.email = user.email;
+
+        res.status(200).send(data);
+    }
+    catch(error) {
+        console.log(error);
+        res.status(500).send('{ "message": "' + error + '" }');
+    }
+}
+
 module.exports = {
     listarAsignaturas,
-    changeUserStatus
+    changeUserStatus,
+    getUserProfile
 }
