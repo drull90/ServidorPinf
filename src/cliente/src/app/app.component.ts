@@ -20,14 +20,14 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     const user = await this.auth.getCurrentUser();
-    if(!user) {
-      this.router.navigate(['login']);
-    }
-    else {
-      if(this.router.url === "/") {
-        this.router.navigate(['home']);
-      }
-    }
+    // if(!user) {
+    //   this.router.navigate(['login']);
+    // }
+    // else {
+    //   if(this.router.url === "/") {
+    //     this.router.navigate(['home']);
+    //   }
+    // }
 
   }
 
