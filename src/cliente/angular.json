@@ -117,5 +117,8 @@
       }
     }
   },
-  "defaultProject": "clientePinf"
+  "defaultProject": "clientePinf",
+  "cli": {
+    "analytics": false
+  }
 }
