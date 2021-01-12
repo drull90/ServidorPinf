@@ -32,13 +32,14 @@
     "firebase": "^7.24.0",
     "firebase-admin": "^9.4.2",
     "firebase-functions": "^3.6.1",
+    "install": "^0.13.0",
     "pdf-to-excel": "^0.3.0",
     "pdfreader": "^1.2.7",
     "rxjs": "~6.6.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1100.1",
+    "@angular-devkit/build-angular": "^0.1100.6",
     "@angular/cli": "^11.0.5",
     "@angular/compiler-cli": "~11.0.0",
     "@types/jasmine": "~3.6.0",
