@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FriendsComponent } from './components/friends/friends.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ForoComponent } from './components/foro/foro.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -33,6 +35,8 @@ import { ForoComponent } from './components/foro/foro.component';
     AngularFireAuthModule,
     AngularFileUploaderModule,
     HttpClientModule,
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]
