@@ -1,9 +1,9 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-4 well">
+    <div class="col-sm-4 card card-body bg-light">
       <h3>Has iniciado sesión como:</h3>
       <div class="card" style="width: 400px">
-          <i class="far fa-user" style="height: 4em;"></i>
+          <i class="far fa-user fa-10x"></i>
         <div class="card-body">
           <h4 class="card-title">@Usuario</h4>
           <p><strong>Cantidad de PinfCoins:</strong> 66</p>
@@ -11,78 +11,58 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-8 well">
+    <div class="col-sm-8 card card-body bg-dark text-white">
       <div class="container-fluid text-center">
-        <h2>PANEL DE CONTROL</h2>
+        <h2>¿Qué ofrece PinfBet?</h2>
         <br>
         <div class="row">
-          <div class="col-sm-4">
-            <span class="glyphicon glyphicon-off"></span>
-            <h4>Cerrar Sesión</h4>
-            <p>Cierra la sesión</p>
+          <div class="col-sm-3">
+            <i class="fas fa-mobile fa-8x"></i>            
+            <p>Un sistema de apuestas  académicas basado en la moneda virtual PinfCoin.</p>
           </div>
-          <div class="col-sm-4">
-            <span class="glyphicon glyphicon-user"></span>
-            <h4>Mi perfil</h4>
-            <p>Gestiona los datos de tu perfil.</p>
+          <div class="col-sm-3">
+            <i class="fas fa-file-upload fa-8x"></i>            
+            <p>Sube tu expediente académico y obtén tus primeros PinfCoins.</p>
           </div>
-          <div class="col-sm-4">
-            <span class="glyphicon glyphicon-heart"></span>
-            <h4>Amistades</h4>
-            <p>Consulta tu lista de amigos y gestiona tus solicitudes de amistad.</p>
+          <div class="col-sm-3">
+            <i class="far fa-heart fa-8x"></i>
+            <p>Agrega a tus amigos y apuesta por sus asignaturas con tus PinfCoins.</p>
           </div>
+          <div class="col-sm-3">
+            <i class="fas fa-comments-dollar fa-8x"></i>
+            <p>Comparte tus comentarios con la comunidad en el foro.</p>
           </div>
-          <br><br>
-        <div class="row">
-          <div class="col-sm-4">
-            <span class="glyphicon glyphicon-tower"></span>
-            <h4>Apuestas</h4>
-            <p>Haz nuevas apuestas o consulta las que ya has realizado.</p>
-          </div>
-          <div class="col-sm-4">
-            <span class="glyphicon glyphicon-list-alt"></span>
-            <h4>Expediente</h4>
-            <p>Consulta, sube o actualiza tu expediente.</p>
-          </div>
-          <div class="col-sm-4">
-            <span class="glyphicon glyphicon-signal"></span>
-            <h4>Estadísticas</h4>
-            <p>Consulta las estadísticas de las asignaturas para trazar tu plan de apuestas.</p>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </div>
-
 <div class="container-fluid bg-grey">
   <h2 class="text-center">La opinión de los usuarios</h2>
-  <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-  </ol>
+  <div id="opinionCarousel" class="carousel slide" data-ride="carousel">
   
-  <div class="carousel-inner" role="listbox">
-    <div class="item active">
-      <h4>"Espero aprobar todo para seguir apostando a tope!"<br><span style="font-style:normal;">Florinda García</span></h4>
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <h3 class="text-center"><em>"Espero aprobar todo para poder seguir apostando a tope!"</em></h3>
+        <p class="text-center">Florinda García</p>
+      </div>
+      <div class="carousel-item">
+        <h3 class="text-center"><em>"Apostar en PinfBet me motiva para estudiar más y obtener más PinfCoins."</em></h3>
+        <p class="text-center">Luis Pérez</p>
+      </div>
+      <div class="carousel-item">
+        <h3 class="text-center"><em>"Apostando a tope"</em></h3>
+        <p class="text-center">Julieta Cid</p>
+      </div>
     </div>
-    <div class="item">
-      <h4>"La app es genial, pero mal curso..."<br><span style="font-style:normal;">Anónimo</span></h4>
-    </div>
-    <div class="item">
-      <h4>"Nunca pensé que me engancharía tanto a Pinfbet"<br><span style="font-style:normal;">Joe John</span></h4>
-    </div>
+  
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#opinionCarousel" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#opinionCarousel" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  
   </div>
-
-    <a class="left carousel-control" href="#OpinionCarousel" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only">Anterior</span>
-    </a>
-    <a class="right carousel-control" href="#OpinionCarousel" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">Siguiente</span>
-    </a>
-</div>
 </div>
