@@ -16,6 +16,9 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ForoComponent } from './components/foro/foro.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import { MatriculaComponent } from './components/matricula/matricula.component';
+import { ExpedienteComponent } from './components/expediente/expediente.component';
+import { BetComponent } from './components/bet/bet.component';
 
 
 @NgModule({
@@ -26,7 +29,10 @@ import {MatButtonModule} from '@angular/material/button';
     RegisterComponent,
     FriendsComponent,
     ProfileComponent,
-    ForoComponent
+    ForoComponent,
+    MatriculaComponent,
+    ExpedienteComponent,
+    BetComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

@@ -1,19 +1,19 @@
 <div class="container text-center card card-body bg-light">
     <h1>Consulta tu asignaturas matriculadas.</h1>
+
     <table class="table table-striped">
-      <thead>
-          <th scope="col">Código</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apuestas recibidas</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of matricula">
-          <td>{{item.Codigo}}</td>
-          <td>{{item.Nombre}}</td>
-          <td>{{item.apuestas}}</td>
-        </tr>
-      </tbody>
+      <tr>
+        <th scope="col">Código</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apuestas recibidas</th>
+      </tr>
+      <tr *ngFor="let item of matricula">
+        <td>{{item.codigo}}</td>
+        <td>{{item.nombre}}</td>
+        <td>{{item.apuestas}}</td>
+      </tr>
     </table>
+
 </div> 
 
 <div class="container card card-body bg-light">
