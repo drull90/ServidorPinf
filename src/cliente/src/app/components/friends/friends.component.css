@@ -27,8 +27,12 @@
 }
 
 .mgt {
-    margin-top: 20px;
+    margin-top: 15px;
 }
+.mgb {
+    margin-bottom: 15px;
+}
+
 .mgt1 {
     margin-top: 5px !important;
 }

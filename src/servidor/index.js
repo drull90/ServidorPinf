@@ -148,17 +148,17 @@ async function crearDatosDePrueba() {
 
     // crear amistades
 
-    // data = {
-    //     "HGFOTOEW": true
-    // };
+    data = {
+        "HGFOTOEW": true
+    };
 
-    // await db.collection('amistades').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
+    await db.collection('amistades').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
 
-    // data = {
-    //     "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": true
-    // };
+    data = {
+        "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": true
+    };
 
-    // await db.collection('amistades').doc('HGFOTOEW').set(data);
+    await db.collection('amistades').doc('HGFOTOEW').set(data);
 
     // crear peticiones enviadas
 
@@ -306,4 +306,4 @@ async function crearDatosDePrueba() {
 }
 
 
-crearDatosDePrueba();
+//crearDatosDePrueba();
