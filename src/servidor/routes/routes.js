@@ -16,8 +16,11 @@ const matricula = require('./matricula/matricula');
 
 app.get('/asignaturas', firebaseAdmin.isAuth, usuario.listarAsignaturas);
 app.post('/userstatus', firebaseAdmin.isAuth, usuario.changeUserStatus);
+app.post('/cambiarnick', firebaseAdmin.isAuth, usuario.cambiarNick);
+app.post('/cambiarestado', firebaseAdmin.isAuth, usuario.cambiarEstado);
 app.post('/aceptarpeticion', firebaseAdmin.isAuth, amistad.aceptarPeticion);
 app.post('/rechazarpeticion', firebaseAdmin.isAuth, amistad.rechazarPeticion);
+app.post('/enviarsolicitudamistad',firebaseAdmin.isAuth, amistad.enviarSolicitudAmistad);
 app.get('/foros', firebaseAdmin.isAuth, foro.getForos);
 app.post('/foro', firebaseAdmin.isAuth, foro.crearForo);
 app.post('/msgforo', firebaseAdmin.isAuth, foro.addMessageForo);
