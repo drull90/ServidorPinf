@@ -12,22 +12,61 @@ var codigos = [];
 var nombres = [];
 var asignaturas = [];
 
-asyc function getMatricula(req, res)
+async function getMatricula(req, res)
 {
   try{
-    let uid: req.user.uid;
+    let uid = req.user.uid;
     
-    let = {
+    let data = {
       data: []
     };
 
-    //let matricula = await database.collection('asignaturas')
+    let matricula = await database.collection('matricula').doc(uid).get();
+
+    matricula = matricula.data();
+
+    let keys = Object.keys(matricula);
+
+    for(let i = 0; i < keys.length; ++i ) {
+      let asignatura = await getDatosAsignatura(keys[i]);
+
+      if(asignatura !== {}) {
+
+        let apuestasRecibidas = Object.keys(matricula[keys[i]]);
+
+        asignatura.apuestas = apuestasRecibidas.length;
+
+        data.data.push(asignatura);
+      }
+ 
+    }
+
+    res.status(200).send(data);
   }
   catch(error) {
     console.log(error);
     res.status(500).send('{ "message": "' + error + '" } ');
   }
 }
+
+async function getDatosAsignatura(codigo) {
+
+  let data = {};
+  let asignatura = await database.collection('asignaturas').doc(codigo).get();
+
+  asignatura = asignatura.data();
+
+  if(asignatura !== undefined ) {
+    data = {
+      codigo: codigo,
+      nombre: asignatura.nombre
+    }
+  }
+
+  return data;
+}
+
+
 function analizarMatricula() {
 
   //Bucle que determina la parte del código de asignatura que todas comparten. En el caso del pdf-matrícula 
@@ -102,8 +141,6 @@ async function subirMatriculaConPDF(){
     }
   }
 }
-
-subirMatriculaConPDF();
 
 module.exports = {
   getMatricula

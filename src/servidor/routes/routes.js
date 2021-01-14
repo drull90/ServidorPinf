@@ -8,10 +8,11 @@ app.use(cors({ origin: true }));
 
 const firebaseAdmin = require('../firebase/firebaseAdmin');
 
-const expediente = require("./expediente/subirExpediente");
+const expediente = require("./expediente/expediente");
 const usuario = require("./usuario/usuario");
 const amistad = require("./amistad/amistad");
 const foro = require('./foro/foro');
+const matricula = require('./matricula/matricula');
 
 app.get('/asignaturas', firebaseAdmin.isAuth, usuario.listarAsignaturas);
 app.post('/userstatus', firebaseAdmin.isAuth, usuario.changeUserStatus);
@@ -23,6 +24,6 @@ app.post('/msgforo', firebaseAdmin.isAuth, foro.addMessageForo);
 app.get('/userdata', firebaseAdmin.isAuth, usuario.getUserProfile);
 app.get('/amistades', firebaseAdmin.isAuth, amistad.getAmistades);
 app.get('/expediente', firebaseAdmin.isAuth, expediente.getExpediente);
-app.get('/matricula'), firebaseAdmin.isAuth, matricula.getMatricula);
+app.get('/matricula', firebaseAdmin.isAuth, matricula.getMatricula);
 
 module.exports = app;

@@ -2,17 +2,15 @@
     <h1>Consulta tu asignaturas matriculadas.</h1>
     <table class="table table-striped">
       <thead>
-        <tr>
           <th scope="col">Código</th>
           <th scope="col">Nombre</th>
-          <th scope="col">Créditos</th>
-        </tr>
+          <th scope="col">Apuestas recibidas</th>
       </thead>
       <tbody>
-        <tr *ngFor="let data of userData">
-          <td>{{data.Codigo}}</td>
-          <td>{{data.Nombre}}</td>
-          <td>{{data.Creditos}</td>
+        <tr *ngFor="let item of matricula">
+          <td>{{item.Codigo}}</td>
+          <td>{{item.Nombre}}</td>
+          <td>{{item.apuestas}}</td>
         </tr>
       </tbody>
     </table>

@@ -15,7 +15,7 @@ async function getExpediente(req, res)
     let uid = req.user.uid;
 
     let data = {
-      data: [];
+      data: []
     };
 
     let expediente = await database.collection('expediente').doc(uid).get();
@@ -25,7 +25,7 @@ async function getExpediente(req, res)
       let arr = Object.keys(expediente);
       for(let i = 0; i < arr.length; i++)
       {
-        let user = //terminar
+        //let user = //terminar
       }
     }
 
