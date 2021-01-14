@@ -51,17 +51,17 @@ export class FriendsComponent implements OnInit {
     // Borrar
 
     let data = {
-      receptor: "@rgued98"
+      nuevonick: "@juen"
     }
 
-    this.httpClient.post(environment.url + "/enviarsolicitudamistad ", data, {headers: {'Authorization': tokenString}})
+    this.httpClient.post(environment.url + "/cambiarnick", data, {headers: {'Authorization': tokenString}})
     .subscribe(
       (response: any) => {   // data is already a JSON object
 
         console.log(response);
       }
     );
-
+    
     // Fin borrar
 
   }
