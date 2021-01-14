@@ -3,14 +3,8 @@
 let admin = require("../../firebase/firebaseAdmin");
 
 let database = admin.dataBase;
-let firebase = admin.firebaseAdmin.firestore;
 
-var pdfReader = require("pdfreader");
-
-var rows = [];
-var codigos = [];
-var nombres = [];
-var asignaturas = [];
+let pdfReader = require("pdfreader");
 
 async function getMatricula(req, res)
 {
@@ -66,33 +60,37 @@ async function getDatosAsignatura(codigo) {
   return data;
 }
 
+function analizarMatricula(pdfArray) {
 
-function analizarMatricula() {
+  let precod;
+  let codigos = [];
+  let nombres = [];
+  let asignaturas = [];
 
   //Bucle que determina la parte del código de asignatura que todas comparten. En el caso del pdf-matrícula 
   //se encuentra después de la linea Cv (a diferencia del expediente que se encontraba en "Asignaturas Matriculadas:")
-  for(let i = 0; i <= rows.length ; i++){
-    if(rows[i] == "Cv"){                    
-      var precod = rows[i+1].substr(0,4);
+  for(let i = 0; i <= pdfArray.length ; i++){
+    if(pdfArray[i] == "Cv"){                    
+      precod = pdfArray[i+1].substr(0,4);
     }
   }
   
   //Como la información de asignaturas no viene recogida en una misma linea en este formato de PDF usando las herramientas de PDFReader
   //en primer lugar recogemos los códigos presentes en el archivo (asignaturas matriculadas) y se almacena en el array de codigos[]
-  for(let i = 0; i <= rows.length ; i++){
-    if(rows[i] != null){
-      if(rows[i].match(precod)){
-        codigos.push(rows[i]);
+  for(let i = 0; i <= pdfArray.length ; i++){
+    if(pdfArray[i] != null){
+      if(pdfArray[i].match(precod)){
+        codigos.push(pdfArray[i]);
       }
     }
   }
 
   //En este bucle, se calcula la posición de la línea donde se encuentra el nombre de cada código anteriormente leído y lo almacena en nombres[]
   //DISCLAIMER: Esto solo sería valido para recibos de matrículas generados con el formato que utiliza la Universidad de Cádiz a fecha del curso 2020/2021
-  for(let i = 0; i <= rows.length ; i++){
-    if(rows[i] != null){
-      if(rows[i].match(precod)){
-        nombres.push(rows[i+(10*codigos.length)]);
+  for(let i = 0; i <= pdfArray.length ; i++){
+    if(pdfArray[i] != null){
+      if(pdfArray[i].match(precod)){
+        nombres.push(pdfArray[i+(10*codigos.length)]);
       }
     }
    }
@@ -105,43 +103,51 @@ function analizarMatricula() {
       asignaturas.push(str1.concat(" ", str2));
     }
   }
+
+  let data = {
+    codigo: codigos,
+    nombres: nombres
+  }
   
+  return data;
 }
 
-async function subirMatriculaConPDF(){
-
-  new pdfReader.PdfReader().parseFileItems("ruta_al_PDFMatrícula", function(err, item) {  //Duda incluir path al pdf que sube el usuario
-    if (!item ){
-      analizarMatricula(); 
-    }
-    else if(item.text) 
-    {
-      rows.push(item.text);
-    }
+function getFileFromClient(byteArray) {
+  let promise = new Promise(function(resolve, reject) {
+      var pdfString = [];
+      new pdfReader.PdfReader().parseBuffer(byteArray, function (err, item) {
+          if (err) console.log("PDF READER ERROR: " + err);
+          else if (!item) resolve(pdfString);
+          else if (item.text) pdfString.push(item.text);
+      });
   });
 
-  for(let i = 0 ; i <= asignaturas.length ; i++){
-   
-    if(asignaturas[i] != null){
-      let l = asignaturas[i].split(" ");
-      let codigo = l[0];
-      let nombre = nombres[i];
+  return promise;
+}
 
-      const userMatRef = db.collection('matricula').doc(usuario);
-      const asignaturaRef = db.collection('asignaturas').doc(codigo);
+async function subirMatricula(req, res) {
+  try {
+    let uid = req.user.uid;
 
-      const a = await userMatRef.set({
-        "codigo": codigo
-      },{ merge: true });
+    let pdfStringArray = await getFileFromClient(req.body);
 
-      const b =  await asignaturaRef.set({
-        "nombre": nombre
-      },{merge: true });
- 
-    }
+    let data = analizarMatricula(pdfStringArray);
+
+    // Meter en asignaturas las asignaturas que no existan
+
+    // Actualizar expediente antes que la matricula
+
+    res.status(200).send('{ "message": "Matricula subida correctamente" }');
   }
+  catch(error) {
+    console.log(error);
+    res.status(500).send('{ "message": "' + error + '" } ');
+  }
+
+
 }
 
 module.exports = {
-  getMatricula
+  getMatricula,
+  subirMatricula
 }

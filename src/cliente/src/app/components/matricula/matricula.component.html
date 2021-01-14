@@ -22,8 +22,11 @@
         <h1><i class="fas fa-cloud-upload-alt"></i> Sube tu matrícula</h1>
         <div class="form-group">
         <label for="expediente">Adjuntar un archivo</label>
-        <input type="file" id="expediente">
-        <p class="help-block">Sube tu matrícula en formato pdf para sincronizarla automáticamente con PinfBet.</p>
+        <!-- <input type="file" id="expediente">
+        <p class="help-block">Sube tu matrícula en formato pdf para sincronizarla automáticamente con PinfBet.</p> -->
+        <angular-file-uploader
+          [config]="afuConfig">
+        </angular-file-uploader>
       </div>
     </div>
     <div class="col-sm-7">

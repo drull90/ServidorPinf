@@ -13,6 +13,18 @@ export class MatriculaComponent implements OnInit {
 
   matricula: any = [];
   token: string = "";
+  afuConfig = {
+    formatsAllowed: ".pdf",
+    maxSize: 5,
+    uploadAPI: {
+      url: environment.url + "/matricula",
+      responseType: 'arraybuffer',
+      headers: {
+        "Authorization": this.token
+      }
+    },
+    theme: "dragNDrop"
+  };
 
   constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient) { }
 
@@ -22,6 +34,19 @@ export class MatriculaComponent implements OnInit {
     let token = await user?.getIdToken();
     let tokenString = "Bearer " + token;
     this.token = tokenString;
+
+    this.afuConfig = {
+      formatsAllowed: ".pdf",
+      maxSize: 5,
+      uploadAPI: {
+        url: environment.url + "/matricula",
+        responseType: 'arraybuffer',
+        headers: {
+          "Authorization": this.token
+        }
+      },
+      theme: "dragNDrop"
+    };
 
     this.httpClient.get(environment.url + "/matricula", {headers: {'Authorization': tokenString}})
     .subscribe(
