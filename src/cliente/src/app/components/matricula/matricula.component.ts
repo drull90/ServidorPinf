@@ -7,9 +7,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MatriculaComponent implements OnInit {
 
-  constructor() { }
+  data: any = [];
+  token: string = "";
 
-  ngOnInit(): void {
+  constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient) { }
+
+
+  async ngOnInit(){
+
+    let user= await this.auth.getCurrentUser();
+    let token = await user?.getIdToken();
+    let tokenString = "Bearer" + token;
+    this.token = tokenString;
+
+    this.httpClient.get(environment.url + "/matricula", {headers: {'Authorization': tokenString}})
+    .subscribe(
+      (response: any) => {
+        this.data = response.data;
+
+        console.log(this.data);
+      }
+    );
   }
 
 }

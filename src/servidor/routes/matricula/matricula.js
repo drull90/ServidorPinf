@@ -1,3 +1,10 @@
+'use strict'
+
+let admin = require("../../firebase/firebaseAdmin");
+
+let database = admin.dataBase;
+let firebase = admin.firebaseAdmin.firestore;
+
 var pdfReader = require("pdfreader");
 
 var rows = [];
@@ -5,8 +12,22 @@ var codigos = [];
 var nombres = [];
 var asignaturas = [];
 
-let usuario = "HPLZSWQI";  //Duda obtener el usuario uuid que verdaderamente ha iniciado sesión
+asyc function getMatricula(req, res)
+{
+  try{
+    let uid: req.user.uid;
+    
+    let = {
+      data: []
+    };
 
+    //let matricula = await database.collection('asignaturas')
+  }
+  catch(error) {
+    console.log(error);
+    res.status(500).send('{ "message": "' + error + '" } ');
+  }
+}
 function analizarMatricula() {
 
   //Bucle que determina la parte del código de asignatura que todas comparten. En el caso del pdf-matrícula 
@@ -83,3 +104,7 @@ async function subirMatriculaConPDF(){
 }
 
 subirMatriculaConPDF();
+
+module.exports = {
+  getMatricula
+}

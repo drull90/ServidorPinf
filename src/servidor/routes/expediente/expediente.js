@@ -1,11 +1,42 @@
+'use strict'
+
+const { database } = require("firebase-admin");
+const { ConsoleReporter } = require("jasmine");
 var pdfReader = require("pdfreader");
 
 let admin = require("../../firebase/firebaseAdmin");
+let firebase = admin.firebaseAdmin.firestore;
 
 let dataBase = admin.dataBase;
 
+async function getExpediente(req, res)
+{
+  try{
+    let uid = req.user.uid;
 
-let usuario = "HPLZSWQI";  //Duda obtener el usuario uuid que verdaderamente ha iniciado sesión
+    let data = {
+      data: [];
+    };
+
+    let expediente = await database.collection('expediente').doc(uid).get();
+    expediente = expediente.data();
+
+    if(expediente){
+      let arr = Object.keys(expediente);
+      for(let i = 0; i < arr.length; i++)
+      {
+        let user = //terminar
+      }
+    }
+
+    res.status(200).send(data);
+  }
+  catch(error)
+  {
+    console.log(error);
+    res.status(500).send('{ "message": "' + error + '" } ');
+  }
+}
 
 function analizarExpediente() {
 
@@ -236,5 +267,6 @@ function prueba(req, res) {
 }
 
 module.exports = {
-  prueba
+  prueba,
+  getExpediente
 }

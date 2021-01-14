@@ -1,28 +1,21 @@
 <div class="container text-center card card-body bg-light">
     <h1>Consulta tu asignaturas matriculadas.</h1>
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Busca...">
-                    <table id="myTable">
-                        <tr class="header">
-                            <th style="width: 25%;">Código</th>
-                            <th style="width: 25%">Nombre</th>
-                            <th style="width: 25%;">Créditos</th>
-                        </tr>
-                        <tr>
-                            <td>11112222</td>
-                            <td>Ciencias</td>
-                            <td>6</td>
-                        </tr>
-                        <tr>
-                            <td>11113333</td>
-                            <td>Lenguas</td>
-                            <td>6</td>
-                        </tr>
-                        <tr>
-                            <td>11114444</td>
-                            <td>Matemáticas</td>
-                            <td>6</td>
-                        </tr>
-                    </table>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Código</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Créditos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of userData">
+          <td>{{data.Codigo}}</td>
+          <td>{{data.Nombre}}</td>
+          <td>{{data.Creditos}</td>
+        </tr>
+      </tbody>
+    </table>
 </div> 
 
 <div class="container card card-body bg-light">

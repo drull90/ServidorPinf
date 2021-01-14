@@ -19,6 +19,9 @@ export class HomeComponent implements OnInit {
     }
   };
 
+  nick: string = "";
+  pinfcoins: number = 0;
+  estado: string = "";
 
   constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient) {}
 
@@ -41,6 +44,16 @@ export class HomeComponent implements OnInit {
     .subscribe(
       (response) => {   // data is already a JSON object
          console.log(response);
+      }
+    );
+
+    this.httpClient.get(environment.url + "/userdata", {headers: {'Authorization': tokenString}})
+    .subscribe(
+      (response: any) => {   // data is already a JSON object
+         console.log(response);
+         this.nick = response.nick;
+         this.pinfcoins = response.pinfcoins;
+         this.estado = response.estado;
       }
     );
   }
