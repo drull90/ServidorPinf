@@ -167,7 +167,7 @@ async function cambiarNick(req, res){
     }
 }
 
-async function cambiarEstado(){
+async function cambiarEstado(req,res){
     try{
     let arroba ="@";
     if(req.usuario.startsWith("@")){
