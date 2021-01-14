@@ -24,6 +24,8 @@ app.post('/msgforo', firebaseAdmin.isAuth, foro.addMessageForo);
 app.get('/userdata', firebaseAdmin.isAuth, usuario.getUserProfile);
 app.get('/amistades', firebaseAdmin.isAuth, amistad.getAmistades);
 app.get('/expediente', firebaseAdmin.isAuth, expediente.getExpediente);
+app.post('/expediente', firebaseAdmin.isAuth, expediente.subirExpediente);
 app.get('/matricula', firebaseAdmin.isAuth, matricula.getMatricula);
+app.post('/matricula', firebaseAdmin.isAuth, matricula.subirMatricula);
 
 module.exports = app;

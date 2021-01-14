@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../service/authentication.service';
@@ -11,13 +11,6 @@ import { environment } from 'src/environments/environment';
   providers: [AuthenticationService]
 })
 export class HomeComponent implements OnInit {
-
-  afuConfig = {
-    uploadAPI: {
-      url:"http://localhost:5001/pinfbet-10a92/us-central1/api/prueba",
-      responseType: 'arraybuffer'
-    }
-  };
 
   nick: string = "";
   pinfcoins: number = 0;
