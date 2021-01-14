@@ -108,8 +108,9 @@ async function getDatosPerfil(uid) {
     return data;
 }
 
-async function enviarSolicitudAmistad(){
+async function enviarSolicitudAmistad(req,res){
     try{
+        console.log(req.body);
     if(req.receptor.startsWith('@')){
       //codigo suponiendo que me dan el nombre del uuids
       let interruptor = 1; //suponemos que el destino existe
@@ -389,5 +390,6 @@ async function enviarSolicitudAmistad(){
 module.exports = {
     aceptarPeticion,
     rechazarPeticion,
+    getAmistades,
     enviarSolicitudAmistad
 };
