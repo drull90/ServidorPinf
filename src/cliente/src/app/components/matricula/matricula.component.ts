@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from '../service/authentication.service';
@@ -27,6 +28,17 @@ export class MatriculaComponent implements OnInit {
   };
 
   constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient) { }
+
+  formularioMatricula = new FormGroup({
+    Código: new FormControl('', Validators.required),
+    Nombre: new FormControl('', Validators.required)
+  })
+
+  onSubmit()
+  {
+    alert(JSON.stringify(this.formularioMatricula.value))
+
+  }
 
   async ngOnInit(){
 

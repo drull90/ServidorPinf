@@ -1,9 +1,10 @@
 'use strict'
 
-var pdfReader = require("pdfreader");
-
 let admin = require("../../firebase/firebaseAdmin");
+
 let database = admin.dataBase;
+
+let pdfReader = require("pdfreader");
 
 async function getExpediente(req, res)
 {
@@ -15,14 +16,19 @@ async function getExpediente(req, res)
     };
 
     let expediente = await database.collection('expediente').doc(uid).get();
+    
     expediente = expediente.data();
 
-    if(expediente){
-      let arr = Object.keys(expediente);
-      for(let i = 0; i < arr.length; i++)
-      {
-        //let user = //terminar
-      }
+    let keys = Object.keys(expediente);
+
+    for(let i = 0; i < keys.length; ++i)
+    {
+      let asignatura = await getDatosAsignatura(keys[i]);
+      
+      //if(asignatura !== {})
+      //{
+      //  let 
+      //}
     }
 
     res.status(200).send(data);
@@ -32,6 +38,23 @@ async function getExpediente(req, res)
     console.log(error);
     res.status(500).send('{ "message": "' + error + '" } ');
   }
+}
+
+async function getDatosAsignatura(codigo)
+{
+  let data = {};
+  let asignatura = await database.collection('asignaturas').doc(codigo).get();
+
+  asignatura = asignatura.data();
+
+  if(asignatura !== undefined ) {
+    data = {
+      codigo: codigo,
+      nombre: asignatura.nombre
+    }
+  }
+
+  return data;
 }
 
 function getFileFromClient(byteArray) {

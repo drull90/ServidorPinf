@@ -1,20 +1,16 @@
 <div class="container text-center  card card-body bg-light">
     <h1>Consulta tu expediente actual</h1>
     <table class="table table-striped">
-      <thead>
         <tr>
           <th scope="col">Código</th>
           <th scope="col">Nombre</th>
           <th scope="col">Calificación</th>
         </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of data">
-          <td>{{data.Codigo}}</td>
-          <td>{{data.Nombre}}</td>
-          <td>{{data.Calificacion}}</td>
+        <tr *ngFor="let item of expediente">
+          <td>{{item.Codigo}}</td>
+          <td>{{item.Nombre}}</td>
+          <td>{{item.Calificacion}}</td>
         </tr>
-      </tbody>
     </table>
 
 <div class="container card card-body bg-light">
@@ -35,55 +31,28 @@
     <div class="col-sm-7">
         <h1>Entrada manual</h1>
         <p>Si lo prefieres, introduce de manera manual una nueva asignatura a tu expediente. Ten en cuenta de que quedará pendiente de validación.</p>
-        <form>
-          <div class="form-group row">
-            <label for="cod" class="col-sm-2 col-form-label">Código de Asignatura:</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="cod" placeholder="Cod.Asignatura...">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="nom" class="col-sm-2 col-form-label">Nombre de la asignatura:</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="nom" placeholder="Nombre...">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="grade" class="col-sm-2 col-form-label">Calificación:</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="grade" placeholder="Calificación...">
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-10">
-              <button type="submit" class="btn btn-primary">Confirmar</button>
-            </div>
-          </div>
-        </form>
+        <form [formGroup]="formularioExpediente" (ngSubmit)="onSubmit()">  
+          
+          Código de asignatura: <input 
+          type="text" 
+          class="form-control" 
+          formControlName="Codigo">
+          <br/>
+
+          Nombre de la asignatura: <input 
+          type="text" 
+          class="form-control" 
+          formControlName="Nombre">
+          <br/>
+          
+          Calificación: <input 
+          type="number" 
+          class="form-control" 
+          formControlName="Calificacion">
+          <br/>
+
+            <button class="btn btn-primary" type="submit">Subir asignatura</button>
+        </form>            
     </div>
   </div>
 </div>
-
-<script>
-    function myFunction() {
-      // Declare variables
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("myInput");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("myTable");
-      tr = table.getElementsByTagName("tr");
-    
-      // Loop through all table rows, and hide those who don't match the search query
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
-    }
-    </script>

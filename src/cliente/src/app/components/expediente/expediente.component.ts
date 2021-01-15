@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AngularFileUploaderConfig } from 'angular-file-uploader';
 import { environment } from 'src/environments/environment';
@@ -11,9 +12,11 @@ import { AuthenticationService } from '../service/authentication.service';
   styleUrls: ['./expediente.component.css']
 })
 export class ExpedienteComponent implements OnInit {
-
+  
+  expediente: any = [];
   data: any = [];
   token: string = "";
+  
 
   afuConfig = {
     formatsAllowed: ".pdf",
@@ -29,6 +32,17 @@ export class ExpedienteComponent implements OnInit {
   };
 
   constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient) { }
+
+  formularioExpediente = new FormGroup({
+    Codigo: new FormControl('', Validators.required),
+    Nombre: new FormControl('', Validators.required),
+    Calificacion: new FormControl('', Validators.required)
+  })
+
+  onSubmit()
+  {
+    alert(JSON.stringify(this.formularioExpediente.value))
+  }
 
   async ngOnInit(){
 
@@ -53,9 +67,9 @@ export class ExpedienteComponent implements OnInit {
     this.httpClient.get(environment.url + "/expediente", {headers: {'Authorization': tokenString}})
     .subscribe(
       (response: any) => {
-        this.data = response.data;
+        this.expediente = response.data;
 
-        console.log(this.data);
+        console.log(this.expediente);
       }
     );
   }

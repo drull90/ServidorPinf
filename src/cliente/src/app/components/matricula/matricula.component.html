@@ -32,31 +32,22 @@
     <div class="col-sm-7">
         <h1>Entrada manual</h1>
         <p>Si lo prefieres, introduce manualmente una nueva asignatura a tus asignaturas actuales. Ten en cuenta de que quedará pendiente de validación.</p>
-        <form>
-          <div class="form-group row">
-            <label for="cod" class="col-sm-2 col-form-label">Código de Asignatura:</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="cod" placeholder="Cod.Asignatura...">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="nom" class="col-sm-2 col-form-label">Nombre de la asignatura:</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="nom" placeholder="Nombre...">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="grade" class="col-sm-2 col-form-label">Créditos:</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="grade" placeholder="Calificación...">
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-10">
-              <button type="submit" class="btn btn-primary">Confirmar</button>
-            </div>
-          </div>
-        </form>
+        <form [formGroup]="formularioMatricula" (ngSubmit)="onSubmit()">  
+          
+          Código de asignatura: <input 
+          type="text" 
+          class="form-control" 
+          formControlName="Codigo">
+          <br/>
+
+          Nombre de la asignatura: <input 
+          type="text" 
+          class="form-control" 
+          formControlName="Nombre">
+          <br/>
+          
+            <button class="btn btn-primary" type="submit">Subir asignatura</button>
+        </form> 
     </div>
   </div>
 </div>
