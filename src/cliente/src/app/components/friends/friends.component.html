@@ -2,12 +2,12 @@
     <h1>Amistades</h1>
     <p>Envia solicitud de amistad</p>
     <input type="text" placeholder="Search.." #username>
-    <button type="submit" class="mgb" (click)="enviarSolicitud(username.value)">Buscar</button>
+    <button type="submit" class="mgb" (click)="enviarSolicitud(username.value)">Enviar</button>
     <p>Gestiona tus amistades</p>
     <div class="example-card text-center container">
 
-      <mat-card class="bg mgt mgb w25" *ngFor="let item of data" [routerLink]="['/profile/' + item.uid]">
-        <mat-card-header class="block h6 w25">
+      <mat-card class="bg mgt mgb w25" *ngFor="let item of data">
+        <mat-card-header class="block h6 w25" [routerLink]="['/profile/' + item.uid]">
           <div mat-card-avatar>
             <img src="https://img.icons8.com/bubbles/100/000000/user.png" alt="User-Profile-Image">
           </div>

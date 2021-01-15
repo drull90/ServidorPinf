@@ -1,0 +1,42 @@
+<div class="container text-center well">
+    <div class="card-block text-center">
+        <div class="m-b-25"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image"> </div>
+        <h6>Perfil de {{data.nick}}</h6>
+    </div>
+
+    <div class="container text-center centerTable">
+        <table class="table" *ngIf="data.amistad==='amigos'; else noamigos">
+            <tr class="header">
+                <th style="width: 20%;">Codigo</th>
+                <th style="width: 55%">Nombre</th>
+                <th style="width: 25%;">Apostado</th>
+            </tr>
+            <tbody *ngFor="let item of data.tabla">
+                    <tr *ngIf="item.apostado===true; else noapostado" class="apostado">
+                        <td>{{item.codigo}}</td>
+                        <td>{{item.nombre}}</td>
+                        <td >Ya apostado</td>
+                    </tr>
+
+                <ng-template #noapostado>
+                    <tr [routerLink]="['/apuesta/' + data.uid + '/' + item.codigo]">
+                        <td>{{item.codigo}}</td>
+                        <td>{{item.nombre}}</td>
+                        <td>Sin apostar</td>
+                    </tr>
+                </ng-template>
+            </tbody>
+        </table>
+        <ng-template #noamigos>
+            <div class="text-center">
+                <h6>No sois amigos, no puedes realizar apuestas</h6>
+            </div>
+        </ng-template>
+    </div>
+
+    <div>
+        <button class="mgb40" *ngIf="data.amistad==='amigos'" (click)="eliminarAmigo()">Eliminar amistad</button>
+        <button class="mgb40" *ngIf="data.amistad==='enviada'" (click)="eliminarSolicitudAdmistad()">Eliminar solicitud de amistad</button>
+        <button class="mgb40" *ngIf="data.amistad===''" (click)="enviarSolicitudAmistad()">Enviar solicitud de amistad</button>
+    </div>
+</div>

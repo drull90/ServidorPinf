@@ -1,0 +1,32 @@
+.card-block {
+    padding: 1.25rem
+}
+
+.m-b-25 {
+    margin-bottom: 25px
+}
+
+.img-radius {
+    border-radius: 5px
+}
+
+.centerTable {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.table {
+    width: 80%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.mgb40 {
+    margin-bottom: 40px;
+}
+
+.apostado {
+    background-color: #eeeeee;
+}

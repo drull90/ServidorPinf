@@ -14,16 +14,18 @@ const matricula = require('./matricula/matricula');
 
 app.use(cors({ origin: true }));
 
-app.get('/asignaturas', firebaseAdmin.isAuth, usuario.listarAsignaturas);
 app.post('/userstatus', firebaseAdmin.isAuth, usuario.changeUserStatus);
 app.post('/cambiarnick', firebaseAdmin.isAuth, usuario.cambiarNick);
 app.post('/aceptarpeticion', firebaseAdmin.isAuth, amistad.aceptarPeticion);
 app.post('/rechazarpeticion', firebaseAdmin.isAuth, amistad.rechazarPeticion);
 app.post('/enviarsolicitudamistad', firebaseAdmin.isAuth,amistad.enviarSolicitudAmistad);
+app.delete('/amistad/:uid', firebaseAdmin.isAuth, amistad.eliminarAmigo);
+app.delete('/peticion/:uid', firebaseAdmin.isAuth, amistad.eliminarPeticion);
 app.get('/foros', firebaseAdmin.isAuth, foro.getForos);
 app.post('/foro', firebaseAdmin.isAuth, foro.crearForo);
 app.post('/msgforo', firebaseAdmin.isAuth, foro.addMessageForo);
 app.get('/userdata', firebaseAdmin.isAuth, usuario.getUserProfile);
+app.get('/profile/:id', firebaseAdmin.isAuth, usuario.getExternalProfile);
 app.get('/amistades', firebaseAdmin.isAuth, amistad.getAmistades);
 app.get('/expediente', firebaseAdmin.isAuth, expediente.getExpediente);
 app.post('/expediente', firebaseAdmin.isAuth, expediente.subirExpediente);

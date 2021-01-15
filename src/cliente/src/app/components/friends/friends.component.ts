@@ -53,7 +53,6 @@ export class FriendsComponent implements OnInit {
   rechazarPeticion(uid: String) {
     this.httpClient.post(environment.url + "/rechazarpeticion ", uid, {headers: {'Authorization': this.token}})
     .subscribe((response: any) => {   // data is already a JSON object
-        
       }
     );
 

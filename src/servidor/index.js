@@ -130,21 +130,36 @@ async function crearDatosDePrueba() {
 
     data = {
         "2007003": {
-            "HGFOTOEW": true,
-            "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": true
+            "HGFOTOEW": "HGFOTOEW-z8JUgK1gH6fH4AXOH1hpuXNLDJx1-2007003",
+            "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-z8JUgK1gH6fH4AXOH1hpuXNLDJx1-2007003"
         }
     };
 
-    await db.collection('matricula').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
+    await db.collection('matricula').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data, {merge: true});
 
     data = {
         "2007003": {
-            "HGFOTOEW": true,
-            "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": true
+            "HGFOTOEW": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007003",
+            "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007003"
         }
     };
 
-    await db.collection('matricula').doc('HGFOTOEW').set(data);
+    await db.collection('matricula').doc('HGFOTOEW').set(data, {merge: true});
+
+    data = {
+        "2007001": {
+            "HGFOTOEW": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007003",
+            "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007003"
+        }
+    };
+
+    await db.collection('matricula').doc('HGFOTOEW').set(data, {merge: true});
+
+    data = {
+        "2007002": {}
+    };
+
+    await db.collection('matricula').doc('HGFOTOEW').set(data, {merge: true});
 
     // crear amistades
 
@@ -197,25 +212,16 @@ async function crearDatosDePrueba() {
         "calificacion": 8
     };
 
-    await db.collection('apuestas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007001').set(data);
+    await db.collection('apuestas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007003').set(data);
 
     data = {
-        "usuario": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
-        "destinatario": "HQARWSE",
+        "usuario": "HQARWSE",
+        "destinatario": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
         "estado": "aprueba",
         "calificacion": 8
     };
 
-    await db.collection('apuestas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007002').set(data);
-
-    data = {
-        "usuario": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
-        "destinatario": "HQARWSE",
-        "estado": "aprueba",
-        "calificacion": 8
-    };
-
-    await db.collection('apuestas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1-z8JUgK1gH6fH4AXOH1hpuXNLDJx1-2007001').set(data);
+    await db.collection('apuestas').doc('HGFOTOEW-z8JUgK1gH6fH4AXOH1hpuXNLDJx1-2007003').set(data);
 
     // crear estadisiticas
 

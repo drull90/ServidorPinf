@@ -13,9 +13,11 @@ async function aceptarPeticion(req, res) {
 
         // Eliminar peticion enviada
         await database.collection('peticionesRecibidas').doc(uid).update({[uidPeticion]: firebase.FieldValue.delete()});
+        await database.collection('peticionesRecibidas').doc(uidPeticion).update({[uid]: firebase.FieldValue.delete()});
 
         // Eliminar peticion recibida
-        await database.collection('peticionesRecibidas').doc(uidPeticion).update({ [uid]: firebase.FieldValue.delete()});
+        await database.collection('peticionesEnviadas').doc(uidPeticion).update({ [uid]: firebase.FieldValue.delete()});
+        await database.collection('peticionesEnviadas').doc(uid).update({ [uidPeticion]: firebase.FieldValue.delete()});
 
         let data = {[uidPeticion]: true}
 
@@ -52,6 +54,75 @@ async function rechazarPeticion(req, res) {
         console.log(error);
         res.status(500).send('{ "message": "' + error + '" }');
     }
+}
+
+async function eliminarPeticion(req, res) {
+  try {
+    let uid = req.user.uid;
+
+    let uidDestino = req.params.uid;
+
+    if(uidDestino.startsWith("@")) {
+      uidDestino = await database.collection('uuids').doc(uidDestino).get();
+      uidDestino = uidDestino.data();
+      uidDestino = uidDestino.uuid;
+    }
+
+    if(uidDestino) {
+      // Eliminar peticion enviada
+      await database.collection('peticionesEnviadas').doc(uid).update({[uidDestino]: firebase.FieldValue.delete()});
+      // Eliminar peticion recibida
+      await database.collection('peticionesRecibidas').doc(uidDestino).update({[uid]: firebase.FieldValue.delete()});
+
+      res.status(200).send('{ "message": "Peticion eliminada" }');
+    }
+    else {
+      res.status(400).send('{ "message": "No existe la peticion" }');
+    }
+    
+  }
+  catch(error) {
+      console.log(error);
+      res.status(500).send('{ "message": "' + error + '" }');
+  }
+}
+
+async function eliminarAmigo(req, res) {
+  try {
+    let uid = req.user.uid;
+
+    let uidDestino = req.params.uid;
+
+    if(uidDestino.startsWith("@")) {
+      uidDestino = await database.collection('uuids').doc(uidDestino).get();
+      uidDestino = uidDestino.data();
+      uidDestino = uidDestino.uuid;
+    }
+
+    if(uidDestino) {
+
+      // Eliminar de amistades a ambos
+      await database.collection('amistades').doc(uid).update({[uidDestino]: firebase.FieldValue.delete()});
+
+      await database.collection('amistades').doc(uidDestino).update({[uid]: firebase.FieldValue.delete()});
+
+      res.status(200).send('{ "message": "Amigo eliminado correctamente" }');
+    }
+    else {
+      res.status(400).send('{ "message": "No existe el amigo" }');
+    }
+
+    // Eliminar peticion enviada
+    await database.collection('peticionesRecibidas').doc(uid).update({[uidPeticion]: firebase.FieldValue.delete()});
+    // Eliminar peticion recibida
+    await database.collection('peticionesEnviadas').doc(uidPeticion).update({[uid]: firebase.FieldValue.delete()});
+
+    res.status(200).send('{ "message": "Peticion rechazada" }');
+  }
+  catch(error) {
+      console.log(error);
+      res.status(500).send('{ "message": "' + error + '" }');
+  }
 }
 
 async function getAmistades(req, res) {
@@ -183,5 +254,7 @@ module.exports = {
     aceptarPeticion,
     rechazarPeticion,
     getAmistades,
-    enviarSolicitudAmistad
+    enviarSolicitudAmistad,
+    eliminarPeticion,
+    eliminarAmigo
 };
