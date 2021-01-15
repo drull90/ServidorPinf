@@ -9,7 +9,7 @@ export class BetComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }

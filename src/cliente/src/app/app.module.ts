@@ -21,6 +21,7 @@ import { ExpedienteComponent } from './components/expediente/expediente.componen
 import { BetComponent } from './components/bet/bet.component';
 import { ApuestaComponent } from './components/apuesta/apuesta.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 
 
 @NgModule({
@@ -35,7 +36,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatriculaComponent,
     ExpedienteComponent,
     BetComponent,
-    ApuestaComponent
+    ApuestaComponent,
+    MiPerfilComponent,
+    ProfileComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
