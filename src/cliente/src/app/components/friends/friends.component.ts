@@ -23,47 +23,13 @@ export class FriendsComponent implements OnInit {
     let tokenString = "Bearer " + token;
     this.token = tokenString;
 
-    // this.httpClient.post(environment.url + "/rechazarpeticion ", data, {headers: {'Authorization': tokenString}})
-    // .subscribe(
-    //   (response) => {   // data is already a JSON object
-    //      console.log(response);
-    //   }
-    // );
-
-    // this.httpClient.post(environment.url + "/msgforo ", data, {headers: {'Authorization': tokenString}})
-    // .subscribe(
-    //   (response) => {   // data is already a JSON object
-    //      console.log(response);
-    //   }
-    // );
-
     this.httpClient.get(environment.url + "/amistades ", {headers: {'Authorization': tokenString}})
     .subscribe(
       (response: any) => {   // data is already a JSON object
-        
         this.data = response.data;
-
         console.log(this.data);
-
       }
     );
-
-    // Borrar
-
-    let data = {
-      nuevonick: "@juen"
-    }
-
-    this.httpClient.post(environment.url + "/cambiarnick", data, {headers: {'Authorization': tokenString}})
-    .subscribe(
-      (response: any) => {   // data is already a JSON object
-
-        console.log(response);
-      }
-    );
-    
-    // Fin borrar
-
   }
 
   aceptarPeticion(uid: String) {
@@ -97,6 +63,26 @@ export class FriendsComponent implements OnInit {
         this.data.splice(i, 1);
       }
     }
+  }
+
+  enviarSolicitud(nick: String) {
+
+    if(!nick.startsWith("@")) {
+      nick = "@" + nick;
+    }
+    let data = {
+      receptor: nick
+    }
+
+    this.httpClient.post(environment.url + "/enviarsolicitudamistad ", data, {headers: {'Authorization': this.token}})
+    .subscribe(
+      (response: any) => {   // data is already a JSON object
+        alert(response.message);
+      },
+      (error: any) => {
+        alert(error.error.message);
+      }
+    );
   }
 
 }

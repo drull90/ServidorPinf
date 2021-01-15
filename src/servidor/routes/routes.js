@@ -4,8 +4,6 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 
-app.use(cors({ origin: true }));
-
 const firebaseAdmin = require('../firebase/firebaseAdmin');
 
 const expediente = require("./expediente/expediente");
@@ -14,10 +12,11 @@ const amistad = require("./amistad/amistad");
 const foro = require('./foro/foro');
 const matricula = require('./matricula/matricula');
 
+app.use(cors({ origin: true }));
+
 app.get('/asignaturas', firebaseAdmin.isAuth, usuario.listarAsignaturas);
 app.post('/userstatus', firebaseAdmin.isAuth, usuario.changeUserStatus);
 app.post('/cambiarnick', firebaseAdmin.isAuth, usuario.cambiarNick);
-app.post('/cambiarestado', firebaseAdmin.isAuth, usuario.cambiarEstado);
 app.post('/aceptarpeticion', firebaseAdmin.isAuth, amistad.aceptarPeticion);
 app.post('/rechazarpeticion', firebaseAdmin.isAuth, amistad.rechazarPeticion);
 app.post('/enviarsolicitudamistad', firebaseAdmin.isAuth,amistad.enviarSolicitudAmistad);

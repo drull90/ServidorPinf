@@ -119,8 +119,6 @@ async function cambiarNick(req, res){
     }
 }
 
-
-
 module.exports = {
     listarAsignaturas,
     changeUserStatus,

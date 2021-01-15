@@ -23,7 +23,7 @@ async function crearDatosDePrueba() {
 
     // Crear usuario
     let data = {
-        "nick": "drull90",
+        "nick": "@drull90",
         "estado": "Apostando a tope",
         "fotoUrl": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-FOTO",
         "pinfcoins": 200,
@@ -38,7 +38,7 @@ async function crearDatosDePrueba() {
     await db.collection('usuarios').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
 
     data = {
-        "nick": "rgued98",
+        "nick": "@rgued98",
         "estado": "Apostando a tope",
         "fotoUrl": "HGFOTOEW-FOTO",
         "pinfcoins": 3,

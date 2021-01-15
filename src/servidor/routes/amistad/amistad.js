@@ -94,6 +94,77 @@ async function getAmistades(req, res) {
     }
 }
 
+async function enviarSolicitudAmistad(req,res){
+  try {
+    let emisor = req.user.uid;
+    let receptor = req.body.receptor;
+
+    if(receptor.startsWith('@')) { // Es un nick, buscamos su uid
+      let uidReceptor = await database.collection('uuids').doc(receptor).get();
+      uidReceptor = uidReceptor.data();
+      if(uidReceptor !== undefined) {
+        receptor = uidReceptor.uuid;
+      }
+      else {
+        receptor = undefined;
+      }
+    }
+    else {
+      let uidReceptor = await database.collection('usuarios').doc(receptor).get();
+      uidReceptor = uidReceptor.data();
+      if(uidReceptor === undefined) {
+        receptor = undefined;
+      }
+    }
+
+    if(receptor !== undefined) {
+
+      if(receptor !== emisor) {
+        // Comprobamos que no sean amigos ya
+        let sonAmmigos = await database.collection('amistades').doc(emisor).get();
+        sonAmmigos = sonAmmigos.data();
+
+        if(sonAmmigos !== undefined) {
+          sonAmmigos = sonAmmigos[receptor];
+        }
+
+        if(!sonAmmigos) {
+
+          let data = {
+            [receptor]: true
+          };
+
+          // Metemos en peticiones enviadas del emisor
+          await database.collection('peticionesEnviadas').doc(emisor).set(data, { merge: true });
+
+          data = {
+            [emisor]: true
+          }
+
+          // Metemos en petciones recibidas del receptor
+          await database.collection('peticionesRecibidas').doc(receptor).set(data, { merge: true });
+
+          res.status(200).send('{ "message": "Peticion realizada con exito" }');
+        }
+        else {
+          res.status(400).send('{ "message": "Ya sois amigos" }');
+        }
+      }
+      else {
+        res.status(400).send('{ "message": "No puedes autoenviarte una solicitud" }');
+      }
+    }
+    else {
+      res.status(400).send('{ "message": "Destinatario no existe" }');
+    }    
+  }
+  catch(error) {
+    console.log(error);
+    res.status(500).send('{ "message": "' + error + '" }');
+  }
+
+}
+
 async function getDatosPerfil(uid) {
 
     let usuario = await database.collection('usuarios').doc(uid).get();
@@ -107,55 +178,6 @@ async function getDatosPerfil(uid) {
 
     return data;
 }
-
-async function enviarSolicitudAmistad(req,res){
-  try {
-    let emisor = req.user.uid;
-    let receptor = req.body.receptor;
-
-    if(receptor.startsWith('@')) { // Es un nick, buscamos su uid
-      let uidReceptor = await database.collection('uuids').doc(receptor).get();
-      uidReceptor = uidReceptor.data();
-      receptor = uidReceptor.uuid;
-    }
-    else {
-      let uidReceptor = await database.collection('usuarios').doc(receptor).get();
-      uidReceptor = uidReceptor.data();
-      if(uidReceptor === undefined) {
-        receptor = undefined;
-      }
-    }
-
-    if(receptor !== undefined) {
-
-      let data = {
-        [receptor]: true
-      };
-
-      // Metemos en peticiones enviadas del emisor
-      await database.collection('peticionesEnviadas').doc(emisor).set(data, { merge: true });
-
-      data = {
-        [emisor]: true
-      }
-
-      // Metemos en petciones recibidas del receptor
-      await database.collection('peticionesRecibidas').doc(receptor).set(data, { merge: true });
-
-    }
-    else {
-      res.status(400).send('{ "message": "Destinatario no existe" }');
-    }
-
-    res.status(200).send('{ "message": "Peticion realizada con exito" }');
-  }
-  catch(error) {
-    console.log(error);
-    res.status(500).send('{ "message": "' + error + '" }');
-  }
-
-}
-  
 
 module.exports = {
     aceptarPeticion,
