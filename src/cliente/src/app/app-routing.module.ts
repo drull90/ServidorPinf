@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AboutUsComponent } from './components/about-us/about-us.component';
+import { ApuestaComponent } from './components/apuesta/apuesta.component';
 import { BetComponent } from './components/bet/bet.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { ExpedienteComponent } from './components/expediente/expediente.component';
@@ -61,6 +62,9 @@ const routes: Routes = [
   {
     path: 'miperfil',
     component: MiPerfilComponent
+  },
+  { path: 'apuesta',
+    component: ApuestaComponent  
   }
 ];
 

@@ -19,6 +19,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatriculaComponent } from './components/matricula/matricula.component';
 import { ExpedienteComponent } from './components/expediente/expediente.component';
 import { BetComponent } from './components/bet/bet.component';
+import { ApuestaComponent } from './components/apuesta/apuesta.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { BetComponent } from './components/bet/bet.component';
     ForoComponent,
     MatriculaComponent,
     ExpedienteComponent,
-    BetComponent
+    BetComponent,
+    ApuestaComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -42,7 +45,8 @@ import { BetComponent } from './components/bet/bet.component';
     AngularFileUploaderModule,
     HttpClientModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]
