@@ -63,7 +63,7 @@ const routes: Routes = [
     path: 'miperfil',
     component: MiPerfilComponent
   },
-  { path: 'apuesta',
+  { path: 'apuesta/:uid/:codigo',
     component: ApuestaComponent  
   }
 ];
