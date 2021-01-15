@@ -10,7 +10,7 @@ import { AuthenticationService } from '../service/authentication.service';
 })
 export class ProfileComponent implements OnInit {
 
-  userNick: String = "";
+  userUID: String = "";
 
   constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient, private activatedRoute: ActivatedRoute) { }
 
@@ -23,11 +23,9 @@ export class ProfileComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       let nick = params.get("userid");
       if(nick) {
-        this.userNick = nick;
+        this.userUID = nick;
       }
     });
-
-    console.log(this.userNick);
 
   }
 

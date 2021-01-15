@@ -6,7 +6,7 @@
     <p>Gestiona tus amistades</p>
     <div class="example-card text-center container">
 
-      <mat-card class="bg mgt mgb" *ngFor="let item of data">
+      <mat-card class="bg mgt mgb w25" *ngFor="let item of data" [routerLink]="['/profile/' + item.uid]">
         <mat-card-header class="block h6 w25">
           <div mat-card-avatar>
             <img src="https://img.icons8.com/bubbles/100/000000/user.png" alt="User-Profile-Image">
@@ -15,8 +15,7 @@
           <mat-card-subtitle class="mgt1" *ngIf="item.tipo==='peticion'; else amistad">Peticion de amistad</mat-card-subtitle>
           <ng-template #amistad>
             <mat-card-subtitle class="mgt1">{{item.estado}}</mat-card-subtitle>
-          </ng-template>
-          
+          </ng-template> 
         </mat-card-header>
         <mat-card-actions class="w25" *ngIf="item.tipo==='peticion'">
           <div>
