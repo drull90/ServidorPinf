@@ -66,7 +66,6 @@ export class ExpedienteComponent implements OnInit {
 
   formularioExpediente = new FormGroup({
     Codigo: new FormControl('', Validators.required),
-    Nombre: new FormControl('', Validators.required),
     Calificacion: new FormControl('', Validators.required)
   })
 
