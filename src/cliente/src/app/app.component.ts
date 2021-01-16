@@ -42,6 +42,8 @@ export class AppComponent implements OnInit {
 
   async cerrarSesion() {
     await this.auth.logout();
+    await this.router.navigate(["/"]);
+    window.location.reload();
   }
 
   login() {

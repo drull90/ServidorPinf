@@ -15,25 +15,26 @@ export class LoginComponent {
 
   async loginWithPassword(username: string, password: string) {
     await this.authService.login(username, password);
-    this.redirectToHome();
+    await this.redirectToHome();
   }
 
   async loginWithGoogle() {
     await this.authService.loginWithGoogle();
-    this.redirectToHome();
+    await this.redirectToHome();
   }
 
   async loginWithFacebook() {
     await this.authService.loginWithFacebook();
-    this.redirectToHome();
+    await this.redirectToHome();
   }
 
   async loginWithTwitter() {
     await this.authService.loginWithTwitter();
-    this.redirectToHome();
+    await this.redirectToHome();
   }
 
-  private redirectToHome() {
-    this.router.navigate(['home']);
+  async redirectToHome() {
+    await this.router.navigate(["/"]);
+    window.location.reload();
   }
 }
