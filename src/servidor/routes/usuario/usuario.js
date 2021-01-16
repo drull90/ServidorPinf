@@ -9,7 +9,7 @@ async function changeUserStatus(req, res) {
     try {
         let uid = req.user.uid;
 
-        const status = await database.collection('usuarios').doc(uid).update({
+        await database.collection('usuarios').doc(uid).update({
             "estado": req.body
         })
 
@@ -53,39 +53,40 @@ async function getUserProfile(req, res) {
 
 async function cambiarNick(req, res){
     
-    try{
-    let usuario = req.user.uid; 
-    let newnombre = req.body.nuevonick;
-    let arroba ="@";
-    if(!newnombre.startsWith("@")){
-      newnombre = arroba.concat(newnombre);
-    }
-    let nombreantiguo = await database.collection('usuarios').doc(usuario).get();
-    nombreantiguo = nombreantiguo.data().nick;
-    
+    try {
+        let usuario = req.user.uid; 
+        let newnombre = req.body.nuevonick;
+        let arroba ="@";
 
-    let nuevonombre = await database.collection('uuids').doc(newnombre).get();
-    nuevonombre = nuevonombre.data();
+        if(!newnombre.startsWith("@")){
+            newnombre = arroba.concat(newnombre);
+        }
 
-    if(nuevonombre==undefined){
-        const status = await database.collection('usuarios').doc(usuario).update({
-            "nick": newnombre
-        })
+        let nombreantiguo = await database.collection('usuarios').doc(usuario).get();
+        nombreantiguo = nombreantiguo.data().nick;
+        
+        let nuevonombre = await database.collection('uuids').doc(newnombre).get();
+        nuevonombre = nuevonombre.data();
 
-        await database.collection('uuids').doc(nombreantiguo).delete();
+        if(nuevonombre === undefined) {
+            await database.collection('usuarios').doc(usuario).update({
+                "nick": newnombre
+            })
 
-        let data = {};
+            await database.collection('uuids').doc(nombreantiguo).delete();
 
-        data[newnombre] = {
-            "uuid":usuario
-        } 
-    
-        await database.collection('uuids').doc(newnombre).set(data);
+            let data = {};
+            data[newnombre] = {
+                "uuid":usuario
+            } 
+        
+            await database.collection('uuids').doc(newnombre).set(data);
 
-        res.status(200).send('{ "message": "Nick cambiado" }');
-    }else{
-        res.status(400).send('{ "message": "Nombre de usuario ya existe" }');
-    }
+            res.status(200).send('{ "message": "Nick cambiado" }');
+        }
+        else{
+            res.status(400).send('{ "message": "Nombre de usuario ya existe" }');
+        }
      
     }
     catch(error) {

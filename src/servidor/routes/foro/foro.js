@@ -37,41 +37,40 @@ async function crearForo(req, res) {
         let title = req.body.title;
         let msg = req.body.msg;
 
-        let nick = await database.collection('usuarios').doc(uid).get();
-
-        nick = nick.data().nick;
-
-        let data = {
-            titulo: title,
-            author: nick,
-            authorID: uid
+        if(tiitle === "" || tiitle === undefined || msg === "" || msg === undefined) {
+            res.status(400).send('{ "message": "Titulo y mensaje no pueden ir vacios" }');
         }
+        else {
+            let nick = await database.collection('usuarios').doc(uid).get();
+            nick = nick.data().nick;
 
+            let data = {
+                titulo: title,
+                author: nick,
+                authorID: uid
+            }
 
-        const foros = await database.collection('foro').get();
-        let i = 0;
-        foros.forEach((doc) => {
-            ++i;
-        });
+            const foros = await database.collection('foro').get();
+            let i = 0;
+            foros.forEach((doc) => {
+                ++i;
+            });
 
-        let key = i.toString();
+            let key = i.toString();
 
-        console.log(key);
+            const foro = await database.collection('foro').doc(key).set(data);
 
-        const foro = database.collection('foro').doc(key);
+            data = {};
+            data["m1"] = {
+                author: nick,
+                texto: msg,
+                authorID: uid
+            };
 
-        await foro.set(data);
+            await database.collection('foroMensajes').doc(foro.id).set(data);
 
-        data = {};
-        data["m1"] = {
-            author: nick,
-            texto: msg,
-            authorID: uid
-        };
-
-        await database.collection('foroMensajes').doc(foro.id).set(data);
-
-        res.status(200).send('{ "message": "Foro creado" }');
+            res.status(200).send('{ "message": "Foro creado" }');
+        }
     }
     catch(error) {
         console.log(error);
@@ -87,38 +86,35 @@ async function addMessageForo(req, res) {
         let msg = req.body.msg;
         let foro = req.body.id;
 
-        let nick = await database.collection('usuarios').doc(uid).get();
-
-        nick = nick.data().nick;
-
-        let data = {
-            author: nick,
-            texto: msg,
-            authorID: uid
-        }
-
-        let foroMsg = await database.collection('foroMensajes').doc(foro).get();
-
-        if(foroMsg !== undefined) {
-
-            let arr = Object.keys(foroMsg.data());
-
-            let key = "m" + (arr.length + 1);
-
-            let data = {};
-
-            data[key] = {
-                author: nick,
-                texto: msg,
-                authorID: uid
-            }
-
-            await database.collection('foroMensajes').doc(foro).set(data, { merge: true });
-
-            res.status(200).send('{ "message": "Mensaje agregado" }');
+        if(msg === "" || msg === undefined || foro === "" || foro === undefined) {
+            res.status(400).send('{ "message": "Id foro y mensaje no pueden ir vacios" }');
         }
         else {
-            res.status(500).send('{ "message": "Error al agregar mensaje" }');
+            let nick = await database.collection('usuarios').doc(uid).get();
+            nick = nick.data().nick;
+
+            let foroMsg = await database.collection('foroMensajes').doc(foro).get();
+
+            if(foroMsg !== undefined) {
+
+                let arr = Object.keys(foroMsg.data());
+
+                let key = "m" + (arr.length + 1);
+
+                let data = {};
+                data[key] = {
+                    author: nick,
+                    texto: msg,
+                    authorID: uid
+                }
+
+                await database.collection('foroMensajes').doc(foro).set(data, { merge: true });
+
+                res.status(200).send('{ "message": "Mensaje agregado" }');
+            }
+            else {
+                res.status(500).send('{ "message": "Error al agregar mensaje" }');
+            }
         }
         
     }
@@ -131,7 +127,6 @@ async function addMessageForo(req, res) {
 
 async function getMensajesForo(req, res) {
     try {
-        let uid = req.user.uid;
         let idForo = req.params.foroid;
 
         let mensajes = {
@@ -139,7 +134,6 @@ async function getMensajesForo(req, res) {
         };
 
         // Obtener los mensajes de x foro
-
         let msgForo = await database.collection('foroMensajes').doc(idForo).get();
         msgForo = msgForo.data();
 
