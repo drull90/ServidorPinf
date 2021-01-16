@@ -11,8 +11,10 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { MatriculaComponent } from './components/matricula/matricula.component';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ResponibilityStatementComponent } from './components/responibility-statement/responibility-statement.component';
 
 const routes: Routes = [
   {
@@ -63,8 +65,17 @@ const routes: Routes = [
     path: 'miperfil',
     component: MiPerfilComponent
   },
-  { path: 'apuesta/:uid/:codigo',
+  { 
+    path: 'apuesta/:uid/:codigo',
     component: ApuestaComponent  
+  },
+  {
+    path: 'responsibility-statement',
+    component: ResponibilityStatementComponent
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent
   }
 ];
 

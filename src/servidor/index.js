@@ -12,7 +12,7 @@ exports.api = functions.https.onRequest(app);
 
 exports.userCreated = functions.auth.user().onCreate( async (user) => {
     let userData = {
-        nick: user.uid,
+        nick: "@" + user.uid,
         estado: "Apostando a tope",
         pinfcoins: 0,
         idioma: "es"

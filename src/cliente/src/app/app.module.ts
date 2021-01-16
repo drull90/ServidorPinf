@@ -22,6 +22,8 @@ import { BetComponent } from './components/bet/bet.component';
 import { ApuestaComponent } from './components/apuesta/apuesta.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
+import { ResponibilityStatementComponent } from './components/responibility-statement/responibility-statement.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 
 
 @NgModule({
@@ -38,7 +40,9 @@ import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
     BetComponent,
     ApuestaComponent,
     MiPerfilComponent,
-    ProfileComponent
+    ProfileComponent,
+    ResponibilityStatementComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
