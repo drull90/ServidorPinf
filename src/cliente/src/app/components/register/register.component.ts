@@ -36,28 +36,28 @@ export class RegisterComponent {
   async createAccountWithEmail(username: string, password: string) {
     if(this.checkPolicyAndResponsibilityAccepted()) {
       await this.authService.createAccountWithEmail(username, password);
-      this.redirectToHome();
+      await this.redirectToHome();
     }
   }
 
   async createAccountWithGoogle() {
     if(this.checkPolicyAndResponsibilityAccepted()) {
       await this.authService.loginWithGoogle();
-      this.redirectToHome();     
+      await this.redirectToHome();     
     }
   }
 
   async createAccountWithFacebook() {
     if(this.checkPolicyAndResponsibilityAccepted()) {
       await this.authService.loginWithFacebook();
-      this.redirectToHome();
+      await this.redirectToHome();
     }
   }
 
   async createAccountWithTwitter() {
     if(this.checkPolicyAndResponsibilityAccepted()) {
       await this.authService.loginWithTwitter();
-      this.redirectToHome();
+      await this.redirectToHome();
     }
   }
 
@@ -89,8 +89,9 @@ export class RegisterComponent {
     }
   }
 
-  private redirectToHome() {
-    this.router.navigate(['home']);
+  private async redirectToHome() {
+    await this.router.navigate(["/"]);
+    window.location.reload();
   }
 
 }
