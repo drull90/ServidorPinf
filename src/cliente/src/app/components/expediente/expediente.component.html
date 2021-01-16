@@ -23,7 +23,8 @@
         <!-- <input type="file" id="expediente">
         <p class="help-block">Sube tu expediente en formato pdf para sincronizarlo automáticamente con PinfBet.</p> -->
         <angular-file-uploader
-          [config]="afuConfig">
+          [config]="afuConfig"
+          (ApiResponse)="expedienteSubido($event)">
         </angular-file-uploader>
       </div>
     </div>

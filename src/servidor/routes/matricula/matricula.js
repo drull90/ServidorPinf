@@ -147,20 +147,58 @@ async function subirMatricula(req, res) {
     let uid = req.user.uid;
 
     let pdfStringArray = await getFileFromClient(req.body);
-
     let data = analizarMatricula(pdfStringArray);
 
-    // Meter en asignaturas las asignaturas que no existan
+    // Miramos si esta actualizando o guardando matricula
+    let matricula = await database.collection('matricula').doc(uid).get();
+    matricula = matricula.data();
 
-    // Actualizar expediente antes que la matricula
-
-    res.status(200).send('{ "message": "Matricula subida correctamente" }');
+    let keys = Object.keys(matricula);
+    if(matricula === undefined || keys.length === 0) { // No hay datos en matricula, esta guardandolo
+      await guardarMatricula(uid, data);
+      res.status(200).send('{ "message": "Matricula subida correctamente" }');
+    }
+    else {
+      await actualizarMatricula(uid, data);
+      res.status(200).send('{ "message": "Matricula actualizada correctamente" }');
+    }
+    
   }
   catch(error) {
     console.log(error);
     res.status(500).send('{ "message": "' + error + '" } ');
   }
 
+}
+
+async function guardarMatricula(uid, data) {
+
+  let datos = data;
+
+  // Meter en asignaturas las asignaturas que no existan
+  for(let i = 0; i < datos.codigo.length; ++i) {
+    let codigoAsig = datos.codigo[i];
+
+    let asignatura = await database.collection('asignaturas').doc(codigoAsig).get();
+    asignatura = asignatura.data();
+
+    if(asignatura === undefined) { // No existe la asignatura
+      let dataAsig = {
+        nombre: datos.nombres[i]
+      };
+
+      await database.collection('asignaturas').doc(codigoAsig).set(dataAsig);
+    }
+
+    // Guardamos la asignatura en la matricula del usuario
+    let dataAsig = {};
+    dataAsig[codigoAsig] = {};
+    await database.collection('matricula').doc(uid).set(dataAsig, {merge: true});
+  } 
+
+}
+
+async function actualizarMatricula(uid, data) {
 
 }
 

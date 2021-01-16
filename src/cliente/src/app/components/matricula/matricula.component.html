@@ -25,7 +25,8 @@
         <!-- <input type="file" id="expediente">
         <p class="help-block">Sube tu matrícula en formato pdf para sincronizarla automáticamente con PinfBet.</p> -->
         <angular-file-uploader
-          [config]="afuConfig">
+          [config]="afuConfig"
+          (ApiResponse)="expedienteSubido($event)">
         </angular-file-uploader>
       </div>
     </div>

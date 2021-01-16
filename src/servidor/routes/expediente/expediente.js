@@ -152,7 +152,6 @@ function obtenerPinfCoins(pdfArray, asignaturas) {
   return (creditosSuperados * NotaMedia); 
 }
 
-
 async function subirExpediente(req, res) {
   try {
     let uid = req.user.uid;
@@ -160,44 +159,69 @@ async function subirExpediente(req, res) {
     let pdfStringArray = await getFileFromClient(req.body);
     let asignaturasAprobadas = getAsignaturasAprobadas(pdfStringArray);
 
-    console.log(asignaturasAprobadas);
+    // Miramos si esta actualizando o guardando matricula
+    let expediente = await database.collection('expedientes').doc(uid).get();
+    expediente = expediente.data();
 
-    let asignatura, calificacion, nombre, codigo, coins, coinsTotalesConseguidos = 0;
-
-    const userExRef = database.collection('expedientes').doc(uid);
-    const asigRef = database.collection('asignaturas');
-    const userRef = database.collection('usuarios').doc(uid);
-
-    for (let i = 0; i <= asignaturasAprobadas.length; ++i) {
-      if (asignaturasAprobadas[i] != null) {
-
-        asignatura = asignaturasAprobadas[i].split(" ");
-        calificacion = asignatura[asignatura.length - 2];
-        nombre = getNombreAsignatura(asignatura);
-        codigo = asignatura[1];
-        coins = obtenerPinfCoins(pdfStringArray, asignaturasAprobadas);
-        coinsTotalesConseguidos += coins;
-        
-        let expediente = {};
-        expediente[codigo] = {
-          nombre: nombre
-        };
-
-        // Guardar asignatura en asignaturas
-        // Guardar codigo en expediente del usuario junto a calificacion
-
-          
-      }
+    let keys = Object.keys(expediente);
+    if(expediente === undefined || keys.length === 0) { // No hay datos en matricula, esta guardandolo
+      await guardarExpediente(uid, asignaturasAprobadas, pdfStringArray);
+      res.status(200).send('{ "message": "Expediente subid correctamente" }');
+    }
+    else {
+      await actualizarExpediente(uid, asignaturasAprobadas, pdfStringArray);
+      res.status(200).send('{ "message": "Expediente actualizado correctamente" }');
     }
 
-    // Actualizar pinfcoins del usuario (Van a ser 0 siempre)
-
-    res.status(200).send('{ "message": "Expediente subido correctamente" } ');
+    
   }
   catch(error) {
     console.log(error);
     res.status(500).send('{ "message": "' + error + '" } ');
   }
+}
+
+async function guardarExpediente(uid, asignaturasAprobadas, pdfStringArray) {
+
+  let asignatura, calificacion, nombre, codigo, coins, coinsTotalesConseguidos = 0;
+
+  for (let i = 0; i <= asignaturasAprobadas.length; ++i) {
+    if (asignaturasAprobadas[i] != null) {
+
+      asignatura = asignaturasAprobadas[i].split(" ");
+      calificacion = asignatura[asignatura.length - 2];
+      nombre = getNombreAsignatura(asignatura);
+      codigo = asignatura[1];
+      coins = obtenerPinfCoins(pdfStringArray, asignaturasAprobadas);
+      coinsTotalesConseguidos += coins;
+
+      // Buscamos la asignatura actual en la db, si esta, no hacemos nada, si no, la agregamos
+      let asig = await database.collection('asignaturas').doc(codigo).get();
+      asig = asig.data();
+
+      if(asig === undefined) { // La asignatura no existe, la guardamos
+        await database.collection('asignaturas').doc(codigo).set({nombre: nombre});
+      }
+
+      // Guardamos en el expediente los datos
+      let expediente = {};
+      expediente[codigo] = {
+        calificacion: calificacion
+      };
+
+      await database.collection('expedientes').doc(uid).set(expediente, {merge: true});
+    }
+  }
+
+  // Actualizar pinfcoins del usuario (Van a ser 0 siempre)
+  await database.collection('usuarios').doc(uid).update({
+    pinfcoins: coinsTotalesConseguidos
+  });
+
+}
+
+async function actualizarExpediente() {
+
 }
 
 module.exports = {

@@ -19,16 +19,23 @@ export class HomeComponent implements OnInit {
   constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient) {}
 
   async ngOnInit() {
-    let user = await this.auth.getCurrentUser();
-    let token = await user?.getIdToken();
-    let tokenString = "Bearer " + token;
+    // let user = await this.auth.getCurrentUser();
+    // let token = await user?.getIdToken();
+    // let tokenString = "Bearer " + token;
 
-    this.httpClient.get(environment.url + "/expediente", {headers: {'Authorization': tokenString}})
-    .subscribe(
-      (response: any) => {   // data is already a JSON object
-         console.log(response.data);
-      }
-    );
+    // let data = {
+    //   destinatario: "HGFOTOEW",
+    //   estado: "Aprueba",
+    //   calificacion: 8,
+    //   codigoAsig: "2007001"
+    // }
+
+    // this.httpClient.post(environment.url + "/apuesta", data, {headers: {'Authorization': tokenString}})
+    // .subscribe(
+    //   (response: any) => {   // data is already a JSON object
+    //      console.log(response);
+    //   }
+    // );
   }
 
 }

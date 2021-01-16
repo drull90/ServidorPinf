@@ -34,7 +34,7 @@ export class ExpedienteComponent implements OnInit {
   constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient) { }
 
   
-  async ngOnInit(){
+  async ngOnInit() {
 
     let user= await this.auth.getCurrentUser();
     let token = await user?.getIdToken();
@@ -58,7 +58,6 @@ export class ExpedienteComponent implements OnInit {
     .subscribe(
       (response: any) => {
         this.expediente = response.data;
-
         console.log(this.expediente);
       }
     );
@@ -84,6 +83,16 @@ export class ExpedienteComponent implements OnInit {
       },
       (error: any) => {
         alert(error.error.message);
+      }
+    );
+  }
+
+  expedienteSubido(event: any) {
+    // Actualizamos los datos de la tabla
+    this.httpClient.get(environment.url + "/expediente", {headers: {'Authorization': this.token}})
+    .subscribe(
+      (response: any) => {
+        this.expediente = response.data;
       }
     );
   }
