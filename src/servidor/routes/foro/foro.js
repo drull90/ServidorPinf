@@ -3,7 +3,6 @@
 let admin = require("../../firebase/firebaseAdmin");
 
 let database = admin.dataBase;
-let firebase = admin.firebaseAdmin.firestore;
 
 async function getForos(req, res) {
 
