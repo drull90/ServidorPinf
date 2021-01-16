@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../service/authentication.service';
 
 @Component({
@@ -10,21 +11,29 @@ import { AuthenticationService } from '../service/authentication.service';
 
 export class LoginComponent {
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
-  loginWithPassword(username: string, password: string) {
-    this.authService.login(username, password);
+  async loginWithPassword(username: string, password: string) {
+    await this.authService.login(username, password);
+    this.redirectToHome();
   }
 
-  loginWithGoogle() {
-    this.authService.loginWithGoogle();
+  async loginWithGoogle() {
+    await this.authService.loginWithGoogle();
+    this.redirectToHome();
   }
 
-  loginWithFacebook() {
-    this.authService.loginWithFacebook();
+  async loginWithFacebook() {
+    await this.authService.loginWithFacebook();
+    this.redirectToHome();
   }
 
-  loginWithTwitter() {
-    this.authService.loginWithTwitter();
+  async loginWithTwitter() {
+    await this.authService.loginWithTwitter();
+    this.redirectToHome();
+  }
+
+  private redirectToHome() {
+    this.router.navigate(['home']);
   }
 }

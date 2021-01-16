@@ -3,20 +3,27 @@
 require('dotenv').config();
 
 const functions = require('firebase-functions');
-
 const app = require('./routes/routes');
+const admin = require("./firebase/firebaseAdmin");
+
+let database = admin.dataBase;
 
 exports.api = functions.https.onRequest(app);
 
 exports.userCreated = functions.auth.user().onCreate( async (user) => {
+    let userData = {
+        nick: "@" + user.uid,
+        estado: "Apostando a tope",
+        pinfcoins: 0,
+        idioma: "es"
+    };
 
-    console.log("Usuario creado =======>" + user);
+    await database.collection('usuarios').doc(user.uid).set(userData);
 
 });
 
 // BORRAR
 
-const admin = require("./firebase/firebaseAdmin");
 let db = admin.dataBase;
 
 async function crearDatosDePrueba() {
@@ -283,13 +290,17 @@ async function crearDatosDePrueba() {
     // crear foro
 
     data = {
-        "titulo": "Por que no funciona esto"
+        "titulo": "Por que no funciona esto",
+        author: "pepe",
+        authorID: "z8JUgK1gH6fH4AXOH1hpuXNLDJx1"
     };
 
     await db.collection('foro').doc('0').set(data);
 
     data = {
-        "titulo": "Como se hacen las apuestas"
+        "titulo": "Como se hacen las apuestas",
+        author: "Andrea",
+        authorID: "HGFOTOEW"
     };
 
     await db.collection('foro').doc('1').set(data);
@@ -298,12 +309,14 @@ async function crearDatosDePrueba() {
 
     data = {
         "m1": {
-            "author": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
-            "texto": "Pues eso, que esto no funciona, alguien me explica"
+            "authorID": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
+            "texto": "Pues eso, que esto no funciona, alguien me explica",
+            author: "Andres"
         },
         "m2": {
-            "author": "HGFOTOEW",
-            "texto": "Que ere tonto y no sabe quillo"
+            "authorID": "HGFOTOEW",
+            "texto": "Que ere tonto y no sabe quillo",
+            "author": "pepe"
         }
     };
 

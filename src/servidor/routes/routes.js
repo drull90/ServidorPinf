@@ -24,6 +24,7 @@ app.delete('/peticion/:uid', firebaseAdmin.isAuth, amistad.eliminarPeticion);
 app.get('/foros', firebaseAdmin.isAuth, foro.getForos);
 app.post('/foro', firebaseAdmin.isAuth, foro.crearForo);
 app.post('/msgforo', firebaseAdmin.isAuth, foro.addMessageForo);
+app.get('/msgforo/:foroid', firebaseAdmin.isAuth, foro.getMensajesForo);
 app.get('/userdata', firebaseAdmin.isAuth, usuario.getUserProfile);
 app.get('/profile/:id', firebaseAdmin.isAuth, usuario.getExternalProfile);
 app.get('/amistades', firebaseAdmin.isAuth, amistad.getAmistades);
