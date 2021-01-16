@@ -159,12 +159,12 @@ async function subirExpediente(req, res) {
     let pdfStringArray = await getFileFromClient(req.body);
     let asignaturasAprobadas = getAsignaturasAprobadas(pdfStringArray);
 
-    // Miramos si esta actualizando o guardando matricula
+    // Miramos si esta actualizando o guardando expediente
     let expediente = await database.collection('expedientes').doc(uid).get();
     expediente = expediente.data();
 
     let keys = Object.keys(expediente);
-    if(expediente === undefined || keys.length === 0) { // No hay datos en matricula, esta guardandolo
+    if(expediente === undefined || keys.length === 0) { // No hay datos en expediente, esta guardandolo
       await guardarExpediente(uid, asignaturasAprobadas, pdfStringArray);
       res.status(200).send('{ "message": "Expediente subid correctamente" }');
     }
@@ -221,6 +221,8 @@ async function guardarExpediente(uid, asignaturasAprobadas, pdfStringArray) {
 }
 
 async function actualizarExpediente() {
+
+  // Fuck it
 
 }
 

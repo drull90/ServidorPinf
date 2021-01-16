@@ -73,7 +73,13 @@ async function apostar(usuario, destinatario, estado, calificacion, codAsignatur
             // Guardamos la apuesta en el perfil del usuario
             await database.collection('usuarios').doc(usuario).set({
                 "apuestasActivas": { [apuestaID]: true }
-            }, {merge: true});           
+            }, {merge: true});
+
+            // En matricula, guardamos el usuario que ha apostado, con el id de apuesta
+            let str = codAsignatura + "." + usuario;
+            await database.collection('matricula').doc(destinatario).update({
+                [str]: apuestaID
+            }, {merge: true});
 
         }
         else {
