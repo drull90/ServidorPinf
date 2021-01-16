@@ -20,6 +20,8 @@ async function getForos(req, res) {
             data.result.push(foro);
         });
 
+        data.result.reverse();
+
         res.status(200).send(data);
     }
     catch(error) {
