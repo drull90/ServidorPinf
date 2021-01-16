@@ -1,9 +1,4 @@
-body{
-    margin-top:20px;
-    color: #1a202c;
-    text-align: left;
-    background-color: #e2e8f0;    
-}
+
 .inner-wrapper {
     position: relative;
     height: calc(100vh - 3.5rem);
@@ -124,4 +119,14 @@ body{
     flex: 1 1 auto;
     min-height: 1px;
     padding: 1rem;
+}
+
+.mgt15 {
+    margin-top: 15px;
+}
+
+.textArea {
+    display: block;
+    width: 100%;
+    height: 10em;
 }

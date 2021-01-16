@@ -8,17 +8,19 @@ let firebase = admin.firebaseAdmin.firestore;
 async function getForos(req, res) {
 
     try {
-        let forosDisponibles = {};
+        let data = {
+            result: []
+        };
 
         const foros = await database.collection('foro').get();
 
         foros.forEach((doc) => {
-            forosDisponibles[doc.id] = doc.data();
+            let foro = doc.data();
+            foro.id = doc.id;
+            data.result.push(foro);
         });
 
-        console.log(forosDisponibles);
-
-        res.status(200).send(forosDisponibles);
+        res.status(200).send(data);
     }
     catch(error) {
         console.log(error);
@@ -40,17 +42,30 @@ async function crearForo(req, res) {
 
         let data = {
             titulo: title,
-            author: nick
+            author: nick,
+            authorID: uid
         }
 
-        const foro = database.collection('foro').doc();
+
+        const foros = await database.collection('foro').get();
+        let i = 0;
+        foros.forEach((doc) => {
+            ++i;
+        });
+
+        let key = i.toString();
+
+        console.log(key);
+
+        const foro = database.collection('foro').doc(key);
 
         await foro.set(data);
 
         data = {};
         data["m1"] = {
             author: nick,
-            texto: msg
+            texto: msg,
+            authorID: uid
         };
 
         await database.collection('foroMensajes').doc(foro.id).set(data);
@@ -77,7 +92,8 @@ async function addMessageForo(req, res) {
 
         let data = {
             author: nick,
-            texto: msg
+            texto: msg,
+            authorID: uid
         }
 
         let foroMsg = await database.collection('foroMensajes').doc(foro).get();
@@ -92,7 +108,8 @@ async function addMessageForo(req, res) {
 
             data[key] = {
                 author: nick,
-                texto: msg
+                texto: msg,
+                authorID: uid
             }
 
             await database.collection('foroMensajes').doc(foro).set(data, { merge: true });
@@ -111,8 +128,43 @@ async function addMessageForo(req, res) {
 
 }
 
+async function getMensajesForo(req, res) {
+    try {
+        let uid = req.user.uid;
+        let idForo = req.params.foroid;
+
+        let mensajes = {
+            result: []
+        };
+
+        // Obtener los mensajes de x foro
+
+        let msgForo = await database.collection('foroMensajes').doc(idForo).get();
+        msgForo = msgForo.data();
+
+        if(msgForo !== undefined) {
+            let keys = Object.keys(msgForo);
+            for(let i = 0; i < keys.length; ++i) {
+                let data = {
+                    author: msgForo[keys[i]].author,
+                    authorID: msgForo[keys[i]].authorID,
+                    texto: msgForo[keys[i]].texto
+                }
+                mensajes.result.push(data);
+            }
+        }
+
+        res.status(200).send(mensajes);
+    }
+    catch(error) {
+        console.log(error);
+        res.status(500).send('{ "message": "' + error + '" }');
+    }
+}
+
 module.exports = {
     getForos,
     crearForo,
-    addMessageForo
+    addMessageForo,
+    getMensajesForo
 }

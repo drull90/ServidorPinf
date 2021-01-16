@@ -283,13 +283,17 @@ async function crearDatosDePrueba() {
     // crear foro
 
     data = {
-        "titulo": "Por que no funciona esto"
+        "titulo": "Por que no funciona esto",
+        author: "pepe",
+        authorID: "z8JUgK1gH6fH4AXOH1hpuXNLDJx1"
     };
 
     await db.collection('foro').doc('0').set(data);
 
     data = {
-        "titulo": "Como se hacen las apuestas"
+        "titulo": "Como se hacen las apuestas",
+        author: "Andrea",
+        authorID: "HGFOTOEW"
     };
 
     await db.collection('foro').doc('1').set(data);
@@ -298,12 +302,14 @@ async function crearDatosDePrueba() {
 
     data = {
         "m1": {
-            "author": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
-            "texto": "Pues eso, que esto no funciona, alguien me explica"
+            "authorID": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
+            "texto": "Pues eso, que esto no funciona, alguien me explica",
+            author: "Andres"
         },
         "m2": {
-            "author": "HGFOTOEW",
-            "texto": "Que ere tonto y no sabe quillo"
+            "authorID": "HGFOTOEW",
+            "texto": "Que ere tonto y no sabe quillo",
+            "author": "pepe"
         }
     };
 
