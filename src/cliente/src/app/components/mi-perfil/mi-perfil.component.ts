@@ -16,6 +16,8 @@ export class MiPerfilComponent implements OnInit {
   pinfcoins: number = 0;
   estado: string = "";
   email: string = "";
+  token: string = "";
+
 
   constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient) {}
 
@@ -23,6 +25,8 @@ export class MiPerfilComponent implements OnInit {
     let user = await this.auth.getCurrentUser();
     let token = await user?.getIdToken();
     let tokenString = "Bearer " + token;
+    this.token = tokenString;
+
 
     this.httpClient.get(environment.url + "/userdata", {headers: {'Authorization': tokenString}})
     .subscribe(
@@ -37,15 +41,15 @@ export class MiPerfilComponent implements OnInit {
   
   }
 
-  /*
-  StatusForm = new FormGroup({
-    estado: new FormControl('', Validators.required),
+
+  statusForm = new FormGroup({
+    estado: new FormControl('', Validators.required)
   })
 
-  updateStatus()
+  subirEstado()
   {
     let data = {
-      eatado: this.StatusForm.get('estado'),
+      eatado: this.statusForm.get('estado'),
 
     }
     this.httpClient.post(environment.url + "/userstatus", data, {headers: {'Authorization': this.token}})
@@ -58,5 +62,28 @@ export class MiPerfilComponent implements OnInit {
       }
     );
   }
-*/
+
+  nickForm = new FormGroup({
+    nick: new FormControl('', Validators.required)
+  })
+
+  actualizarNick()
+  {
+    let data = {
+      nick: this.nickForm.get('nick'),
+
+    }
+    this.httpClient.post(environment.url + "/cambiarnick", data, {headers: {'Authorization': this.token}})
+    .subscribe(
+      (response: any) => {
+        alert(response.message);
+      },
+      (error: any) => {
+        alert(error.error.message);
+      }
+    );
+  }
+
+  
+
 }
