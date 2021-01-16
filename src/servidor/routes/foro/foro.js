@@ -1,7 +1,6 @@
 'use strict'
 
 let admin = require("../../firebase/firebaseAdmin");
-
 let database = admin.dataBase;
 
 async function getForos(req, res) {

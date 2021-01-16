@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from '../service/authentication.service';
 
@@ -13,22 +13,34 @@ import { AuthenticationService } from '../service/authentication.service';
 export class ApuestaComponent implements OnInit {
   
   token: string = "";
+  uid: string = "";
+  codigo: string = "";
 
-  this.activatedRoute.paramMap.subscribe(params => {
-    let uid = params.get("userid"); 
-  });
-  this.activatedRoute.paramMap.subscribe(params => {
-    let cod = params.get("codigo"); 
-  });
+  constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient, private activatedRoute: ActivatedRoute) { }
 
-  constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient) { }
-
-  async ngOnInit(){
+  async ngOnInit() {
 
     let user= await this.auth.getCurrentUser();
     let token = await user?.getIdToken();
     let tokenString = "Bearer " + token;
     this.token = tokenString;
+
+    this.activatedRoute.paramMap.subscribe(params => {
+      let userId = params.get("userid");
+      if(userId) {
+        this.uid =  userId;
+      }
+      // HTTP GET USER NICK
+      this.activatedRoute.paramMap.subscribe(params => {
+        let cod = params.get("codigo"); 
+        if(cod){
+          this.codigo = cod;
+        }
+      });
+
+    });
+    
+
   }
 
   formularioApuesta = new FormGroup({
@@ -37,11 +49,10 @@ export class ApuestaComponent implements OnInit {
     PinfCoinsApostados: new FormControl('', Validators.required)
   })
 
-  onSubmit()
-  {
+  onSubmit() {
     let data = {
-      destinatario: uid;
-      codigoAsig: cod;
+      destinatario: this.uid,
+      codigoAsig: this.codigo,
       calificacion: this.formularioApuesta.get('Calificacion'),
       Estado: this.formularioApuesta.get('Estado'),
       PinfCoinsApostados: this.formularioApuesta.get('PinfCoinsApostados')

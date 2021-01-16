@@ -11,6 +11,7 @@ const usuario = require("./usuario/usuario");
 const amistad = require("./amistad/amistad");
 const foro = require('./foro/foro');
 const matricula = require('./matricula/matricula');
+const apuesta = require('./apuesta/apuesta');
 
 app.use(cors({ origin: true }));
 
@@ -38,6 +39,8 @@ app.post('/subirExpedienteManual',  firebaseAdmin.isAuth, expediente.subirExpedi
 app.get('/matricula',               firebaseAdmin.isAuth, matricula.getMatricula);
 app.post('/matricula',              firebaseAdmin.isAuth, matricula.subirMatricula);
 app.post('/subirMatriculaManual',   firebaseAdmin.isAuth, matricula.subirMatriculaManual)
+
+app.post('/apuesta',                firebaseAdmin.isAuth, apuesta.apuesta);
 
 
 module.exports = app;
