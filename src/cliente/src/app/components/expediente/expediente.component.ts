@@ -33,17 +33,7 @@ export class ExpedienteComponent implements OnInit {
 
   constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient) { }
 
-  formularioExpediente = new FormGroup({
-    Codigo: new FormControl('', Validators.required),
-    Nombre: new FormControl('', Validators.required),
-    Calificacion: new FormControl('', Validators.required)
-  })
-
-  onSubmit()
-  {
-    alert(JSON.stringify(this.formularioExpediente.value))
-  }
-
+  
   async ngOnInit(){
 
     let user= await this.auth.getCurrentUser();
@@ -73,5 +63,30 @@ export class ExpedienteComponent implements OnInit {
       }
     );
   }
+
+  formularioExpediente = new FormGroup({
+    Codigo: new FormControl('', Validators.required),
+    Nombre: new FormControl('', Validators.required),
+    Calificacion: new FormControl('', Validators.required)
+  })
+
+  subirExpedienteManual()
+  {
+    let data = {
+      codigo: this.formularioExpediente.Codigo,
+      nombre: this.formularioExpediente.Nombre,
+      calificacion: this.formularioExpediente.Calificacion
+    }
+    this.httpClient.post(environment.url + "/subirExpedienteManual", data, {headers: {'Authorization': this.token}})
+    .subscribe(
+      (response: any) => {
+        alert(response.message);
+      },
+      (error: any) => {
+        alert(error.error.message);
+      }
+    );
+  }
+
 
 }

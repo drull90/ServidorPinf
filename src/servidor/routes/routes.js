@@ -29,7 +29,10 @@ app.get('/profile/:id', firebaseAdmin.isAuth, usuario.getExternalProfile);
 app.get('/amistades', firebaseAdmin.isAuth, amistad.getAmistades);
 app.get('/expediente', firebaseAdmin.isAuth, expediente.getExpediente);
 app.post('/expediente', firebaseAdmin.isAuth, expediente.subirExpediente);
+app.post('/subirExpedienteManual', firebaseAdmin.isAuth, expediente.subirExpedienteManual);
 app.get('/matricula', firebaseAdmin.isAuth, matricula.getMatricula);
 app.post('/matricula', firebaseAdmin.isAuth, matricula.subirMatricula);
+app.post('/subirMatriculaManual', firebaseAdmin.isAuth, matricula.subirMatriculaManual)
+
 
 module.exports = app;

@@ -29,17 +29,6 @@ export class MatriculaComponent implements OnInit {
 
   constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient) { }
 
-  formularioMatricula = new FormGroup({
-    Código: new FormControl('', Validators.required),
-    Nombre: new FormControl('', Validators.required)
-  })
-
-  onSubmit()
-  {
-    alert(JSON.stringify(this.formularioMatricula.value))
-
-  }
-
   async ngOnInit(){
 
     let user= await this.auth.getCurrentUser();
@@ -66,6 +55,31 @@ export class MatriculaComponent implements OnInit {
         this.matricula = response.data;
 
         console.log(this.matricula);
+      }
+    );
+  }
+
+  formularioMatricula = new FormGroup({
+    Código: new FormControl('', Validators.required),
+    Nombre: new FormControl('', Validators.required)
+  })
+
+  subirMatriculaManual()
+  {
+
+    alert(JSON.stringify(this.formularioMatricula.value))
+
+    let data = {
+      codigo: this.formularioMatricula.Código,
+      nombre: this.formularioMatricula.Nombre
+    }
+    this.httpClient.post(environment.url + "/subirMatriculaManual", data, {headers: {'Authorization': this.token}})
+    .subscribe(
+      (response: any) => {
+        alert(response.message);
+      },
+      (error: any) => {
+        alert(error.error.message);
       }
     );
   }

@@ -31,7 +31,7 @@
     <div class="col-sm-7">
         <h1>Entrada manual</h1>
         <p>Si lo prefieres, introduce de manera manual una nueva asignatura a tu expediente. Ten en cuenta de que quedará pendiente de validación.</p>
-        <form [formGroup]="formularioExpediente" (ngSubmit)="onSubmit()">  
+        <form [formGroup]="formularioExpediente" (ngSubmit)="subirExpedienteManual()">  
           
           Código de asignatura: <input 
           type="text" 

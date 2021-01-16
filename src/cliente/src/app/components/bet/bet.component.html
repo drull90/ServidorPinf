@@ -3,69 +3,23 @@
     <p>Consulta tus apuestas realizadas.</p>
     <div class="row">
         <div class="col-sm-8">
-                    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Busca por nombre...">
-                    <table id="myTable">
-                        <tr class="header">
-                            <th style="width: 25%;">#</th>
-                            <th style="width: 25%">Destinatario</th>
-                            <th style="width: 25%;">Calificación</th>
-                            <th style="width: 25%;">Estado</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>@Usuario2</td>
-                            <td>6</td>
-                            <td>Acierto</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>@Usuario3</td>
-                            <td>8</td>
-                            <td>Pendiente</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>@Usuario3</td>
-                            <td>3</td>
-                            <td>Pendiente</td>
-                        </tr>
-                    </table>
+          <table class="table table-striped">
+            <tr>
+              <th scope="col">Destinatario</th>
+              <th scope="col">Calificación</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Resultado</th>
+            </tr>
+            <tr *ngFor="let item of apuestas">
+              <td>{{item.destinatario}}</td>
+              <td>{{item.calificacion}}</td>
+              <td>{{item.estado}}</td>
+              <td>{{item.resultado}}</td>
+            </tr>
+          </table>
         </div>
         <div class="col-sm-4">
           <i class="fas fa-signal fa-10x"></i>        
         </div>
     </div>
 </div>
-<div class="container text-center card card-body bg-light">
-    <h1>Nueva apuesta</h1>
-    <p>Busca un usuario para poder apostar en su perfil</p>
-    <form class="example" action="action_page.php">
-        <input type="text" placeholder="Search.." name="search">
-        <button type="submit">Buscar</button>
-      </form>
-
-</div>
-
-<script>
-    function myFunction() {
-      // Declare variables
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("myInput");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("myTable");
-      tr = table.getElementsByTagName("tr");
-    
-      // Loop through all table rows, and hide those who don't match the search query
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
-    }
-    </script>

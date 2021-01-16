@@ -6,6 +6,23 @@ let database = admin.dataBase;
 
 let pdfReader = require("pdfreader");
 
+async function subirMatriculaManual(req,res) {
+  try {
+
+    let uid = req.user.uid;
+
+    let cod = req.body.codigo;
+    let nom = req.body.nombre;
+
+  
+  
+    res.status(200).send('{ "done" }');
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('{ "message": "' + error + '" } ');  }
+}
+
 async function getMatricula(req, res)
 {
   try{
@@ -149,5 +166,6 @@ async function subirMatricula(req, res) {
 
 module.exports = {
   getMatricula,
-  subirMatricula
+  subirMatricula,
+  subirMatriculaManual
 }

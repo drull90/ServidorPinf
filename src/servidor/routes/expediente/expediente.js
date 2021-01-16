@@ -6,9 +6,28 @@ let database = admin.dataBase;
 
 let pdfReader = require("pdfreader");
 
+async function subirExpedienteManual(req, res){
+  try{
+
+    let uid = req.user.uid;
+
+    let cod = req.body.codigo;
+    let nom = req.body.nombre;
+    let cal = req.body.calificacion;
+    
+
+    res.status(200).send('{ "done" }');
+  }
+  catch(error){
+    console.log(error);
+    res.status(500).send('{ "message": "' + error + '" }');
+  }
+}
+
 async function getExpediente(req, res)
 {
   try{
+
     let uid = req.user.uid;
 
     let data = {
@@ -36,9 +55,9 @@ async function getExpediente(req, res)
   catch(error)
   {
     console.log(error);
-    res.status(500).send('{ "message": "' + error + '" } ');
-  }
+    res.status(500).send('{ "message": "' + error + '" } ');  }
 }
+
 
 async function getDatosAsignatura(codigo)
 {
@@ -182,5 +201,6 @@ async function subirExpediente(req, res) {
 
 module.exports = {
   subirExpediente,
-  getExpediente
+  getExpediente,
+  subirExpedienteManual
 }
