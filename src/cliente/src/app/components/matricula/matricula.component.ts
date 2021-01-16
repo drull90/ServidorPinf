@@ -82,4 +82,14 @@ export class MatriculaComponent implements OnInit {
     );
   }
 
+  expedienteSubido(event: any) {
+    // Actualizamos los datos de la tabla
+    this.httpClient.get(environment.url + "/matricula", {headers: {'Authorization': this.token}})
+    .subscribe(
+      (response: any) => {
+        this.matricula = response.data;
+      }
+    );
+  }
+
 }

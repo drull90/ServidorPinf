@@ -10,7 +10,7 @@ async function apuesta(req, res) {
         let destinatarioID = req.body.destinatario;
         let estado = req.body.estado;
         let calificacion = req.body.calificacion;
-        let codAsignatura = req.body.codAsignatura;
+        let codAsignatura = req.body.codigoAsig;
 
         if(destinatarioID.startsWith('@')) { // Es un nick, lo cambiamos a uid
             let uidReceptor = await database.collection('uuids').doc(destinatarioID).get();
@@ -31,8 +31,9 @@ async function apuesta(req, res) {
                 res.status(400).send('{ "message": "Destinatario no existe" }');
             }
             else {
-                await apostar(usuarioID, destinatarioID, estado, calificacion);
-                res.status(200).send('{ "message": apuesta realizada correctamente" }');
+                //Hacemos la apuesta
+                await apostar(usuarioID, destinatarioID, estado, calificacion, codAsignatura);
+                res.status(200).send('{ "message": "apuesta realizada correctamente" }');
             }
         }
         else {
@@ -47,15 +48,54 @@ async function apuesta(req, res) {
 
 }
 
-async function apostar(usuario, destinatario, estado, calificacion) {
+async function apostar(usuario, destinatario, estado, calificacion, codAsignatura) {
 
-    if(estado === "Aprueba" || estado === "Suspende") {
+    if(estado === "Aprueba" || estado === "Suspende" && (calificacion >= 0 && calificacion <= 10) && codAsignatura !== undefined) {
 
+        // Verificamos que existe la asignatura
+        let existe = existeAsignatura(codAsignatura);
+
+        if(existe) {
+            let data = {
+                usuario: usuario,
+                destinatario: destinatario,
+                estado: estado,
+                calificacion: calificacion
+            }
+    
+            //Creamos nuevo documento en apuestas
+            let apuesta = database.collection('apuestas').doc();
+            let apuestaID = apuesta.id;
+
+            //Guardamos la apuesta
+            await apuesta.set(data);
+
+            // Guardamos la apuesta en el perfil del usuario
+            await database.collection('usuarios').doc(usuario).set({
+                "apuestasActivas": { [apuestaID]: true }
+            }, {merge: true});           
+
+        }
+        else {
+            throw "Asignatura no existe";
+        }
     }
     else {
-        throw "Estado no es valido";
+        throw "Error en datos de la apuesta";
     }
 
+}
+
+async function existeAsignatura(codigo) {
+    let existe = 0;
+
+    let asignatura = await database.collection('asignaturas').doc(codigo).get();
+    asignatura = asignatura.data();
+
+    if(asignatura == undefined) {
+        existe = 1;
+    }
+    return existe;
 }
 
 module.exports = {
