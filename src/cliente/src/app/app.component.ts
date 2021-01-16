@@ -13,21 +13,30 @@ export class AppComponent implements OnInit {
   title = 'PinfBet';
   public language = 'es';
 
-  constructor(private router: Router, private auth: AuthenticationService, public fireAuth: AngularFireAuth) {
-    // if(environment.production == false)
-    //   fireAuth.useEmulator("http://localhost:9099/");
-  }
+  constructor(private router: Router, private auth: AuthenticationService, public fireAuth: AngularFireAuth) {}
 
   async ngOnInit() {
     const user = await this.auth.getCurrentUser();
-    // if(!user) {
-    //   this.router.navigate(['login']);
-    // }
-    // else {
-    //   if(this.router.url === "/") {
-    //     this.router.navigate(['home']);
-    //   }
-    // }
+    if(!user) {
+      console.log("Usuario sin logear");
+      if(!this.rutaSinLogin(this.router.url)) {
+        this.router.navigate(['login']);
+      }
+    }
+  }
+
+  private rutaSinLogin(ruta: string): boolean {
+    let isRutaSinLogin = false;
+
+    let rutas = ["/login", "/register", "/", "/contact", "/aboutus", "responsibility-statement", "privacy-policy"];
+
+    for(let i = 0; i < rutas.length; ++i) {
+      if(rutas[i] === ruta) {
+        isRutaSinLogin = true;
+      }
+    }
+
+    return isRutaSinLogin;
   }
 
 }

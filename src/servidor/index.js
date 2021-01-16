@@ -18,7 +18,7 @@ exports.userCreated = functions.auth.user().onCreate( async (user) => {
         idioma: "es"
     };
 
-    await db.collection('usuarios').doc(user.uid).set(userData);
+    await database.collection('usuarios').doc(user.uid).set(userData);
 
 });
 
