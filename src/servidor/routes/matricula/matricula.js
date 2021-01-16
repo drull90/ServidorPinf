@@ -158,9 +158,8 @@ async function subirMatricula(req, res) {
       await guardarMatricula(uid, data);
       res.status(200).send('{ "message": "Matricula subida correctamente" }');
     }
-    else {
-      await actualizarMatricula(uid, data);
-      res.status(200).send('{ "message": "Matricula actualizada correctamente" }');
+    else { // Tiene que actualizar el expediente antes
+      res.status(400).send('{ "message": "Porfavor, actualice su expediente primero para que los usuarios puedan obtener resultados en sus apuestas" }');
     }
     
   }
@@ -195,10 +194,6 @@ async function guardarMatricula(uid, data) {
     dataAsig[codigoAsig] = {};
     await database.collection('matricula').doc(uid).set(dataAsig, {merge: true});
   } 
-
-}
-
-async function actualizarMatricula(uid, data) {
 
 }
 
