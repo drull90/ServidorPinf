@@ -34,21 +34,22 @@ async function getExpediente(req, res)
       data: []
     };
 
-    let expediente = await database.collection('expediente').doc(uid).get();
-    
+    let expediente = await database.collection('expedientes').doc(uid).get();
     expediente = expediente.data();
 
-    let keys = Object.keys(expediente);
+    if(expediente !== undefined) {
+      let keys = Object.keys(expediente); //Codigos asignaturas
 
-    for(let i = 0; i < keys.length; ++i)
-    {
-      let asignatura = await getDatosAsignatura(keys[i]);
-      
-      //if(asignatura !== {})
-      //{
-      //  let 
-      //}
-    }
+      for(let i = 0; i < keys.length; ++i) {
+        let asignatura = await getDatosAsignatura(keys[i]);
+        let asigData = {
+          codigo: asignatura.codigo,
+          nombre: asignatura.nombre,
+          calificacion: expediente[keys[i]].calificacion
+        }
+        data.data.push(asigData);
+      }
+    }   
 
     res.status(200).send(data);
   }

@@ -12,13 +12,14 @@ import { AuthenticationService } from './components/service/authentication.servi
 export class AppComponent implements OnInit {
   title = 'PinfBet';
   public language = 'es';
+  user:any = null;
 
   constructor(private router: Router, private auth: AuthenticationService, public fireAuth: AngularFireAuth) {}
 
   async ngOnInit() {
     const user = await this.auth.getCurrentUser();
+    this.user = user;
     if(!user) {
-      console.log("Usuario sin logear");
       if(!this.rutaSinLogin(this.router.url)) {
         this.router.navigate(['login']);
       }
@@ -37,6 +38,14 @@ export class AppComponent implements OnInit {
     }
 
     return isRutaSinLogin;
+  }
+
+  async cerrarSesion() {
+    await this.auth.logout();
+  }
+
+  login() {
+    this.router.navigate(['login']);
   }
 
 }

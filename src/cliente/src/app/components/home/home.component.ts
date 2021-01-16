@@ -23,13 +23,10 @@ export class HomeComponent implements OnInit {
     let token = await user?.getIdToken();
     let tokenString = "Bearer " + token;
 
-    this.httpClient.get(environment.url + "/userdata", {headers: {'Authorization': tokenString}})
+    this.httpClient.get(environment.url + "/expediente", {headers: {'Authorization': tokenString}})
     .subscribe(
       (response: any) => {   // data is already a JSON object
-         console.log(response);
-         this.nick = response.nick;
-         this.pinfcoins = response.pinfcoins;
-         this.estado = response.estado;
+         console.log(response.data);
       }
     );
   }

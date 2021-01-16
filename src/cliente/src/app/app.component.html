@@ -4,9 +4,9 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
-    
-    <div class="collapse navbar-collapse text-right" id="collapsibleNavbar">
-      <ul class="navbar-nav">
+
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav" *ngIf="user!==null">
         <li class="nav-item">
           <a class="nav-link" routerLink="home"><i class="fas fa-home"></i> INICIO</a>
         </li>
@@ -29,8 +29,9 @@
           <a class="nav-link" routerLink="miperfil"><i class="far fa-user-circle"></i> MI PERFIL</a>
         </li>  
       </ul>
-      <button type="button" class="btn btn-danger float-right"><i class="fas fa-power-off"></i> Cerrar Sesión</button>
-    </div>  
+      <button type="button" class="btn btn-danger" *ngIf="user!==null" (click)="cerrarSesion()"><i class="fas fa-power-off"></i>Cerrar Sesión</button>
+      <button type="button" class="btn btn-primary" *ngIf="user===null" (click)="login()"><i class="fas fa-power-off"></i>Iniciar Sesión</button>
+    </div>
   </nav>
 
   <div class="jumbotron text-center mgt-0">
