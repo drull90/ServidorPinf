@@ -7,7 +7,6 @@ import { ContactComponent } from './components/contact/contact.component';
 import { ExpedienteComponent } from './components/expediente/expediente.component';
 import { ForoComponent } from './components/foro/foro.component';
 import { FriendsComponent } from './components/friends/friends.component';
-import { HomeComponent } from './components/home/home.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { MatriculaComponent } from './components/matricula/matricula.component';
@@ -21,10 +20,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
-  },
-  {
-    path: 'home',
-    component: HomeComponent
   },
   {
     path: 'register',
