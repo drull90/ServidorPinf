@@ -1,0 +1,68 @@
+.how-section1{
+    margin-top:-15%;
+    padding: 10%;
+}
+.how-section1 h4{
+    color: #ffa500;
+    font-weight: bold;
+    font-size: 30px;
+}
+.how-section1 .subheading{
+    color: #3931af;
+    font-size: 20px;
+}
+.how-section1 .row
+{
+    margin-top: 10%;
+}
+.how-img 
+{
+    text-align: center;
+}
+.how-img img{
+    width: 40%;
+}
+
+.logo
+{
+    font-size: 200px;
+    color: #ffa500;
+
+}
+
+.logo-azul
+{
+    font-size: 200px;
+    color: #3931af;
+
+}
+
+.carousel-control.right, .carousel-control.left {
+    background-image: none;
+    color: darkslategrey;
+  }
+  
+  .carousel-indicators li {
+    border-color: darkslategrey;
+  }
+  
+  .carousel-indicators li.active {
+    background-color: darkslategrey;
+  }
+  
+  .item h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    font-weight: 400;
+    font-style: italic;
+    margin: 70px 0;
+  }
+  
+  .item span {
+    font-style: normal;
+  }
+  
+  .bg-grey
+  {
+    background-color: rgb(128, 126, 126);
+  }

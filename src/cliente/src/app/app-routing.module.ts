@@ -8,6 +8,7 @@ import { ExpedienteComponent } from './components/expediente/expediente.componen
 import { ForoComponent } from './components/foro/foro.component';
 import { FriendsComponent } from './components/friends/friends.component';
 import { HomeComponent } from './components/home/home.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { MatriculaComponent } from './components/matricula/matricula.component';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
@@ -76,7 +77,12 @@ const routes: Routes = [
   {
     path: 'privacy-policy',
     component: PrivacyPolicyComponent
+  },
+  {
+    path: '',
+    component: LandingPageComponent
   }
+
 ];
 
 @NgModule({

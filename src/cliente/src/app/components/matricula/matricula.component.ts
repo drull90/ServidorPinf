@@ -60,7 +60,7 @@ export class MatriculaComponent implements OnInit {
   }
 
   formularioMatricula = new FormGroup({
-    Código: new FormControl('', Validators.required),
+    Codigo: new FormControl('', Validators.required),
     Nombre: new FormControl('', Validators.required)
   })
 
@@ -70,8 +70,8 @@ export class MatriculaComponent implements OnInit {
     alert(JSON.stringify(this.formularioMatricula.value))
 
     let data = {
-      codigo: this.formularioMatricula.Código,
-      nombre: this.formularioMatricula.Nombre
+      codigo: this.formularioMatricula.get('Codigo'),
+      nombre: this.formularioMatricula.get('Nombre')
     }
     this.httpClient.post(environment.url + "/subirMatriculaManual", data, {headers: {'Authorization': this.token}})
     .subscribe(

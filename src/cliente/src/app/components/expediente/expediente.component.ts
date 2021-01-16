@@ -73,9 +73,9 @@ export class ExpedienteComponent implements OnInit {
   subirExpedienteManual()
   {
     let data = {
-      codigo: this.formularioExpediente.Codigo,
-      nombre: this.formularioExpediente.Nombre,
-      calificacion: this.formularioExpediente.Calificacion
+      codigo: this.formularioExpediente.get('Codigo'),
+      nombre: this.formularioExpediente.get('Nombre'),
+      calificacion: this.formularioExpediente.get('Calificacion')
     }
     this.httpClient.post(environment.url + "/subirExpedienteManual", data, {headers: {'Authorization': this.token}})
     .subscribe(

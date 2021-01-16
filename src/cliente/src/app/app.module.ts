@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 import { ResponibilityStatementComponent } from './components/responibility-statement/responibility-statement.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
     MiPerfilComponent,
     ProfileComponent,
     ResponibilityStatementComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
+    LandingPageComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
