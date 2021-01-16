@@ -20,6 +20,41 @@
                                             <h6 class="text-muted f-w-400">{{pinfcoins}}</h6>
                                             <p class="m-b-10 f-w-600"><i class="far fa-comment-alt"></i> Estado</p>
                                             <h6 class="text-muted f-w-400">{{estado}}</h6>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editStatus">
+                                                Editar
+                                              </button>
+                                              
+                                              <!-- The Modal -->
+                                              <div class="modal" id="editStatus">
+                                                <div class="modal-dialog">
+                                                  <div class="modal-content">
+                                              
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                      <h4 class="modal-title">Editar estado:</h4>
+                                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                              
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        <form [formGroup]="statusForm" (ngSubmit)="updateStatus()">  
+                                                            Nuevo estado: <input 
+                                                            type="text" 
+                                                            class="form-control" 
+                                                            formControlName="estado">
+                                                            <br/>
+                                                              <button class="btn btn-primary" type="submit">Subir asignatura</button>
+                                                          </form>  
+                                                    </div>
+                                              
+                                                    <!-- Modal footer -->
+                                                    <div class="modal-footer">
+                                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                              
+                                                  </div>
+                                                </div>
+                                              </div>       
                                     
                                 </div>
                             </div>

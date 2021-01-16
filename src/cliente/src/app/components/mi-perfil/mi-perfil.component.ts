@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl , FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from '../service/authentication.service';
@@ -36,4 +37,26 @@ export class MiPerfilComponent implements OnInit {
   
   }
 
+  /*
+  StatusForm = new FormGroup({
+    estado: new FormControl('', Validators.required),
+  })
+
+  updateStatus()
+  {
+    let data = {
+      eatado: this.StatusForm.get('estado'),
+
+    }
+    this.httpClient.post(environment.url + "/userstatus", data, {headers: {'Authorization': this.token}})
+    .subscribe(
+      (response: any) => {
+        alert(response.message);
+      },
+      (error: any) => {
+        alert(error.error.message);
+      }
+    );
+  }
+*/
 }
