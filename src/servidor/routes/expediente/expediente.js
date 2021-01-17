@@ -276,8 +276,11 @@ async function subirExpediente(req, res) {
     // Miramos si esta actualizando o guardando expediente
     let expediente = await database.collection('expedientes').doc(uid).get();
     expediente = expediente.data();
-
-    let keys = Object.keys(expediente);
+    let keys = [];
+    if(expediente !== undefined) {
+      keys = Object.keys(expediente);
+    }
+    
     if(expediente === undefined || keys.length === 0) { // No hay datos en expediente, esta guardandolo
       await guardarExpediente(uid, asignaturasAprobadas, pdfStringArray);
       res.status(200).send('{ "message": "Expediente subido correctamente" }');

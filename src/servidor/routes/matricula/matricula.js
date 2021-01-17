@@ -229,7 +229,11 @@ async function subirMatricula(req, res) {
     let matricula = await database.collection('matricula').doc(uid).get();
     matricula = matricula.data();
 
-    let keys = Object.keys(matricula);
+      let keys = [];
+    if(matricula !== undefined) {
+      keys = Object.keys(matricula);
+    }
+    
     if(matricula === undefined || keys.length === 0) { // No hay datos en matricula, esta guardandolo
       await guardarMatricula(uid, data);
       res.status(200).send('{ "message": "Matricula subida correctamente" }');

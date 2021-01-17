@@ -164,7 +164,10 @@ async function getExternalProfile(req, res) {
 
                 // Obtenemos las apuestas que ha realizado al usuario
                 let matricula = datosMatricula.data();
-                let keys = Object.keys(matricula);
+                let keys = [];
+                if(matricula !== undefined) {
+                    keys = Object.keys(matricula);
+                }
 
                 for(let i = 0; i < keys.length; ++i) { // Por cada asignatura del usuario destinarario, miramos si aparece el uid del usuario
                     let apuestas = matricula[keys[i]]
