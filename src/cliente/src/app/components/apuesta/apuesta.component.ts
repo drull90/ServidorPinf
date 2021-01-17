@@ -15,6 +15,8 @@ export class ApuestaComponent implements OnInit {
   token: string = "";
   uid: string = "";
   codigo: string = "";
+  asignatura: string = "";
+  nick: string = "";
 
   constructor(public auth: AuthenticationService, private router: Router, private httpClient: HttpClient, private activatedRoute: ActivatedRoute) { }
 
@@ -30,16 +32,30 @@ export class ApuestaComponent implements OnInit {
       if(userId) {
         this.uid =  userId;
       }
-      // HTTP GET USER NICK
-      this.activatedRoute.paramMap.subscribe(params => {
-        let cod = params.get("codigo"); 
-        if(cod){
-          this.codigo = cod;
-        }
-      });
-
     });
     
+    this.httpClient.get(environment.url + "/consultarNick/" + this.uid, {headers: {'Authorization': tokenString}})
+    .subscribe(
+      (response: any) => {
+        this.nick = response.nick;
+        console.log(this.nick);
+      }
+    );
+
+    this.activatedRoute.paramMap.subscribe(params => {
+      let cod = params.get("codigo"); 
+      if(cod){
+        this.codigo = cod;
+      }
+    });
+
+    this.httpClient.get(environment.url + "/consultarAsignatura/" + this.codigo, {headers: {'Authorization': tokenString}})
+    .subscribe(
+      (response: any) => {
+        this.asignatura = response.asignatura;
+        console.log(this.nick);
+      }
+    );
 
   }
 

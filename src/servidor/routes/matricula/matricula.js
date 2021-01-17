@@ -20,12 +20,14 @@ async function subirMatriculaManual(req,res) {
 
       let keys = Obect.keys(matricula);
       
-      if(matricula == undefined || keys.length === 0)
+      if(matricula == undefined || keys.length === 0){
         await guardarMatriculaManual(uid,cod); 
         res.status(200).send('{ "message" "Asignatura añadida a la matrícula correctamente" }');
-    
-      }else {
-      res.status(400).send('{ "message": "Actualice su expediente antes de registrar una nueva matrícula" } ');
+      }
+      else 
+      {
+        res.status(400).send('{ "message": "Actualice su expediente antes de registrar una nueva matrícula" } ');
+      }
     }
     else {
       res.status(400).send('{ "message": "Código introducido inválido" } ');
@@ -61,6 +63,33 @@ async function guardarMatriculaManual(uid,cod)
   await database.collection('matricula').doc(uid).set(dataAsig, {merge: true});
   
 
+}
+
+async function getAsignatura(req,res)
+{
+  try {
+    let codigo = req.params.cod;
+
+    let data = {
+        nombre: null
+    }
+
+    let asignatura = await data.collection('asignaturas').doc(codigo).get();
+    asignatura = asignatura.data();
+
+    if(asignatura !== undefined)
+    {
+        data.nombre = asignatura.nombre;
+        res.status(200).send(data);
+    }
+    else{
+        res.status(400).send('{ "message": "La asignatura no existe" }');
+    }
+}
+catch(error){
+    console.log(error);
+    res.status(500).send('{ "message": "' + error + '" }');
+}
 }
 
 async function getMatricula(req, res)
@@ -242,5 +271,6 @@ async function guardarMatricula(uid, data) {
 module.exports = {
   getMatricula,
   subirMatricula,
-  subirMatriculaManual
+  subirMatriculaManual,
+  getAsignatura
 }

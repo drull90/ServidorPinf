@@ -19,6 +19,7 @@ app.post('/userstatus',             firebaseAdmin.isAuth, usuario.changeUserStat
 app.post('/cambiarnick',            firebaseAdmin.isAuth, usuario.cambiarNick);
 app.get('/userdata',                firebaseAdmin.isAuth, usuario.getUserProfile);
 app.get('/profile/:id',             firebaseAdmin.isAuth, usuario.getExternalProfile);
+app.get('/consultarNick/:id',      firebaseAdmin.isAuth, usuario.getNick);
 
 app.post('/aceptarpeticion',        firebaseAdmin.isAuth, amistad.aceptarPeticion);
 app.post('/rechazarpeticion',       firebaseAdmin.isAuth, amistad.rechazarPeticion);
@@ -38,7 +39,8 @@ app.post('/subirExpedienteManual',  firebaseAdmin.isAuth, expediente.subirExpedi
 
 app.get('/matricula',               firebaseAdmin.isAuth, matricula.getMatricula);
 app.post('/matricula',              firebaseAdmin.isAuth, matricula.subirMatricula);
-app.post('/subirMatriculaManual',   firebaseAdmin.isAuth, matricula.subirMatriculaManual)
+app.post('/subirMatriculaManual',   firebaseAdmin.isAuth, matricula.subirMatriculaManual);
+app.get('/consultarAsignatura/:cod', firebaseAdmin.isAuth, matricula.getAsignatura);
 
 app.post('/apuesta',                firebaseAdmin.isAuth, apuesta.apuesta);
 

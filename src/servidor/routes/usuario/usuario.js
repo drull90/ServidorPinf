@@ -95,6 +95,33 @@ async function cambiarNick(req, res){
     }
 }
 
+async function getNick(req, res) {
+
+    try {
+        let uidDestino = req.params.id;
+
+        let data = {
+            nick: null
+        }
+
+        let usuario = await data.collection('usuarios').doc(uidDestino).get();
+        usuario = usuario.data();
+
+        if(usuario !== undefined)
+        {
+            data.nick = usuario.nick;
+            res.status(200).send(data);
+        }
+        else{
+            res.status(400).send('{ "message": "El usuario no existe" }');
+        }
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send('{ "message": "' + error + '" }');
+    }
+}
+
 async function getExternalProfile(req, res) {
     try {
         let uid = req.user.uid;
@@ -286,5 +313,6 @@ module.exports = {
     changeUserStatus,
     getUserProfile,
     cambiarNick,
-    getExternalProfile
+    getExternalProfile,
+    getNick
 }
