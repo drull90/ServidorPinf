@@ -10,28 +10,153 @@ async function subirExpedienteManual(req, res){
 
     let uid = req.user.uid;
 
-    let cod = req.body.codigo;
-    let cal = req.body.calificacion;
+    let codigo = req.body.codigo;
+    let calificacion = req.body.calificacion;
 
-    //Comprobamos si existe la asignatura mandada en el expediente
+    let asignaturaNombre = "";
 
-    let expediente = await database.collection('expedientes').doc(uid).get();
-    expediente = expediente.data();
+    if(codigo !== undefined && calificacion !== undefined) {
 
-    let keys = Object.keys(expediente);
-    if(expediente === undefined || keys.length === 0)  //Caso expediente vacío, guarda la información.
-    {
-      await guardarExpedienteManual(uid,cod,cal);
-      res.status(200).send('{"message": "Asignatura añadida al expediente correctamente" }');
+        // Miramos si tenemos la asignatura guardada
+        let asignatura = await database.collection('asignaturas').doc(cod).get();
+        asignatura = asignatura.data();
+
+        if(asignatura !== undefined) { // La asignatura esta guardada
+        
+            //Comprobamos si existe en el expediente
+            let expediente = await database.collection('expedientes').doc(uid).get();
+            expediente = expediente.data();
+
+            let estaExpediente = false;
+
+            if(expediente !== undefined) { // Expediente tiene datos
+                // Buscamos si esta en expediente
+                if(expediente[codigo] !== undefined) { // Existe ya la asignatura
+                    estaExpediente = true;
+                }
+            }
+
+            if(!estaExpediente) { // La asignatura no esta en el expediente
+
+                // Tenemos 2 casos, esta en matricula o no
+                let matricula = await database.collection('matricula').doc(uid).get();
+                matricula = matricula.data();
+
+                let estaEnMatricula = false;
+                if(matricula !== undefined) { // Matricula tiene asignaturas
+                    if(matricula[codigo] !== undefined) { // Esta en matricula
+                        estaEnMatricula = true
+                    }
+                }
+
+                if(estaEnMatricula) { // Otorgar pinfcoins a todos
+                    let apuestas = matricula[codigo];
+                    let keys = Object.keys(apuestas);
+
+                    for(let i = 0; i < keys.length; ++i) {
+                        let userId = keys[i];
+                        let apuestaId = apuestas[userId];
+
+                        //Obtenemos los datos de la apuesta
+                        let apuesta = await database.collection('apuestas').doc(apuestaId).get();
+                        apuesta = apuesta.data();
+
+                        let calificacionFin = calificacion;
+                        let estadoFin = "";
+                        if(calificacionFin >= 5) {
+                            estadoFin = "Aprueba"
+                        }
+                        else {
+                            estadoFin = "Suspende"
+                        }
+
+                        //Calculamos los pinfcoin ganados
+                        let pinfcoinsApostados = apuesta.pinfCoins;
+                        let pinfcoinsGanados = 0;
+                        if(estadoFin === apuesta.estado) {
+                            pinfcoinsGanados = pinfcoinsApostados * 1.2;
+                        }
+                        if(calificacionFin === apuesta.calificacion) {
+                            pinfcoinsGanados += pinfcoinsApostados * 1.5;
+                        }
+
+                        //Copiamos la apuesta al historial de apuesta
+                        let data = {};
+                        data[apuestaId] = {
+                            destinatario: uid,
+                            estado: apuesta.estado,
+                            calificacion: apuesta.calificacion,
+                            estadoFin: estadoFin,
+                            calificacionFin: calificacionFin,
+                            pinfCoinsGanados: pinfcoinsGanados
+                        };
+                        await database.collection('historialApuestas').doc(userId).set(data, {merge: true});
+
+                        //Borramos apuesta de apustas activas
+                        let str = "apuestasActivas." + apuestaId;
+                        await database.collection('usuarios').doc(userId).update({
+                            [str]: firebase.FieldValue.delete(),
+                            pinfcoinsGanados: firebase.FieldValue.increment(pinfcoinsGanados),
+                            pinfcoins: firebase.FieldValue.increment(pinfcoinsGanados)
+                        });
+
+                    }
+                }
+
+                // Guardar en expediente
+                let data = {};
+                data[codigo] = {
+                    calificacion: calificacion
+                };
+                await database.collection('expedientes').doc(uid).set(data, {merge: true});
+
+                //Agregar pinfcoins al usuario
+                let pinfcoins = calificacion * 6; // 6 creditos
+                await database.collection('usuarios').doc(uid).update({
+                    pinfcoins: firebase.FieldValue.increment(pinfcoins)
+                });
+                res.status(200).send('{ "message": "Asignatura subida correctamente" } ');
+            }   
+            else {
+                res.status(400).send('{ "message": "La asignatura ya esta en el expediente" } ');
+            }
+
+        }
+        else { // Aun no tenemos la asignatura guardada
+            res.status(400).send('{ "message": "Aun no tenemos la asignatura guardada en la base de datos, se paciente, en breves la tendremos" } ');
+        }
+
     }
     else {
-      //Comprobación si existe una matrícula con dicho código (caso actualizar)
+        res.status(400).send('{ "message": "Valores introducidos invalidos" } ');
+    } 
 
-      //Caso no está en matricula y por ende nuevo expediente, solo registrar asignatura al expediente.
-    }
-    
+    // //Comprobamos si existe la asignatura mandada en el expediente
+    // let expediente = await database.collection('expedientes').doc(uid).get();
+    // expediente = expediente.data();
 
-    res.status(200).send('{ "done" }');
+    // if(expediente !== undefined )  { // Miramos que no este ya la asignatura
+      
+    //     let asignaturas = await database.collection('expedientes').doc(uid).get();
+    //     asignaturas = asignaturas.data();
+
+    //     if(asignaturas !== undefined) {
+    //         if(asignaturas[codigo] !== undefined) { // Existe => error
+    //             res.status(400).send('{ "message": "La asignatura ya se encuentra en el expediente" }');
+    //         }
+    //         else { //No existe
+
+
+
+    //         }
+    //     }
+
+    // }
+    // else { // Guardamos la asignatura
+
+    // }
+
+    res.status(200).send('{ "message": "' + asignaturaNombre + ' subida correctamente" }');
   }
   catch(error){
     console.log(error);
@@ -39,10 +164,7 @@ async function subirExpedienteManual(req, res){
   }
 }
 
-//Guardar expediente manual
-async function guardarExpedienteManual(uid, asignaturasAprobadas, pdfStringArray) {
 
-}
 
 async function getExpediente(req, res)
 {
