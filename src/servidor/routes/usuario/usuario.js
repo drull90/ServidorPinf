@@ -74,8 +74,7 @@ async function cambiarNick(req, res){
 
             await database.collection('uuids').doc(nombreantiguo).delete();
 
-            let data = {};
-            data[newnombre] = {
+            let data = {
                 "uuid":usuario
             } 
         

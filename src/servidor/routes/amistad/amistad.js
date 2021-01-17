@@ -165,7 +165,7 @@ async function getAmistades(req, res) {
     }
 }
 
-async function enviarSolicitudAmistad(req,res){
+async function enviarSolicitudAmistad(req,res) {
   try {
     let emisor = req.user.uid;
     let receptor = req.body.receptor;

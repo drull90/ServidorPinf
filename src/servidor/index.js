@@ -18,5 +18,8 @@ exports.userCreated = functions.auth.user().onCreate( async (user) => {
     };
 
     await database.collection('usuarios').doc(user.uid).set(userData);
-    await database.collection('uuids').doc(userData.nick).set(user.id);
+    let data = {
+        uuid: user.id
+    };
+    await database.collection('uuids').doc(userData.nick).set(data);
 });
