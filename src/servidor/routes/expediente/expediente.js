@@ -13,12 +13,10 @@ async function subirExpedienteManual(req, res){
     let codigo = req.body.codigo;
     let calificacion = req.body.calificacion;
 
-    let asignaturaNombre = "";
-
     if(codigo !== undefined && calificacion !== undefined) {
 
         // Miramos si tenemos la asignatura guardada
-        let asignatura = await database.collection('asignaturas').doc(cod).get();
+        let asignatura = await database.collection('asignaturas').doc(codigo).get();
         asignatura = asignatura.data();
 
         if(asignatura !== undefined) { // La asignatura esta guardada
@@ -101,8 +99,11 @@ async function subirExpedienteManual(req, res){
                         });
 
                     }
+                    // Borrar de matricula
+                    await database.collection('matricula').doc(uid).update({
+                        [codigo]: firebase.FieldValue.delete()
+                    });
                 }
-
                 // Guardar en expediente
                 let data = {};
                 data[codigo] = {
@@ -115,10 +116,10 @@ async function subirExpedienteManual(req, res){
                 await database.collection('usuarios').doc(uid).update({
                     pinfcoins: firebase.FieldValue.increment(pinfcoins)
                 });
-                res.status(200).send('{ "message": "Asignatura subida correctamente" } ');
+                res.status(200).send('{ "message": "Asignatura ' + asignatura.nombre + ' subida correctamente" } ');
             }   
             else {
-                res.status(400).send('{ "message": "La asignatura ya esta en el expediente" } ');
+                res.status(400).send('{ "message": "Asignatura ' + asignatura.nombre + ' ya esta en el expediente" } ');
             }
 
         }
@@ -130,16 +131,12 @@ async function subirExpedienteManual(req, res){
     else {
         res.status(400).send('{ "message": "Valores introducidos invalidos" } ');
     }
-
-    res.status(200).send('{ "message": "' + asignaturaNombre + ' subida correctamente" }');
   }
   catch(error){
     console.log(error);
     res.status(500).send('{ "message": "' + error + '" }');
   }
 }
-
-
 
 async function getExpediente(req, res)
 {

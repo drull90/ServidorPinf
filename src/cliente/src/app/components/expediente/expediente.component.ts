@@ -72,12 +72,12 @@ export class ExpedienteComponent implements OnInit {
   {
     let data = {
       codigo: this.formularioExpediente.value["Codigo"],
-      nombre: this.formularioExpediente.value['Nombre'],
       calificacion: this.formularioExpediente.value['Calificacion']
     }
     this.httpClient.post(environment.url + "/subirExpedienteManual", data, {headers: {'Authorization': this.token}})
     .subscribe(
       (response: any) => {
+        this.expedienteSubido(null);
         alert(response.message);
       },
       (error: any) => {
