@@ -92,6 +92,9 @@ export class ExpedienteComponent implements OnInit {
     .subscribe(
       (response: any) => {
         this.expediente = response.data;
+      },
+      (error: any) => {
+        alert(error.error.message);
       }
     );
   }

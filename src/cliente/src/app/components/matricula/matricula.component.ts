@@ -87,6 +87,9 @@ export class MatriculaComponent implements OnInit {
     .subscribe(
       (response: any) => {
         this.matricula = response.data;
+      },
+      (error: any) => {
+        alert(error.error.message);
       }
     );
   }
