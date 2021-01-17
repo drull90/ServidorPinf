@@ -129,32 +129,7 @@ async function subirExpedienteManual(req, res){
     }
     else {
         res.status(400).send('{ "message": "Valores introducidos invalidos" } ');
-    } 
-
-    // //Comprobamos si existe la asignatura mandada en el expediente
-    // let expediente = await database.collection('expedientes').doc(uid).get();
-    // expediente = expediente.data();
-
-    // if(expediente !== undefined )  { // Miramos que no este ya la asignatura
-      
-    //     let asignaturas = await database.collection('expedientes').doc(uid).get();
-    //     asignaturas = asignaturas.data();
-
-    //     if(asignaturas !== undefined) {
-    //         if(asignaturas[codigo] !== undefined) { // Existe => error
-    //             res.status(400).send('{ "message": "La asignatura ya se encuentra en el expediente" }');
-    //         }
-    //         else { //No existe
-
-
-
-    //         }
-    //     }
-
-    // }
-    // else { // Guardamos la asignatura
-
-    // }
+    }
 
     res.status(200).send('{ "message": "' + asignaturaNombre + ' subida correctamente" }');
   }

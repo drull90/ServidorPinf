@@ -17,16 +17,44 @@ async function subirMatriculaManual(req,res) {
 
       if(asignatura !== undefined) { // La asignatura esta guardada
 
-        let matricula = await database.collection('matricula').doc(uid).get();
-        matricula = matricula.data();
+        // Si esta en expediente, echarlo, si no continuar
 
-        let data = {};
-        data[cod] = {
-          [cod]: asignatura.nombre
-        };
-        await database.collection('matricula').doc(uid).set(data, {merge: true});
+        let expediente = await database.collection('expedientes').doc(uid).get();
+        expediente = expediente.data();
 
-        res.status(200).send('{ "message": "Asignatura ' + asignatura.nombre + ' correctamente subida" } ');
+        let existeExpediente = false;
+        if(expediente !== undefined) {
+          if(expediente[cod] !== undefined) {
+            existeExpediente = true;
+          }
+        }
+
+        if(!existeExpediente) {
+
+          let matricula = await database.collection('matricula').doc(uid).get();
+          matricula = matricula.data();
+
+          let data = {};
+          data[cod] = {};
+
+          if(matricula !== undefined) { // Hay algo en matricula
+            if(matricula[cod] === undefined) { // No existe, guardamos
+              await database.collection('matricula').doc(uid).set(data, {merge: true});
+              res.status(200).send('{ "message": "Asignatura ' + asignatura.nombre + ' correctamente subida" } ');
+            }
+            else { // Ya existe
+              res.status(400).send('{ "message": "Asignatura ' + asignatura.nombre + ' ya existe en matricula" } ');
+            } 
+          }
+          else { // No hay nada en matricula, guardamos
+            await database.collection('matricula').doc(uid).set(data, {merge: true});
+            res.status(200).send('{ "message": "Asignatura ' + asignatura.nombre + ' correctamente subida" } ');
+          }
+        }
+        else {
+          res.status(400).send('{ "message": "Asignatura ' + asignatura.nombre + ' ya existe en expediente" } ');
+        }
+
       }
       else { // Aun no tenemos la asignatura guardada
         res.status(400).send('{ "message": "Aun no tenemos la asignatura guardada en la base de datos, se paciente, en breves la tendremos" } ');
