@@ -35,29 +35,53 @@ export class RegisterComponent {
 
   async createAccountWithEmail(username: string, password: string) {
     if(this.checkPolicyAndResponsibilityAccepted()) {
-      await this.authService.createAccountWithEmail(username, password);
-      await this.redirectToHome();
+      try {
+        await this.authService.createAccountWithEmail(username, password);
+        await this.redirectToHome();
+      }
+      catch(error) {
+        alert(error);
+      }
+      
     }
   }
 
   async createAccountWithGoogle() {
     if(this.checkPolicyAndResponsibilityAccepted()) {
-      await this.authService.loginWithGoogle();
-      await this.redirectToHome();     
+      try {
+        await this.authService.loginWithGoogle();
+        await this.redirectToHome(); 
+      }
+      catch(error) {
+        alert(error);
+      }
+          
     }
   }
 
   async createAccountWithFacebook() {
     if(this.checkPolicyAndResponsibilityAccepted()) {
-      await this.authService.loginWithFacebook();
-      await this.redirectToHome();
+      try {
+        await this.authService.loginWithFacebook();
+        await this.redirectToHome();
+      }
+      catch(error) {
+        alert(error);
+      }
+      
     }
   }
 
   async createAccountWithTwitter() {
     if(this.checkPolicyAndResponsibilityAccepted()) {
-      await this.authService.loginWithTwitter();
-      await this.redirectToHome();
+      try {
+        await this.authService.loginWithTwitter();
+        await this.redirectToHome();
+      }
+      catch(error) {
+        alert(error);
+      }
+      
     }
   }
 
