@@ -20,13 +20,12 @@ async function subirMatriculaManual(req,res) {
         let matricula = await database.collection('matricula').doc(uid).get();
         matricula = matricula.data();
 
-        if(matricula[cod] === undefined) { // No existe la matricula, la agregamos
-          let data = {};
-          data[cod] = {
-            [cod]: asignatura.nombre
-          };
-          await database.collection('matricula').doc(uid).set(data, {merge: true});
-        }
+        let data = {};
+        data[cod] = {
+          [cod]: asignatura.nombre
+        };
+        await database.collection('matricula').doc(uid).set(data, {merge: true});
+
         res.status(200).send('{ "message": "Asignatura ' + asignatura.nombre + ' correctamente subida" } ');
       }
       else { // Aun no tenemos la asignatura guardada
@@ -42,30 +41,6 @@ async function subirMatriculaManual(req,res) {
     console.log(error);
     res.status(500).send('{ "message": "' + error + '" } ');  
   }
-}
-
-async function guardarMatriculaManual(uid,cod)
-{
-  let codigoAsig = cod;
-
-  //Meter en la lista de asignaturas si esta no existe
-
-  let asignatura = await database.collection('asignaturas').doc(codigoAsig).get();
-  asignatura = asignatura.data();
-
-  if(asignatura === undefined){
-    let dataAsig = {
-      nombre: getNombreAsignatura(codigoAsig),
-    };
-    
-    await database.collection('asignaturas').doc(codigoAsig).set(dataAsig);
-  
-    //Guardar asignatura en la matrícula
-    let dataAsig = {};
-    dataAsig[codigoAsig] = {};
-    await database.collection('matricula').doc(uid).set(dataAsig, {merge: true});
-  }
-
 }
 
 async function getAsignatura(req,res)
