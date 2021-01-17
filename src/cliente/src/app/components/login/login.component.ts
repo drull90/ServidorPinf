@@ -14,23 +14,45 @@ export class LoginComponent {
   constructor(private authService: AuthenticationService, private router: Router) {}
 
   async loginWithPassword(username: string, password: string) {
-    await this.authService.login(username, password);
-    await this.redirectToHome();
+    try {
+      await this.authService.login(username, password);
+      await this.redirectToHome();
+    }
+    catch(error) {
+      alert(error);
+    }
   }
 
   async loginWithGoogle() {
-    await this.authService.loginWithGoogle();
-    await this.redirectToHome();
+    try {
+      await this.authService.loginWithGoogle();
+      await this.redirectToHome();
+    }
+    catch(error) {
+      alert(error);
+    }
   }
 
   async loginWithFacebook() {
-    await this.authService.loginWithFacebook();
-    await this.redirectToHome();
+    try {
+      await this.authService.loginWithFacebook();
+      await this.redirectToHome();
+    }
+    catch(error) {
+      alert(error);
+    }
+    
   }
 
   async loginWithTwitter() {
-    await this.authService.loginWithTwitter();
-    await this.redirectToHome();
+    try {
+      await this.authService.loginWithTwitter();
+      await this.redirectToHome();
+    }
+    catch(error) {
+      alert(error);
+    }
+    
   }
 
   async redirectToHome() {

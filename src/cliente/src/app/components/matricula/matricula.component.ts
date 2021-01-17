@@ -63,17 +63,16 @@ export class MatriculaComponent implements OnInit {
     Codigo: new FormControl('', Validators.required),
   })
 
-  subirMatriculaManual()
-  {
-
-    alert(JSON.stringify(this.formularioMatricula.value))
+  subirMatriculaManual() {
 
     let data = {
-      codigo: this.formularioMatricula.get('Codigo'),
-    }
+      codigo: this.formularioMatricula.value["Codigo"]
+    };
+
     this.httpClient.post(environment.url + "/subirMatriculaManual", data, {headers: {'Authorization': this.token}})
     .subscribe(
       (response: any) => {
+        this.expedienteSubido(null);
         alert(response.message);
       },
       (error: any) => {
@@ -88,6 +87,9 @@ export class MatriculaComponent implements OnInit {
     .subscribe(
       (response: any) => {
         this.matricula = response.data;
+      },
+      (error: any) => {
+        alert(error.error.message);
       }
     );
   }

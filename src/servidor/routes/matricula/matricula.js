@@ -17,17 +17,44 @@ async function subirMatriculaManual(req,res) {
 
       if(asignatura !== undefined) { // La asignatura esta guardada
 
-        let matricula = await database.collection('matricula').doc(uid).get();
-        matricula = matricula.data();
+        // Si esta en expediente, echarlo, si no continuar
 
-        if(matricula[cod] === undefined) { // No existe la matricula, la agregamos
-          let data = {};
-          data[cod] = {
-            [cod]: asignatura.nombre
-          };
-          await database.collection('matricula').doc(uid).set(data, {merge: true});
+        let expediente = await database.collection('expedientes').doc(uid).get();
+        expediente = expediente.data();
+
+        let existeExpediente = false;
+        if(expediente !== undefined) {
+          if(expediente[cod] !== undefined) {
+            existeExpediente = true;
+          }
         }
-        res.status(200).send('{ "message": "Asignatura ' + asignatura.nombre + ' correctamente subida" } ');
+
+        if(!existeExpediente) {
+
+          let matricula = await database.collection('matricula').doc(uid).get();
+          matricula = matricula.data();
+
+          let data = {};
+          data[cod] = {};
+
+          if(matricula !== undefined) { // Hay algo en matricula
+            if(matricula[cod] === undefined) { // No existe, guardamos
+              await database.collection('matricula').doc(uid).set(data, {merge: true});
+              res.status(200).send('{ "message": "Asignatura ' + asignatura.nombre + ' correctamente subida" } ');
+            }
+            else { // Ya existe
+              res.status(400).send('{ "message": "Asignatura ' + asignatura.nombre + ' ya existe en matricula" } ');
+            } 
+          }
+          else { // No hay nada en matricula, guardamos
+            await database.collection('matricula').doc(uid).set(data, {merge: true});
+            res.status(200).send('{ "message": "Asignatura ' + asignatura.nombre + ' correctamente subida" } ');
+          }
+        }
+        else {
+          res.status(400).send('{ "message": "Asignatura ' + asignatura.nombre + ' ya existe en expediente" } ');
+        }
+
       }
       else { // Aun no tenemos la asignatura guardada
         res.status(400).send('{ "message": "Aun no tenemos la asignatura guardada en la base de datos, se paciente, en breves la tendremos" } ');
@@ -42,30 +69,6 @@ async function subirMatriculaManual(req,res) {
     console.log(error);
     res.status(500).send('{ "message": "' + error + '" } ');  
   }
-}
-
-async function guardarMatriculaManual(uid,cod)
-{
-  let codigoAsig = cod;
-
-  //Meter en la lista de asignaturas si esta no existe
-
-  let asignatura = await database.collection('asignaturas').doc(codigoAsig).get();
-  asignatura = asignatura.data();
-
-  if(asignatura === undefined){
-    let dataAsig = {
-      nombre: getNombreAsignatura(codigoAsig),
-    };
-    
-    await database.collection('asignaturas').doc(codigoAsig).set(dataAsig);
-  
-    //Guardar asignatura en la matrícula
-    let dataAsig = {};
-    dataAsig[codigoAsig] = {};
-    await database.collection('matricula').doc(uid).set(dataAsig, {merge: true});
-  }
-
 }
 
 async function getAsignatura(req,res)
@@ -105,23 +108,24 @@ async function getMatricula(req, res)
     };
 
     let matricula = await database.collection('matricula').doc(uid).get();
-
     matricula = matricula.data();
 
-    let keys = Object.keys(matricula);
+    if(matricula !== undefined) {
+      let keys = Object.keys(matricula);
 
-    for(let i = 0; i < keys.length; ++i ) {
-      let asignatura = await getDatosAsignatura(keys[i]);
+      for(let i = 0; i < keys.length; ++i ) {
+        let asignatura = await getDatosAsignatura(keys[i]);
 
-      if(asignatura !== {}) {
+        if(asignatura !== {}) {
 
-        let apuestasRecibidas = Object.keys(matricula[keys[i]]);
+          let apuestasRecibidas = Object.keys(matricula[keys[i]]);
 
-        asignatura.apuestas = apuestasRecibidas.length;
+          asignatura.apuestas = apuestasRecibidas.length;
 
-        data.data.push(asignatura);
+          data.data.push(asignatura);
+        }
+  
       }
- 
     }
 
     res.status(200).send(data);

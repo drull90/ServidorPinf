@@ -36,7 +36,7 @@ async function crearForo(req, res) {
         let title = req.body.title;
         let msg = req.body.msg;
 
-        if(tiitle === "" || tiitle === undefined || msg === "" || msg === undefined) {
+        if(title === "" || title === undefined || msg === "" || msg === undefined) {
             res.status(400).send('{ "message": "Titulo y mensaje no pueden ir vacios" }');
         }
         else {
@@ -66,7 +66,7 @@ async function crearForo(req, res) {
                 authorID: uid
             };
 
-            await database.collection('foroMensajes').doc(foro.id).set(data);
+            await database.collection('foroMensajes').doc(key).set(data);
 
             res.status(200).send('{ "message": "Foro creado" }');
         }
