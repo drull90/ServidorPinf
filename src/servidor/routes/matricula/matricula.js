@@ -1,42 +1,47 @@
 'use strict'
 
 let admin = require("../../firebase/firebaseAdmin");
-
 let database = admin.dataBase;
-
 let pdfReader = require("pdfreader");
 
 async function subirMatriculaManual(req,res) {
   try {
-
     let uid = req.user.uid;
-
     let cod = req.body.codigo;
 
-    if(cod != null){
-    
-      let matricula = await database.collection('matricula').doc(uid).get();
-      matricula = matricula.data();
+    if(cod !== undefined) {
 
-      let keys = Obect.keys(matricula);
-      
-      if(matricula == undefined || keys.length === 0){
-        await guardarMatriculaManual(uid,cod); 
-        res.status(200).send('{ "message" "Asignatura añadida a la matrícula correctamente" }');
+      // Miramos si tenemos la asignatura guardada
+      let asignatura = await database.collection('asignaturas').doc(cod).get();
+      asignatura = asignatura.data();
+
+      if(asignatura !== undefined) { // La asignatura esta guardada
+
+        let matricula = await database.collection('matricula').doc(uid).get();
+        matricula = matricula.data();
+
+        if(matricula[cod] === undefined) { // No existe la matricula, la agregamos
+          let data = {};
+          data[cod] = {
+            [cod]: asignatura.nombre
+          };
+          await database.collection('matricula').doc(uid).set(data, {merge: true});
+        }
+        res.status(200).send('{ "message": "Asignatura ' + asignatura.nombre + ' correctamente subida" } ');
       }
-      else 
-      {
-        res.status(400).send('{ "message": "Actualice su expediente antes de registrar una nueva matrícula" } ');
+      else { // Aun no tenemos la asignatura guardada
+        res.status(400).send('{ "message": "Aun no tenemos la asignatura guardada en la base de datos, se paciente, en breves la tendremos" } ');
       }
+
     }
     else {
-      res.status(400).send('{ "message": "Código introducido inválido" } ');
-
+      res.status(400).send('{ "message": "Codigo introducido invalido" } ');
     } 
 
   } catch (error) {
     console.log(error);
-    res.status(500).send('{ "message": "' + error + '" } ');  }
+    res.status(500).send('{ "message": "' + error + '" } ');  
+  }
 }
 
 async function guardarMatriculaManual(uid,cod)
@@ -48,20 +53,18 @@ async function guardarMatriculaManual(uid,cod)
   let asignatura = await database.collection('asignaturas').doc(codigoAsig).get();
   asignatura = asignatura.data();
 
-  if(asignatura === undefined)
-  {
+  if(asignatura === undefined){
     let dataAsig = {
       nombre: getNombreAsignatura(codigoAsig),
     };
     
     await database.collection('asignaturas').doc(codigoAsig).set(dataAsig);
   
-  //Guardar asignatura en la matrícula
-
-  let dataAsig = {};
-  dataAsig[codigoAsig] = {};
-  await database.collection('matricula').doc(uid).set(dataAsig, {merge: true});
-  
+    //Guardar asignatura en la matrícula
+    let dataAsig = {};
+    dataAsig[codigoAsig] = {};
+    await database.collection('matricula').doc(uid).set(dataAsig, {merge: true});
+  }
 
 }
 
@@ -238,8 +241,6 @@ async function subirMatricula(req, res) {
   }
 
 }
-
-
 
 async function guardarMatricula(uid, data) {
 
