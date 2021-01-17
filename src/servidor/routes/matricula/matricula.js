@@ -80,7 +80,7 @@ async function getAsignatura(req,res)
         nombre: null
     }
 
-    let asignatura = await data.collection('asignaturas').doc(codigo).get();
+    let asignatura = await database.collection('asignaturas').doc(codigo).get();
     asignatura = asignatura.data();
 
     if(asignatura !== undefined)

@@ -28,19 +28,18 @@ export class ApuestaComponent implements OnInit {
     this.token = tokenString;
 
     this.activatedRoute.paramMap.subscribe(params => {
-      let userId = params.get("userid");
+      let userId = params.get("uid");
       if(userId) {
-        this.uid =  userId;
+        this.uid = userId;
       }
+      this.httpClient.get(environment.url + "/nick/" + this.uid, {headers: {'Authorization': tokenString}})
+      .subscribe(
+        (response: any) => {
+          this.nick = response.nick;
+          console.log(this.nick);
+        }
+      );
     });
-    
-    this.httpClient.get(environment.url + "/consultarNick/" + this.uid, {headers: {'Authorization': tokenString}})
-    .subscribe(
-      (response: any) => {
-        this.nick = response.nick;
-        console.log(this.nick);
-      }
-    );
 
     this.activatedRoute.paramMap.subscribe(params => {
       let cod = params.get("codigo"); 
@@ -52,8 +51,8 @@ export class ApuestaComponent implements OnInit {
     this.httpClient.get(environment.url + "/consultarAsignatura/" + this.codigo, {headers: {'Authorization': tokenString}})
     .subscribe(
       (response: any) => {
-        this.asignatura = response.asignatura;
-        console.log(this.nick);
+        this.asignatura = response.nombre;
+        console.log(this.asignatura);
       }
     );
 
@@ -69,14 +68,16 @@ export class ApuestaComponent implements OnInit {
     let data = {
       destinatario: this.uid,
       codigoAsig: this.codigo,
-      calificacion: this.formularioApuesta.get('Calificacion'),
-      estado: this.formularioApuesta.get('Estado'),
-      pinfCoins: this.formularioApuesta.get('PinfCoinsApostados')
+      calificacion: this.formularioApuesta.value['Calificacion'],
+      estado: this.formularioApuesta.value['Estado'],
+      pinfCoins: this.formularioApuesta.value['PinfCoinsApostados']
     }
     this.httpClient.post(environment.url + "/apuesta", data, {headers: {'Authorization': this.token}})
     .subscribe(
       (response: any) => {
         alert(response.message);
+        // /friends
+        this.router.navigate(["/friends"]);
       },
       (error: any) => {
         alert(error.error.message);

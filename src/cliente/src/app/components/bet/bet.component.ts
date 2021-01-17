@@ -26,10 +26,10 @@ export class BetComponent implements OnInit {
       let tokenString = "Bearer " + token;
       this.token = tokenString;
 
-      this.httpClient.get(environment.url + "/apuestas", {headers: {'Authorization': tokenString}})
+      this.httpClient.get(environment.url + "/apuesta", {headers: {'Authorization': tokenString}})
       .subscribe(
         (response: any) => {
-          this.apuestas = response.data;
+          this.apuestas = response.response;
 
           console.log(this.apuestas);
         }

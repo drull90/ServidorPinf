@@ -13,11 +13,11 @@ async function aceptarPeticion(req, res) {
 
         // Eliminar peticion enviada
         await database.collection('peticionesRecibidas').doc(uid).update({[uidPeticion]: firebase.FieldValue.delete()});
-        await database.collection('peticionesRecibidas').doc(uidPeticion).update({[uid]: firebase.FieldValue.delete()});
+        //await database.collection('peticionesRecibidas').doc(uidPeticion).update({[uid]: firebase.FieldValue.delete()});
 
         // Eliminar peticion recibida
         await database.collection('peticionesEnviadas').doc(uidPeticion).update({ [uid]: firebase.FieldValue.delete()});
-        await database.collection('peticionesEnviadas').doc(uid).update({ [uidPeticion]: firebase.FieldValue.delete()});
+        //await database.collection('peticionesEnviadas').doc(uid).update({ [uidPeticion]: firebase.FieldValue.delete()});
 
         let data = {[uidPeticion]: true}
 

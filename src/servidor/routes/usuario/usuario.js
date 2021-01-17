@@ -10,7 +10,7 @@ async function changeUserStatus(req, res) {
         let uid = req.user.uid;
 
         await database.collection('usuarios').doc(uid).update({
-            "estado": req.body
+            "estado": req.body.estado
         })
 
         res.status(200).send('{ "message": "User status changed" }');
@@ -54,7 +54,7 @@ async function cambiarNick(req, res){
     
     try {
         let usuario = req.user.uid; 
-        let newnombre = req.body.nuevonick;
+        let newnombre = req.body.nick;
         let arroba ="@";
 
         if(!newnombre.startsWith("@")){
@@ -95,7 +95,6 @@ async function cambiarNick(req, res){
 }
 
 async function getNick(req, res) {
-
     try {
         let uidDestino = req.params.id;
 
@@ -103,7 +102,7 @@ async function getNick(req, res) {
             nick: null
         }
 
-        let usuario = await data.collection('usuarios').doc(uidDestino).get();
+        let usuario = await database.collection('usuarios').doc(uidDestino).get();
         usuario = usuario.data();
 
         if(usuario !== undefined)

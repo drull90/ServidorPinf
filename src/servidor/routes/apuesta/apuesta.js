@@ -2,6 +2,7 @@
 
 let admin = require("../../firebase/firebaseAdmin");
 let database = admin.dataBase;
+let firebase = admin.firebaseAdmin.firestore;
 
 async function apuesta(req, res) {
     try {
@@ -22,22 +23,40 @@ async function apuesta(req, res) {
                 destinatarioID = undefined;
             }
         }
-        
-        if(destinatarioID !== undefined) {
-            let existe = await database.collection('usuarios').doc(destinatarioID).get();
-            existe = existe.data();
 
-            if(existe === undefined) {
-                res.status(400).send('{ "message": "Destinatario no existe" }');
-            }
-            else {
-                //Hacemos la apuesta
-                await apostar(usuarioID, destinatarioID, estado, calificacion, codAsignatura, pinfCoins);
-                res.status(200).send('{ "message": "apuesta realizada correctamente" }');
-            }
+        let pinfcoins = await database.collection('usuarios').doc(usuarioID).get();
+        pinfcoins = pinfcoins.data();
+
+        let pinfCoinsTotal = pinfcoins.pinfcoins;
+
+        if(calificacion < 0 || calificacion > 10 ) {
+            res.status(400).send('{ "message": "Calificacion no valida" }');
+        }
+        if(pinfCoins > pinfCoinsTotal) {
+            res.status(400).send('{ "message": "Insuficientes pinfcoins" }');
         }
         else {
-            res.status(400).send('{ "message": "Destinatario no existe" }');
+            if(destinatarioID !== undefined) {
+                let existe = await database.collection('usuarios').doc(destinatarioID).get();
+                existe = existe.data();
+
+                if(existe === undefined) {
+                    res.status(400).send('{ "message": "Destinatario no existe" }');
+                }
+                else {
+                    //Hacemos la apuesta
+                    await apostar(usuarioID, destinatarioID, estado, calificacion, codAsignatura, pinfCoins);
+                    res.status(200).send('{ "message": "apuesta realizada correctamente" }');
+                }
+            }
+            else {
+                res.status(400).send('{ "message": "Destinatario no existe" }');
+            }
+
+            // Eliminamos pinfcoins de usuario
+            await database.collection('usuarios').doc(usuarioID).update({
+                "pinfcoins": firebase.FieldValue.increment(-pinfCoins)
+            });
         }
 
     }
@@ -124,8 +143,9 @@ async function getApuestas(req, res) {
                 let apuesta = await database.collection('apuestas').doc(keys[i]).get();
                 apuesta = apuesta.data();
 
+                let nick = await getNick(apuesta.destinatario);
                 let apuestaData = {
-                    destinatario: apuesta.destinatario,
+                    destinatario: nick,
                     calificacion: apuesta.calificacion,
                     estado: "Pendiente"
                 };
@@ -146,9 +166,10 @@ async function getApuestas(req, res) {
 
                 let str = apuesta.pinfCoinsGanados + " Pinfcoins Ganados";
 
+                let nick = await getNick(apuesta.destinatario);
                 let apuestaData = {
-                    destinatario: apuesta.destinatario,
-                    calificacionFin: apuesta.calificacionFin,
+                    destinatario: nick,
+                    calificacion: apuesta.calificacionFin,
                     estado: str
                 }
 
@@ -156,14 +177,25 @@ async function getApuestas(req, res) {
             }
         }
 
-        console.log(data.response);
-
         res.status(200).send(data);
     }
     catch(error) {
         console.log(error);
         res.status(500).send('{ "message": "' + error + '" }');
     }
+}
+
+async function getNick(uid) {
+    let nick = "";
+
+    let user = await database.collection('usuarios').doc(uid).get();
+    user = user.data();
+
+    if(user !== undefined) {
+        nick = user.nick;
+    }
+
+    return nick;
 }
 
 module.exports = {

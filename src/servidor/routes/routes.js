@@ -19,7 +19,7 @@ app.post('/userstatus',             firebaseAdmin.isAuth, usuario.changeUserStat
 app.post('/cambiarnick',            firebaseAdmin.isAuth, usuario.cambiarNick);
 app.get('/userdata',                firebaseAdmin.isAuth, usuario.getUserProfile);
 app.get('/profile/:id',             firebaseAdmin.isAuth, usuario.getExternalProfile);
-app.get('/consultarNick/:id',       firebaseAdmin.isAuth, usuario.getNick);
+app.get('/nick/:id',                firebaseAdmin.isAuth, usuario.getNick);
 
 app.post('/aceptarpeticion',        firebaseAdmin.isAuth, amistad.aceptarPeticion);
 app.post('/rechazarpeticion',       firebaseAdmin.isAuth, amistad.rechazarPeticion);
