@@ -1,0 +1,35 @@
+<div class="container card card-body bg-light">
+  
+  <div class="row">
+    <div class="col-sm-7 text-center">
+      <h1>Apuesta por <strong>{{nick}}</strong> en la asignatura <strong>{{asignatura}}</strong></h1>
+      <form [formGroup]="formularioApuesta" (ngSubmit)="onSubmit()">
+       
+        Estado:
+        <select id = "estados" 
+        class="form-control" 
+        formControlName="Estado">
+          <option value = "Aprueba">Aprueba</option>
+          <option value = "Suspende">Suspende</option>
+        </select>
+
+        Calificacion: <input 
+        type="number" 
+        class="form-control" 
+        formControlName="Calificacion">
+        <br/>
+        
+        PinfCoins: <input 
+        type="number" 
+        class="form-control" 
+        formControlName="PinfCoinsApostados">
+        <br/>
+          <button class="btn btn-primary" type="submit">Confirmar apuesta</button>
+      </form>
+    </div>
+    <div class="col-sm-3 text-center">
+      <i class="fas fa-coins fa-10x"></i>
+    </div>
+  </div>
+  
+</div>

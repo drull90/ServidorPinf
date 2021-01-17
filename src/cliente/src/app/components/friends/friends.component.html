@@ -1,0 +1,29 @@
+<div class="container text-center well">
+    <h1>Amistades</h1>
+    <p>Envia solicitud de amistad</p>
+    <input type="text" placeholder="Search.." #username>
+    <button type="submit" class="mgb" (click)="enviarSolicitud(username.value)">Enviar</button>
+    <p>Gestiona tus amistades</p>
+    <div class="example-card text-center container">
+
+      <mat-card class="bg mgt mgb w25" *ngFor="let item of data">
+        <mat-card-header class="block h6 w25" [routerLink]="['/profile/' + item.uid]">
+          <div mat-card-avatar>
+            <img src="https://img.icons8.com/bubbles/100/000000/user.png" alt="User-Profile-Image">
+          </div>
+          <mat-card-title class="inline">{{item.nick}}</mat-card-title>
+          <mat-card-subtitle class="mgt1" *ngIf="item.tipo==='peticion'; else amistad">Peticion de amistad</mat-card-subtitle>
+          <ng-template #amistad>
+            <mat-card-subtitle class="mgt1">{{item.estado}}</mat-card-subtitle>
+          </ng-template> 
+        </mat-card-header>
+        <mat-card-actions class="w25" *ngIf="item.tipo==='peticion'">
+          <div>
+            <button mat-button (click)="aceptarPeticion(item.uid)">Aceptar</button>
+            <button mat-button (click)="rechazarPeticion(item.uid)">Rechazar</button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="page-content page-container" id="page-content">
+        <div class="padding">
+            <div class="row container d-flex justify-content-center">
+                <div class="col-xl-6 col-md-12">
+                    <div class="card user-card-full">
+                        <div class="row m-l-0 m-r-0">
+                            <div class="col-sm-4 bg-c-lite-green user-profile">
+                                <div class="card-block text-center text-white">
+                                    <div class="m-b-25"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image"> </div>
+                                    <p class="f-w-600">{{nickUsuario}}</p>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#nickmodal"><i class="far fa-edit"></i> Editar</button>
+
+                                    <div class="modal" id="nickmodal">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h6 class="modal-title" class="black">Actualizar nick</h6>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                          </div>
+                                          <div class="modal-body">                                        
+                                              <h6 class="black">Nick:</h6>
+                                              <input type="text" class="form-control" #nick>                                                                               
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                            <button class="btn btn-primary" data-dismiss="modal" (click)="actualizarNick(nick.value)">Confirmar</button>
+                                          </div>
+                                        </div>
+                                      </div>       
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                              <div class="card-block">
+                                <h3 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Información</h3>
+                                <h4 class="m-b-10 f-w-600"><i class="fas fa-at"></i> Email</h4>
+                                <p class="text-muted f-w-400">{{email}}</p>
+                                <h4 class="m-b-10 f-w-600"><i class="fas fa-coins"></i> PinfCoins</h4>
+                                <p class="text-muted f-w-400">{{pinfcoins}}</p>
+                                <h4 class="m-b-10 f-w-600"><i class="far fa-comment-alt"></i> Estado</h4>
+                                <p class="text-muted f-w-400">{{estadoUsuario}}</p>
+                                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#statusModal"><i class="far fa-edit"></i> Editar</button>
+
+                                <div class="modal" id="statusModal">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h6 class="modal-title">Actualizar estado</h6>
+                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">                
+                                            <h6>Estado:</h6> 
+                                            <input type="text" class="form-control" #estado>                                                                              
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                        <button class="btn btn-primary" data-dismiss="modal" (click)="subirEstado(estado.value)">Confirmar</button>
+                                      </div>
+                                    </div>
+                                  </div>       
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

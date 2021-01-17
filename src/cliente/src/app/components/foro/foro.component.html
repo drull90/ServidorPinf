@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="main-body p-0">
+    <div class="inner-wrapper">
+      <!-- Inner main -->
+      <div class="inner-main">
+        <!-- Inner main header -->
+        <div class="inner-main-header">
+          <button class="btn btn-primary has-icon btn-block" type="button" data-toggle="modal" data-target="#threadModal">Nuevo foro</button>
+        </div>
+        <!-- /Inner main header -->
+
+        <!-- Inner main body -->
+
+        <!-- Forum List -->
+        <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
+          <div class="card mb-2" *ngFor="let item of foros">
+            <div class="card-body p-2 p-sm-3">
+              <div class="media forum-item">
+                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User"/>
+                <div class="media-body">
+                  <h6>
+                    <a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body" (click)="getMensajesForo(item.id)">{{item.titulo}}</a>
+                  </h6>
+                  <p class="text-muted"><a [routerLink]="['/profile/' + item.authorID]">{{item.author}}</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Forum List -->
+
+        <!-- Forum Detail -->
+        <div class="inner-main-body p-2 p-sm-3 collapse forum-content">
+          <a href="#" class="btn btn-light btn-sm mb-3 has-icon" data-toggle="collapse" data-target=".forum-content"><i
+              class="fa fa-arrow-left mr-2"></i>Back</a>
+
+          <div class="card mb-2" *ngFor="let item of mensajes">
+            <div class="card-body">
+              <div class="media forum-item">
+                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle" width="50" alt="User"/>
+                <div class="media-body ml-3">
+                  <a [routerLink]="['/profile/' + item.authorID]" class="text-secondary">{{item.author}}</a>
+                  <div class="mt-3 font-size-sm">
+                    <p>{{item.texto}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h6>Subir nuevo post</h6>
+            <textarea class="textArea"  #texto></textarea>
+            <button (click)="postearForo(texto.value)">Subir</button>
+          </div>
+
+        </div>
+        <!-- /Forum Detail -->
+
+        <!-- /Inner main body -->
+      </div>
+      <!-- /Inner main -->
+    </div>
+
+    <!-- New Thread Modal -->
+    <div class="modal fade" id="threadModal" tabindex="-1" role="dialog" aria-labelledby="threadModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex align-items-center bg-primary text-white">
+              <h6 class="modal-title mb-0" id="threadModalLabel">Nuevo foro</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="threadTitle">Titulo</label>
+                <input type="text" class="form-control" id="threadTitle" placeholder="Introduce titulo" autofocus="" #titulo/>
+                <div class="mgt15">
+                  <label>Mensaje:</label>
+                  <textarea class="textArea" #msg></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" (click)="crearForo(titulo.value, msg.value)" data-dismiss="modal">Crear</button>
+            </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

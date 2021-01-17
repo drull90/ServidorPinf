@@ -1,0 +1,55 @@
+
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark navbar-fixed-top">
+    <a class="navbar-brand" routerLink=""> Pinfbet</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav" *ngIf="user!==null">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="expediente"><i class="fas fa-book"></i> EXPEDIENTE</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="matricula"><i class="fas fa-file-invoice"></i> MATRÍCULA</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="bet"><i class="fas fa-coins"></i> HISTORIAL DE APUESTAS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="friends"><i class="fas fa-users"></i> AMIGOS</a>
+        </li> 
+        <li class="nav-item">
+          <a class="nav-link" routerLink="foro"><i class="far fa-comment"></i> FORO</a>
+        </li> 
+        <li class="nav-item">
+          <a class="nav-link" routerLink="miperfil"><i class="far fa-user-circle"></i> MI PERFIL</a>
+        </li>  
+      </ul>
+      <button type="button" class="btn btn-danger" *ngIf="user!==null" (click)="cerrarSesion()"><i class="fas fa-power-off"></i> Cerrar Sesión</button>
+      <button type="button" class="btn btn-primary" *ngIf="user===null" (click)="login()"><i class="fas fa-power-off"></i> Iniciar Sesión</button>
+    </div>
+  </nav>
+
+  <div class="jumbotron text-center mgt-0">
+    <h1>PinfBet</h1>
+    <p>Una app de apuestas académicas.</p> 
+  </div>
+  
+  <router-outlet></router-outlet>
+
+  <footer>
+      <div class="text-center">
+        <a routerLink="responsibility-statement" style="text-decoration: none">Responsibility Statement</a> | 
+        <a routerLink="privacy-policy" style="text-decoration: none">Privacy Policy</a> |
+        <a routerLink="aboutus" style="text-decoration: none">Sobre Nosotros</a> |
+        <a routerLink="contact" style="text-decoration: none">Contacto</a> | 
+        <a routerLink="help" style="text-decoration: none">Ayuda</a> | 
+        <a href="https://campusvirtual.uca.es/" style="text-decoration: none">Campus Virtual</a> | 
+        <a href="https://www.uca.es/" style="text-decoration: none">Universidad de Cádiz</a> | 
+        <a href="https://esingenieria.uca.es/" style="text-decoration: none">Escuela Superior de Ingeniería</a>
+      </div><br><br>
+    <p class="text-center">Grupo 11 - Proyectos Informáticos - Curso 2020/2021<p>
+
+  </footer>
+

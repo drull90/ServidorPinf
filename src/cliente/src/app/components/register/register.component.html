@@ -1,0 +1,71 @@
+<div class="limiter">
+    <div class="container-login100 background-image">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+            <div class="login100-form validate-form">
+                <span class="login100-form-title p-b-49">
+                    Register
+                </span>
+
+                <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+                    <span class="label-input100">Email</span>
+                    <input class="input100" type="text" name="username" placeholder="Type your username" #username>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Password is required">
+                    <span class="label-input100">Password</span>
+                    <input class="input100" type="password" name="pass" placeholder="Type your password" #password>
+                </div>
+
+                <div class="p-t-8 p-b-31 ">
+                    <div>
+                        <input type="checkbox" name="Responsibility-statement" (change)="checkedResponsibility($event)" >
+                        <a [routerLink]="['/responsibility-statement']" class="m-l-5" id="responsibilityBoxText">Responsibility statement</a>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="Privacy-policy" (change)="checkedPrivacy($event)" >
+                        <a [routerLink]="['/privacy-policy']" class="m-l-5" id="privacyBoxText">Privacy policy</a>
+                    </div>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                        <button class="login100-form-btn" (click)="createAccountWithEmail(username.value, password.value)">
+                            Register
+                        </button>
+                    </div>
+                </div>
+
+                <div class="txt1 text-center p-t-54 p-b-20">
+                    <span>
+                        Or Register Using
+                    </span>
+                </div>
+
+                <div class="flex-c-m">
+                    <a role="button" (click)="createAccountWithFacebook()" class="login100-social-item bg1">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+
+                    <!-- <a role="button" (click)="createAccountWithTwitter()" class="login100-social-item bg2">
+                        <i class="fab fa-twitter"></i>
+                    </a> -->
+
+                    <a role="button" (click)="createAccountWithGoogle()" class="login100-social-item bg3">
+                        <i class="fab fa-google"></i>
+                    </a>
+                </div>
+
+                <div class="flex-col-c p-t-155">
+                    <span class="txt1 p-b-17">
+                        Have an account?
+                    </span>
+
+                    <a [routerLink]="['/login']" class="txt2">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

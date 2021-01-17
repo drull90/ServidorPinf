@@ -1,0 +1,23 @@
+<div class="container text-center card card-body bg-light">
+    <h1>Mis apuestas</h1>
+    <p>Consulta tus apuestas realizadas.</p>
+    <div class="row">
+        <div class="col-sm-8">
+          <table class="table table-striped">
+            <tr>
+              <th scope="col"><i class="fas fa-bullseye"></i> Destinatario</th>
+              <th scope="col"><i class="fas fa-graduation-cap"></i> Calificación</th>
+              <th scope="col"><i class="fas fa-thermometer-three-quarters"></i> Estado</th>
+            </tr>
+            <tr *ngFor="let item of apuestas">
+              <td>{{item.destinatario}}</td>
+              <td>{{item.calificacion}}</td>
+              <td>{{item.estado}}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-sm-4">
+          <i class="fas fa-signal fa-10x"></i>        
+        </div>
+    </div>
+</div>
