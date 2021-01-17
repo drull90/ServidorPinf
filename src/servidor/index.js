@@ -15,7 +15,8 @@ exports.userCreated = functions.auth.user().onCreate( async (user) => {
         nick: "@" + user.uid,
         estado: "Apostando a tope",
         pinfcoins: 0,
-        idioma: "es"
+        idioma: "es",
+        pinfcoinsGanados: 0
     };
 
     await database.collection('usuarios').doc(user.uid).set(userData);
@@ -37,8 +38,7 @@ async function crearDatosDePrueba() {
         "verificado": true,
         "idioma": "es",
         "apuestasActivas": {
-            "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007001": true,
-            "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007002": true
+            "BBB": true,
         }
     };
 
@@ -50,7 +50,10 @@ async function crearDatosDePrueba() {
         "fotoUrl": "HGFOTOEW-FOTO",
         "pinfcoins": 3,
         "verificado": false,
-        "idioma": "en"
+        "idioma": "en",
+        "apuestasActivas": {
+            "AAAAA": true,
+        }
     };
 
     await db.collection('usuarios').doc('HGFOTOEW').set(data);
@@ -136,10 +139,16 @@ async function crearDatosDePrueba() {
     // crear matricula
 
     data = {
-        "2007003": {
-            "HGFOTOEW": "HGFOTOEW-z8JUgK1gH6fH4AXOH1hpuXNLDJx1-2007003",
-            "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-z8JUgK1gH6fH4AXOH1hpuXNLDJx1-2007003"
-        }
+        "21714001": {
+            "HGFOTOEW": "AAAAA",
+            "z8JUgK1gH6fH4AXOH1hpuXNLDJx1": "BBB"
+        },
+        "21714002": {
+
+        },
+        "21714003": {},
+        "21714004": {},
+        "21714005": {}
     };
 
     await db.collection('matricula').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data, {merge: true});
@@ -213,22 +222,24 @@ async function crearDatosDePrueba() {
     // crear apuestas
 
     data = {
-        "usuario": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
-        "destinatario": "HQARWSE",
-        "estado": "aprueba",
-        "calificacion": 8
+        "usuario": "HGFOTOEW",
+        "destinatario": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
+        "estado": "Suspende",
+        "calificacion": 3,
+        "pinfCoins": 10
     };
 
-    await db.collection('apuestas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007003').set(data);
+    await db.collection('apuestas').doc('BBB').set(data);
 
     data = {
-        "usuario": "HQARWSE",
+        "usuario": "HGFOTOEW",
         "destinatario": "z8JUgK1gH6fH4AXOH1hpuXNLDJx1",
-        "estado": "aprueba",
-        "calificacion": 8
+        "estado": "Suspende",
+        "calificacion": 3,
+        "pinfCoins": 10
     };
 
-    await db.collection('apuestas').doc('HGFOTOEW-z8JUgK1gH6fH4AXOH1hpuXNLDJx1-2007003').set(data);
+    await db.collection('apuestas').doc('AAAAA').set(data);
 
     // crear estadisiticas
 
@@ -245,47 +256,47 @@ async function crearDatosDePrueba() {
 
     // crear historial apuestas
 
-    data = {
-        "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007005": {
-            "destinatario": "HQWSSAZC",
-            "estado": "aprueba",
-            "calificacion": 8,
-            "estadoFin": "aprobado",
-            "calificacionFin": 5,
-            "pinfcoinsGanados": 20
-        },
-        "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007006": {
-            "destinatario": "HQWSSAZC",
-            "estado": "aprueba",
-            "calificacion": 8,
-            "estadoFin": "aprobado",
-            "calificacionFin": 5,
-            "pinfcoinsGanados": 20
-        }
-    };
+    // data = {
+    //     "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007005": {
+    //         "destinatario": "HQWSSAZC",
+    //         "estado": "aprueba",
+    //         "calificacion": 8,
+    //         "estadoFin": "aprobado",
+    //         "calificacionFin": 5,
+    //         "pinfcoinsGanados": 20
+    //     },
+    //     "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007006": {
+    //         "destinatario": "HQWSSAZC",
+    //         "estado": "aprueba",
+    //         "calificacion": 8,
+    //         "estadoFin": "aprobado",
+    //         "calificacionFin": 5,
+    //         "pinfcoinsGanados": 20
+    //     }
+    // };
 
-    await db.collection('historialApuestas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
+    // await db.collection('historialApuestas').doc('z8JUgK1gH6fH4AXOH1hpuXNLDJx1').set(data);
 
-    data = {
-        "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007005": {
-            "destinatario": "HQWSSAZC",
-            "estado": "aprueba",
-            "calificacion": 8,
-            "estadoFin": "aprobado",
-            "calificacionFin": 5,
-            "pinfcoinsGanados": 20
-        },
-        "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007006": {
-            "destinatario": "HQWSSAZC",
-            "estado": "aprueba",
-            "calificacion": 8,
-            "estadoFin": "aprobado",
-            "calificacionFin": 5,
-            "pinfcoinsGanados": 20
-        }
-    };
+    // data = {
+    //     "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007005": {
+    //         "destinatario": "HQWSSAZC",
+    //         "estado": "aprueba",
+    //         "calificacion": 8,
+    //         "estadoFin": "aprobado",
+    //         "calificacionFin": 5,
+    //         "pinfcoinsGanados": 20
+    //     },
+    //     "z8JUgK1gH6fH4AXOH1hpuXNLDJx1-HGFOTOEW-2007006": {
+    //         "destinatario": "HQWSSAZC",
+    //         "estado": "aprueba",
+    //         "calificacion": 8,
+    //         "estadoFin": "aprobado",
+    //         "calificacionFin": 5,
+    //         "pinfcoinsGanados": 20
+    //     }
+    // };
 
-    await db.collection('historialApuestas').doc('HGFOTOEW').set(data);
+    // await db.collection('historialApuestas').doc('HGFOTOEW').set(data);
 
     // crear foro
 
