@@ -1,7 +1,5 @@
 'use strict'
 
-require('dotenv').config();
-
 const functions = require('firebase-functions');
 const app = require('./routes/routes');
 const admin = require("./firebase/firebaseAdmin");
