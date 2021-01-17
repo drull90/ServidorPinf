@@ -26,8 +26,8 @@
           <a class="nav-link" routerLink="miperfil"><i class="far fa-user-circle"></i> MI PERFIL</a>
         </li>  
       </ul>
-      <button type="button" class="btn btn-danger" *ngIf="user!==null" (click)="cerrarSesion()"><i class="fas fa-power-off"></i>Cerrar Sesión</button>
-      <button type="button" class="btn btn-primary" *ngIf="user===null" (click)="login()"><i class="fas fa-power-off"></i>Iniciar Sesión</button>
+      <button type="button" class="btn btn-danger" *ngIf="user!==null" (click)="cerrarSesion()"><i class="fas fa-power-off"></i> Cerrar Sesión</button>
+      <button type="button" class="btn btn-primary" *ngIf="user===null" (click)="login()"><i class="fas fa-power-off"></i> Iniciar Sesión</button>
     </div>
   </nav>
 
@@ -40,7 +40,7 @@
 
   <footer>
       <div class="text-center">
-        <a href="#" style="text-decoration: none">Aviso Legal</a> | 
+        <a routerLink="responsibility-statement" style="text-decoration: none">responsibility Statement</a> | 
         <a routerLink="aboutus" style="text-decoration: none">Sobre Nosotros</a> |
         <a routerLink="contact" style="text-decoration: none">Contacto</a> | 
         <a routerLink="help" style="text-decoration: none">Ayuda</a> | 
