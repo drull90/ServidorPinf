@@ -12,15 +12,55 @@ async function subirMatriculaManual(req,res) {
     let uid = req.user.uid;
 
     let cod = req.body.codigo;
-    let nom = req.body.nombre;
 
-  
-  
-    res.status(200).send('{ "done" }');
+    if(cod != null){
+    
+      let matricula = await database.collection('matricula').doc(uid).get();
+      matricula = matricula.data();
+
+      let keys = Obect.keys(matricula);
+      
+      if(matricula == undefined || keys.length === 0)
+        await guardarMatriculaManual(uid,cod); 
+        res.status(200).send('{ "message" "Asignatura añadida a la matrícula correctamente" }');
+    
+      }else {
+      res.status(400).send('{ "message": "Actualice su expediente antes de registrar una nueva matrícula" } ');
+    }
+    else {
+      res.status(400).send('{ "message": "Código introducido inválido" } ');
+
+    } 
 
   } catch (error) {
     console.log(error);
     res.status(500).send('{ "message": "' + error + '" } ');  }
+}
+
+async function guardarMatriculaManual(uid,cod)
+{
+  let codigoAsig = cod;
+
+  //Meter en la lista de asignaturas si esta no existe
+
+  let asignatura = await database.collection('asignaturas').doc(codigoAsig).get();
+  asignatura = asignatura.data();
+
+  if(asignatura === undefined)
+  {
+    let dataAsig = {
+      nombre: getNombreAsignatura(codigoAsig),
+    };
+    
+    await database.collection('asignaturas').doc(codigoAsig).set(dataAsig);
+  
+  //Guardar asignatura en la matrícula
+
+  let dataAsig = {};
+  dataAsig[codigoAsig] = {};
+  await database.collection('matricula').doc(uid).set(dataAsig, {merge: true});
+  
+
 }
 
 async function getMatricula(req, res)
@@ -169,6 +209,8 @@ async function subirMatricula(req, res) {
   }
 
 }
+
+
 
 async function guardarMatricula(uid, data) {
 

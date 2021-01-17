@@ -12,8 +12,24 @@ async function subirExpedienteManual(req, res){
     let uid = req.user.uid;
 
     let cod = req.body.codigo;
-    let nom = req.body.nombre;
     let cal = req.body.calificacion;
+
+    //Comprobamos si existe la asignatura mandada en el expediente
+
+    let expediente = await database.collection('expedientes').doc(uid).get();
+    expediente = expediente.data();
+
+    let keys = Object.keys(expediente);
+    if(expediente === undefined || keys.length === 0)  //Caso expediente vacío, guarda la información.
+    {
+      await guardarExpedienteManual(uid,cod,cal);
+      res.status(200).send('{"message": "Asignatura añadida al expediente correctamente" }');
+    }
+    else {
+      //Comprobación si existe una matrícula con dicho código (caso actualizar)
+
+      //Caso no está en matricula y por ende nuevo expediente, solo registrar asignatura al expediente.
+    }
     
 
     res.status(200).send('{ "done" }');
@@ -22,6 +38,11 @@ async function subirExpedienteManual(req, res){
     console.log(error);
     res.status(500).send('{ "message": "' + error + '" }');
   }
+}
+
+//Guardar expediente manual
+async function guardarExpedienteManual(uid, asignaturasAprobadas, pdfStringArray) {
+
 }
 
 async function getExpediente(req, res)
