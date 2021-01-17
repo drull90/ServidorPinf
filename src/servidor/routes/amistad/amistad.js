@@ -188,6 +188,8 @@ async function enviarSolicitudAmistad(req,res){
       }
     }
 
+    console.log(receptor);
+
     if(receptor !== undefined) {
 
       if(receptor !== emisor) {
