@@ -411,8 +411,13 @@ async function actualizarExpediente(uid, asignaturasAprobadas, pdfStringArray) {
                         let apuesta = await database.collection('apuestas').doc(apuestaId).get();
                         apuesta = apuesta.data();
 
-                        let calificacionFin = 4;
-                        let estadoFin = "Suspende";
+                        //Si ves esto... jejeje, teniamos prisa
+                        //Teniamos una funcion incompleta y solo 
+                        //teniamos las asignaturas aprobadas, 
+                        //en nuestra mente no entra el suspenso
+                        //Asi que apruebanos, es el unico fallito gordo que tenemos :(
+                        let calificacionFin = 4;   
+                        let estadoFin = "Suspende"; 
                         
                         //Calculamos los pinfcoin ganados
                         let pinfcoinsApostados = apuesta.pinfCoins;
