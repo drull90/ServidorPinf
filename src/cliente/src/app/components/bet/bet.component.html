@@ -5,16 +5,14 @@
         <div class="col-sm-8">
           <table class="table table-striped">
             <tr>
-              <th scope="col">Destinatario</th>
-              <th scope="col">Calificación</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Resultado</th>
+              <th scope="col"><i class="fas fa-bullseye"></i> Destinatario</th>
+              <th scope="col"><i class="fas fa-graduation-cap"></i> Calificación</th>
+              <th scope="col"><i class="fas fa-thermometer-three-quarters"></i> Estado</th>
             </tr>
             <tr *ngFor="let item of apuestas">
               <td>{{item.destinatario}}</td>
               <td>{{item.calificacion}}</td>
               <td>{{item.estado}}</td>
-              <td>{{item.resultado}}</td>
             </tr>
           </table>
         </div>
