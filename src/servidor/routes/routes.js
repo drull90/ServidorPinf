@@ -43,6 +43,7 @@ app.post('/subirMatriculaManual',   firebaseAdmin.isAuth, matricula.subirMatricu
 app.get('/consultarAsignatura/:cod',firebaseAdmin.isAuth, matricula.getAsignatura);
 
 app.post('/apuesta',                firebaseAdmin.isAuth, apuesta.apuesta);
+app.get('/apuesta',                 firebaseAdmin.isAuth, apuesta.getApuestas);
 
 
 module.exports = app;

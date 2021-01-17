@@ -4,12 +4,11 @@ let admin = require("../../firebase/firebaseAdmin");
 let database = admin.dataBase;
 
 async function apuesta(req, res) {
-
     try {
         let usuarioID = req.user.uid;
         let destinatarioID = req.body.destinatario;
         let estado = req.body.estado;
-        let calificacion = req.body.calificacion;
+        let calificacion = parseInt(req.body.calificacion);
         let codAsignatura = req.body.codigoAsig;
         let pinfCoins = req.body.pinfCoins;
 
@@ -106,6 +105,68 @@ async function existeAsignatura(codigo) {
     return existe;
 }
 
+async function getApuestas(req, res) {
+    try {
+        let uid = req.user.uid;
+
+        let data = {
+            response: []
+        };
+
+        // Leer informacion apuestas activas
+        let apuestasActivas = await database.collection('usuarios').doc(uid).get();
+        apuestasActivas = apuestasActivas.data();
+
+        if(apuestasActivas["apuestasActivas"] !== undefined) { // Existen apuestas activas
+
+            let keys = Object.keys(apuestasActivas["apuestasActivas"]);
+            for(let i = 0; i < keys.length; ++i) { //Por cada apuesta voy a buscarla a apuesta
+                let apuesta = await database.collection('apuestas').doc(keys[i]).get();
+                apuesta = apuesta.data();
+
+                let apuestaData = {
+                    destinatario: apuesta.destinatario,
+                    calificacion: apuesta.calificacion,
+                    estado: "Pendiente"
+                };
+
+                data.response.push(apuestaData);
+            }
+        }
+
+        // Leer informacion historial apuestas
+        let historialApuestas = await database.collection('historialApuestas').doc(uid).get();
+        historialApuestas = historialApuestas.data();
+
+        if(historialApuestas !== undefined) {
+
+            let keys = Object.keys(historialApuestas);
+            for(let i = 0; i < keys.length; ++i) {
+                let apuesta = historialApuestas[keys[i]];
+
+                let str = apuesta.pinfCoinsGanados + " Pinfcoins Ganados";
+
+                let apuestaData = {
+                    destinatario: apuesta.destinatario,
+                    calificacionFin: apuesta.calificacionFin,
+                    estado: str
+                }
+
+                data.response.push(apuestaData);
+            }
+        }
+
+        console.log(data.response);
+
+        res.status(200).send(data);
+    }
+    catch(error) {
+        console.log(error);
+        res.status(500).send('{ "message": "' + error + '" }');
+    }
+}
+
 module.exports = {
-    apuesta
+    apuesta,
+    getApuestas
 }
