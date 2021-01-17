@@ -108,23 +108,24 @@ async function getMatricula(req, res)
     };
 
     let matricula = await database.collection('matricula').doc(uid).get();
-
     matricula = matricula.data();
 
-    let keys = Object.keys(matricula);
+    if(matricula !== undefined) {
+      let keys = Object.keys(matricula);
 
-    for(let i = 0; i < keys.length; ++i ) {
-      let asignatura = await getDatosAsignatura(keys[i]);
+      for(let i = 0; i < keys.length; ++i ) {
+        let asignatura = await getDatosAsignatura(keys[i]);
 
-      if(asignatura !== {}) {
+        if(asignatura !== {}) {
 
-        let apuestasRecibidas = Object.keys(matricula[keys[i]]);
+          let apuestasRecibidas = Object.keys(matricula[keys[i]]);
 
-        asignatura.apuestas = apuestasRecibidas.length;
+          asignatura.apuestas = apuestasRecibidas.length;
 
-        data.data.push(asignatura);
+          data.data.push(asignatura);
+        }
+  
       }
- 
     }
 
     res.status(200).send(data);

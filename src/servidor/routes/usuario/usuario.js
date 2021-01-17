@@ -33,7 +33,6 @@ async function getUserProfile(req, res) {
         }
 
         let userData = await database.collection('usuarios').doc(uid).get();
-
         userData = userData.data();
 
         let user = await fbauth.getUser(uid);
