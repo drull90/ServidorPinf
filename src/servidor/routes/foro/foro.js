@@ -66,7 +66,7 @@ async function crearForo(req, res) {
                 authorID: uid
             };
 
-            await database.collection('foroMensajes').doc(foro.id).set(data);
+            await database.collection('foroMensajes').doc(key).set(data);
 
             res.status(200).send('{ "message": "Foro creado" }');
         }
