@@ -54,8 +54,8 @@ export class ApuestaComponent implements OnInit {
       destinatario: this.uid,
       codigoAsig: this.codigo,
       calificacion: this.formularioApuesta.get('Calificacion'),
-      Estado: this.formularioApuesta.get('Estado'),
-      PinfCoinsApostados: this.formularioApuesta.get('PinfCoinsApostados')
+      estado: this.formularioApuesta.get('Estado'),
+      pinfCoins: this.formularioApuesta.get('PinfCoinsApostados')
     }
     this.httpClient.post(environment.url + "/apuesta", data, {headers: {'Authorization': this.token}})
     .subscribe(

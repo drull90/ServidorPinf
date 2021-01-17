@@ -11,6 +11,7 @@ async function apuesta(req, res) {
         let estado = req.body.estado;
         let calificacion = req.body.calificacion;
         let codAsignatura = req.body.codigoAsig;
+        let pinfCoins = req.body.pinfCoins;
 
         if(destinatarioID.startsWith('@')) { // Es un nick, lo cambiamos a uid
             let uidReceptor = await database.collection('uuids').doc(destinatarioID).get();
@@ -32,7 +33,7 @@ async function apuesta(req, res) {
             }
             else {
                 //Hacemos la apuesta
-                await apostar(usuarioID, destinatarioID, estado, calificacion, codAsignatura);
+                await apostar(usuarioID, destinatarioID, estado, calificacion, codAsignatura, pinfCoins);
                 res.status(200).send('{ "message": "apuesta realizada correctamente" }');
             }
         }
@@ -48,7 +49,7 @@ async function apuesta(req, res) {
 
 }
 
-async function apostar(usuario, destinatario, estado, calificacion, codAsignatura) {
+async function apostar(usuario, destinatario, estado, calificacion, codAsignatura, pinfCoins) {
 
     if(estado === "Aprueba" || estado === "Suspende" && (calificacion >= 0 && calificacion <= 10) && codAsignatura !== undefined) {
 
@@ -60,7 +61,8 @@ async function apostar(usuario, destinatario, estado, calificacion, codAsignatur
                 usuario: usuario,
                 destinatario: destinatario,
                 estado: estado,
-                calificacion: calificacion
+                calificacion: calificacion,
+                pinfCoins: pinfCoins
             }
     
             //Creamos nuevo documento en apuestas
