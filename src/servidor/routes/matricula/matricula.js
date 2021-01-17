@@ -27,7 +27,7 @@ async function subirMatriculaManual(req,res) {
           };
           await database.collection('matricula').doc(uid).set(data, {merge: true});
         }
-        res.status(400).send('{ "message": "Asignatura ' + asignatura.nombre + ' correctamente subida" } ');
+        res.status(200).send('{ "message": "Asignatura ' + asignatura.nombre + ' correctamente subida" } ');
       }
       else { // Aun no tenemos la asignatura guardada
         res.status(400).send('{ "message": "Aun no tenemos la asignatura guardada en la base de datos, se paciente, en breves la tendremos" } ');
@@ -36,7 +36,6 @@ async function subirMatriculaManual(req,res) {
     }
     else {
       res.status(400).send('{ "message": "Codigo introducido invalido" } ');
-
     } 
 
   } catch (error) {
